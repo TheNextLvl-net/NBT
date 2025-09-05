@@ -20,11 +20,6 @@ public final class EscapeTagImpl implements EscapeTag {
     }
 
     @Override
-    public boolean equals(final Object obj) {
-        return obj.getClass().equals(getClass());
-    }
-
-    @Override
     public void write(NBTOutputStream outputStream) throws IOException {
         outputStream.writeByte((byte) getTypeId());
     }
