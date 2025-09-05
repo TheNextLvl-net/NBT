@@ -45,6 +45,12 @@ tasks.javadoc {
 publishing {
     publications.create<MavenPublication>("maven") {
         from(components["java"])
+        pom.scm {
+            val repository = "TheNextLvl-net/NBT"
+            url.set("https://github.com/$repository")
+            connection.set("scm:git:git://github.com/$repository.git")
+            developerConnection.set("scm:git:ssh://github.com/$repository.git")
+        }
     }
     repositories.maven {
         val channel = if ((version as String).contains("-pre")) "snapshots" else "releases"
