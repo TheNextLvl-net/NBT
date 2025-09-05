@@ -90,10 +90,10 @@ public class NBTExample {
 
     public static void writeData() throws Exception {
         try (var out = new NBTOutputStream(new FileOutputStream("data.nbt"))) {
-            CompoundTag root = new CompoundTag.Builder()
+            CompoundTag root = CompoundTag.builder()
                     .put("Name", "Example")
                     .put("Health", 20)
-                    .put("Position", new CompoundTag.Builder()
+                    .put("Position", CompoundTag.builder()
                             .put("x", 1)
                             .put("y", 64)
                             .put("z", 1)
@@ -231,7 +231,7 @@ record PlayerData(String name, Position pos, java.util.List<InventoryItem> items
 class PositionAdapter implements TagAdapter<Position> {
     @Override
     public Tag serialize(Position position, TagSerializationContext context) {
-        return new CompoundTag.Builder()
+        return CompoundTag.builder()
                 .put("x", position.x())
                 .put("y", position.y())
                 .put("z", position.z())
@@ -252,7 +252,7 @@ class PositionAdapter implements TagAdapter<Position> {
 class InventoryItemAdapter implements TagAdapter<InventoryItem> {
     @Override
     public Tag serialize(InventoryItem item, TagSerializationContext context) {
-        return new CompoundTag.Builder()
+        return CompoundTag.builder()
                 .put("id", item.id())
                 .put("count", item.count())
                 .build();
@@ -276,7 +276,7 @@ class PlayerDataAdapter implements TagAdapter<PlayerData> {
             // Let context use InventoryItemAdapter
             list.add(context.serialize(it));
         }
-        return new CompoundTag.Builder()
+        return CompoundTag.builder()
                 .put("name", data.name())
                 .put("pos", context.serialize(data.pos())) // delegate to PositionAdapter
                 .put("items", list)
