@@ -16,7 +16,7 @@ public final class LongAdapter implements TagAdapter<Long> {
 
     private LongAdapter() {
     }
-    
+
     @Override
     public Long deserialize(Tag tag, TagDeserializationContext context) throws ParserException {
         return tag.getAsLong();

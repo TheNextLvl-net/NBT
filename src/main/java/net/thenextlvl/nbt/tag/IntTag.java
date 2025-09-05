@@ -13,7 +13,7 @@ public sealed interface IntTag extends NumberTag<Integer> permits IntTagImpl {
      * Represents the unique identifier for this Tag.
      */
     int ID = 3;
-    
+
     /**
      * Creates a new instance of {@code IntTag} with the specified integer value.
      *

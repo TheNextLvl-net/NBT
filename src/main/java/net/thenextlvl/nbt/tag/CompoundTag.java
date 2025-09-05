@@ -218,7 +218,7 @@ public sealed interface CompoundTag extends ValueTag<Map<String, Tag>> permits C
     static Builder builder() {
         return new CompoundTagImpl.Builder();
     }
-    
+
     /**
      * Creates and returns an empty instance of a CompoundTag.
      *
@@ -228,7 +228,7 @@ public sealed interface CompoundTag extends ValueTag<Map<String, Tag>> permits C
     static CompoundTag empty() {
         return of(new HashMap<>());
     }
-    
+
     /**
      * Creates a new instance of a CompoundTag with the given map of string keys and tag values.
      *

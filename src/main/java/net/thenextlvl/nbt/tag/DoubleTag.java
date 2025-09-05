@@ -13,7 +13,7 @@ public sealed interface DoubleTag extends NumberTag<Double> permits DoubleTagImp
      * Represents the unique identifier for this Tag.
      */
     int ID = 6;
-    
+
     /**
      * Creates a new instance of {@code DoubleTag} with the specified double value.
      *

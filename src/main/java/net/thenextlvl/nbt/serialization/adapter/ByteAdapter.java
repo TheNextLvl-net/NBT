@@ -16,7 +16,7 @@ public final class ByteAdapter implements TagAdapter<Byte> {
 
     private ByteAdapter() {
     }
-    
+
     @Override
     public Byte deserialize(Tag tag, TagDeserializationContext context) throws ParserException {
         return tag.getAsByte();

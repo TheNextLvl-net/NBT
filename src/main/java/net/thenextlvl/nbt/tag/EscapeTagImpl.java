@@ -10,10 +10,10 @@ import java.io.IOException;
 @ApiStatus.Internal
 public final class EscapeTagImpl implements EscapeTag {
     public static final EscapeTag INSTANCE = new EscapeTagImpl();
-    
+
     private EscapeTagImpl() {
     }
-    
+
     @Override
     public int getTypeId() {
         return ID;

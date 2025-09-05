@@ -16,7 +16,7 @@ public final class IntegerAdapter implements TagAdapter<Integer> {
 
     private IntegerAdapter() {
     }
-    
+
     @Override
     public Integer deserialize(Tag tag, TagDeserializationContext context) throws ParserException {
         return tag.getAsInt();

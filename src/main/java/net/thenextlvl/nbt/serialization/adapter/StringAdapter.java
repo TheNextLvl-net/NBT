@@ -16,7 +16,7 @@ public final class StringAdapter implements TagAdapter<String> {
 
     private StringAdapter() {
     }
-    
+
     @Override
     public String deserialize(Tag tag, TagDeserializationContext context) throws ParserException {
         return tag.getAsString();

@@ -14,7 +14,7 @@ public sealed interface IntArrayTag extends ValueTag<int[]>, IterableTag<Integer
      * Represents the unique identifier for this Tag.
      */
     int ID = 11;
-    
+
     /**
      * Creates a new instance of IntArrayTag containing the specified integer values.
      *

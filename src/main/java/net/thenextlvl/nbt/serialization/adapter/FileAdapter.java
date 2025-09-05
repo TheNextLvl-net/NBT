@@ -18,7 +18,7 @@ public final class FileAdapter implements TagAdapter<File> {
 
     private FileAdapter() {
     }
-    
+
     @Override
     public File deserialize(Tag tag, TagDeserializationContext context) throws ParserException {
         return new File(tag.getAsString());

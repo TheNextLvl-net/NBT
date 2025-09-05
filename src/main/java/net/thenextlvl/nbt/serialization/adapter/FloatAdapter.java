@@ -16,7 +16,7 @@ public final class FloatAdapter implements TagAdapter<Float> {
 
     private FloatAdapter() {
     }
-    
+
     @Override
     public Float deserialize(Tag tag, TagDeserializationContext context) throws ParserException {
         return tag.getAsFloat();

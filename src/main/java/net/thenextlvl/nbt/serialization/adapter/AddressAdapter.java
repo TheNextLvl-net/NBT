@@ -18,7 +18,7 @@ public final class AddressAdapter implements TagAdapter<InetSocketAddress> {
 
     private AddressAdapter() {
     }
-    
+
     @Override
     public InetSocketAddress deserialize(Tag tag, TagDeserializationContext context) throws ParserException {
         var root = tag.getAsCompound();

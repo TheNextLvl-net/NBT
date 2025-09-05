@@ -14,7 +14,7 @@ public sealed interface LongArrayTag extends ValueTag<long[]>, IterableTag<Long>
      * Represents the unique identifier for this Tag.
      */
     int ID = 12;
-    
+
     /**
      * Creates a new {@code LongArrayTag} instance with the specified array of long values.
      *

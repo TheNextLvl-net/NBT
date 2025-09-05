@@ -14,7 +14,7 @@ public sealed interface FloatTag extends NumberTag<Float> permits FloatTagImpl {
      * Represents the unique identifier for this Tag.
      */
     int ID = 5;
-    
+
     /**
      * Creates a new instance of FloatTag with the specified float value.
      *

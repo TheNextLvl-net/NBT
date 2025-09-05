@@ -16,7 +16,7 @@ public final class ShortAdapter implements TagAdapter<Short> {
 
     private ShortAdapter() {
     }
-    
+
     @Override
     public Short deserialize(Tag tag, TagDeserializationContext context) throws ParserException {
         return tag.getAsShort();

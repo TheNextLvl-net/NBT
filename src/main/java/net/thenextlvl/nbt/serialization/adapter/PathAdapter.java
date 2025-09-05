@@ -18,7 +18,7 @@ public final class PathAdapter implements TagAdapter<Path> {
 
     private PathAdapter() {
     }
-    
+
     @Override
     public Path deserialize(Tag tag, TagDeserializationContext context) throws ParserException {
         return Path.of(tag.getAsString());

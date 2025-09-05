@@ -16,7 +16,7 @@ public sealed interface ByteArrayTag extends ValueTag<byte[]>, IterableTag<Byte>
      * Represents the unique identifier for this Tag.
      */
     int ID = 7;
-    
+
     /**
      * Creates a new instance of {@code ByteArrayTag} with the specified byte array value.
      *

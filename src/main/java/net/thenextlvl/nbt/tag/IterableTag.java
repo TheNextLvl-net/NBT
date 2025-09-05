@@ -34,7 +34,7 @@ public interface IterableTag<E> extends Iterable<E> {
     /**
      * Replaces the element at the specified position in this IterableTag with the specified element.
      *
-     * @param index index of the element to replace
+     * @param index   index of the element to replace
      * @param element element to be stored at the specified position
      */
     @Contract(mutates = "this")

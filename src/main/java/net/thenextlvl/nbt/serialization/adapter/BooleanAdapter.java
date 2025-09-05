@@ -16,7 +16,7 @@ public final class BooleanAdapter implements TagAdapter<Boolean> {
 
     private BooleanAdapter() {
     }
-    
+
     @Override
     public Boolean deserialize(Tag tag, TagDeserializationContext context) throws ParserException {
         return tag.getAsBoolean();
