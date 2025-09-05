@@ -26,6 +26,6 @@ public final class FileAdapter implements TagAdapter<File> {
 
     @Override
     public Tag serialize(File file, TagSerializationContext context) throws ParserException {
-        return new StringTag(file.getPath());
+        return StringTag.of(file.getPath());
     }
 }

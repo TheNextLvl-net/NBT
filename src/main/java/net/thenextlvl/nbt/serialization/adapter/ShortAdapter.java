@@ -24,6 +24,6 @@ public final class ShortAdapter implements TagAdapter<Short> {
 
     @Override
     public Tag serialize(Short object, TagSerializationContext context) throws ParserException {
-        return new ShortTag(object);
+        return ShortTag.of(object);
     }
 }

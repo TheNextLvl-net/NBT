@@ -14,6 +14,18 @@ import net.thenextlvl.nbt.tag.LongTag;
 import net.thenextlvl.nbt.tag.ShortTag;
 import net.thenextlvl.nbt.tag.StringTag;
 import net.thenextlvl.nbt.tag.Tag;
+import net.thenextlvl.nbt.tag.ByteArrayTagImpl;
+import net.thenextlvl.nbt.tag.ByteTagImpl;
+import net.thenextlvl.nbt.tag.CompoundTagImpl;
+import net.thenextlvl.nbt.tag.DoubleTagImpl;
+import net.thenextlvl.nbt.tag.FloatTagImpl;
+import net.thenextlvl.nbt.tag.IntArrayTagImpl;
+import net.thenextlvl.nbt.tag.IntTagImpl;
+import net.thenextlvl.nbt.tag.ListTagImpl;
+import net.thenextlvl.nbt.tag.LongArrayTagImpl;
+import net.thenextlvl.nbt.tag.LongTagImpl;
+import net.thenextlvl.nbt.tag.ShortTagImpl;
+import net.thenextlvl.nbt.tag.StringTagImpl;
 import org.jetbrains.annotations.Contract;
 import org.jspecify.annotations.NullMarked;
 
@@ -112,19 +124,19 @@ public final class NBTInputStream extends DataInputStream {
      * Mappings between tag type ids and the corresponding mapping function
      */
     private final Map<Integer, MappingFunction> mapper = new HashMap<>(Map.ofEntries(
-            Map.entry(ByteArrayTag.ID, ByteArrayTag::read),
-            Map.entry(ByteTag.ID, ByteTag::read),
-            Map.entry(CompoundTag.ID, CompoundTag::read),
-            Map.entry(DoubleTag.ID, DoubleTag::read),
+            Map.entry(ByteArrayTag.ID, ByteArrayTagImpl::read),
+            Map.entry(ByteTag.ID, ByteTagImpl::read),
+            Map.entry(CompoundTag.ID, CompoundTagImpl::read),
+            Map.entry(DoubleTag.ID, DoubleTagImpl::read),
             Map.entry(EscapeTag.ID, ignored -> EscapeTag.INSTANCE),
-            Map.entry(FloatTag.ID, FloatTag::read),
-            Map.entry(IntArrayTag.ID, IntArrayTag::read),
-            Map.entry(IntTag.ID, IntTag::read),
-            Map.entry(ListTag.ID, ListTag::read),
-            Map.entry(LongArrayTag.ID, LongArrayTag::read),
-            Map.entry(LongTag.ID, LongTag::read),
-            Map.entry(ShortTag.ID, ShortTag::read),
-            Map.entry(StringTag.ID, StringTag::read)
+            Map.entry(FloatTag.ID, FloatTagImpl::read),
+            Map.entry(IntArrayTag.ID, IntArrayTagImpl::read),
+            Map.entry(IntTag.ID, IntTagImpl::read),
+            Map.entry(ListTag.ID, ListTagImpl::read),
+            Map.entry(LongArrayTag.ID, LongArrayTagImpl::read),
+            Map.entry(LongTag.ID, LongTagImpl::read),
+            Map.entry(ShortTag.ID, ShortTagImpl::read),
+            Map.entry(StringTag.ID, StringTagImpl::read)
     ));
 
     /**

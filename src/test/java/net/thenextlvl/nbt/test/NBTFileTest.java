@@ -22,9 +22,9 @@ public class NBTFileTest {
     @Test
     public void createFile() {
         var contents = CompoundTag.builder()
-                .put("array", new IntArrayTag())
-                .put("list", new ListTag<>(DoubleTag.ID))
-                .put("compound", new CompoundTag())
+                .put("array", IntArrayTag.of())
+                .put("list", ListTag.of(DoubleTag.ID))
+                .put("compound", CompoundTag.empty())
                 .put("number", 1)
                 .put("boolean", false)
                 .put("string", "Hello World!")
@@ -37,7 +37,7 @@ public class NBTFileTest {
         assertTrue(path.exists(), "Failed to create file");
         assertEquals(contents, file.getRoot(), "File was not saved to disk");
 
-        var modified = new CompoundTag();
+        var modified = CompoundTag.empty();
         file.setRoot(modified);
         file.save();
 

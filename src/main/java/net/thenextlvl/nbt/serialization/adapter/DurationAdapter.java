@@ -19,7 +19,7 @@ public final class DurationAdapter implements TagAdapter<Duration> {
 
     private DurationAdapter() {
     }
-    
+
     @Override
     public Duration deserialize(Tag tag, TagDeserializationContext context) throws ParserException {
         return Duration.ofMillis(tag.getAsLong());
@@ -27,6 +27,6 @@ public final class DurationAdapter implements TagAdapter<Duration> {
 
     @Override
     public Tag serialize(Duration duration, TagSerializationContext context) throws ParserException {
-        return new LongTag(duration.toMillis());
+        return LongTag.of(duration.toMillis());
     }
 }

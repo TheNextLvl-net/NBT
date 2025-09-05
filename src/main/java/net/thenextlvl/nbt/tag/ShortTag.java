@@ -1,11 +1,7 @@
 package net.thenextlvl.nbt.tag;
 
-import net.thenextlvl.nbt.NBTInputStream;
-import net.thenextlvl.nbt.NBTOutputStream;
 import org.jetbrains.annotations.Contract;
 import org.jspecify.annotations.NullMarked;
-
-import java.io.IOException;
 
 /**
  * The ShortTag class represents a tag that holds a short value.
@@ -13,45 +9,20 @@ import java.io.IOException;
  * for handling short values in a tag context.
  */
 @NullMarked
-public class ShortTag extends NumberTag<Short> {
+public sealed interface ShortTag extends NumberTag<Short> permits ShortTagImpl {
     /**
      * Represents the unique identifier for this Tag.
      */
-    public static final int ID = 2;
+    int ID = 2;
 
     /**
-     * Constructs a new instance of ShortTag with the specified short value.
+     * Creates a new instance of {@code ShortTag} with the specified short value.
      *
-     * @param value the short value to be associated with this tag
+     * @param value the short value to encapsulate within the {@code ShortTag}
+     * @return a new {@code ShortTag} instance containing the given short value
      */
-    public ShortTag(Short value) {
-        super(value);
-    }
-
-    @Override
-    public short getAsShort() {
-        return getValue();
-    }
-
-    @Override
-    public int getTypeId() {
-        return ID;
-    }
-
-    @Override
-    public void write(NBTOutputStream outputStream) throws IOException {
-        outputStream.writeShort(getValue());
-    }
-
-    /**
-     * Reads a short value from the given NBTInputStream and returns it as a ShortTag.
-     *
-     * @param inputStream the NBTInputStream from which the short value will be read
-     * @return a ShortTag containing the short value read from the inputStream
-     * @throws IOException if an I/O error occurs while reading from the inputStream
-     */
-    @Contract(value = "_ -> new", mutates = "param1")
-    public static ShortTag read(NBTInputStream inputStream) throws IOException {
-        return new ShortTag(inputStream.readShort());
+    @Contract(value = "_ -> new", pure = true)
+    static ShortTag of(short value) {
+        return new ShortTagImpl(value);
     }
 }

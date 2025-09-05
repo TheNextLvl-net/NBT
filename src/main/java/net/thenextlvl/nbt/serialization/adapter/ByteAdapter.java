@@ -24,6 +24,6 @@ public final class ByteAdapter implements TagAdapter<Byte> {
 
     @Override
     public Tag serialize(Byte object, TagSerializationContext context) throws ParserException {
-        return new ByteTag(object);
+        return ByteTag.of(object);
     }
 }

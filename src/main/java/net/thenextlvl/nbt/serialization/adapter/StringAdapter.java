@@ -24,6 +24,6 @@ public final class StringAdapter implements TagAdapter<String> {
 
     @Override
     public Tag serialize(String object, TagSerializationContext context) throws ParserException {
-        return new StringTag(object);
+        return StringTag.of(object);
     }
 }

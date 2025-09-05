@@ -24,6 +24,6 @@ public final class LongAdapter implements TagAdapter<Long> {
 
     @Override
     public Tag serialize(Long object, TagSerializationContext context) throws ParserException {
-        return new LongTag(object);
+        return LongTag.of(object);
     }
 }

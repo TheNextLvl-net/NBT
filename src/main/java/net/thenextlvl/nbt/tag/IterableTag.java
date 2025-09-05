@@ -1,5 +1,6 @@
 package net.thenextlvl.nbt.tag;
 
+import org.jetbrains.annotations.Contract;
 import org.jspecify.annotations.NullMarked;
 
 import java.util.Iterator;
@@ -13,12 +14,12 @@ import java.util.Iterator;
  */
 @NullMarked
 public interface IterableTag<E> extends Iterable<E> {
-
     /**
      * Returns the number of elements in this IterableTag.
      *
      * @return the number of elements in this IterableTag
      */
+    @Contract(pure = true)
     int size();
 
     /**
@@ -27,6 +28,7 @@ public interface IterableTag<E> extends Iterable<E> {
      * @param index index of the element to return
      * @return the element at the specified position in this list
      */
+    @Contract(pure = true)
     E get(int index);
 
     /**
@@ -35,6 +37,7 @@ public interface IterableTag<E> extends Iterable<E> {
      * @param index index of the element to replace
      * @param element element to be stored at the specified position
      */
+    @Contract(mutates = "this")
     void set(int index, E element);
 
     /**
@@ -43,6 +46,7 @@ public interface IterableTag<E> extends Iterable<E> {
      * @return an {@code Iterator<E>} over the elements in this IterableTag
      */
     @Override
+    @Contract(pure = true)
     default Iterator<E> iterator() {
         return new Iterator<>() {
             private int index;

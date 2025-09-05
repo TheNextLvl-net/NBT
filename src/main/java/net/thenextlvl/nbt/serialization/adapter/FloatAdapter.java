@@ -24,6 +24,6 @@ public final class FloatAdapter implements TagAdapter<Float> {
 
     @Override
     public Tag serialize(Float object, TagSerializationContext context) throws ParserException {
-        return new FloatTag(object);
+        return FloatTag.of(object);
     }
 }

@@ -1,56 +1,27 @@
 package net.thenextlvl.nbt.tag;
 
-import net.thenextlvl.nbt.NBTInputStream;
-import net.thenextlvl.nbt.NBTOutputStream;
 import org.jetbrains.annotations.Contract;
 import org.jspecify.annotations.NullMarked;
-
-import java.io.IOException;
 
 /**
  * The DoubleTag class represents a numerical tag holding a Double value within the NBT (Named Binary Tag) system.
  * This class extends the abstract NumberTag class to provide specific functionality for Double values.
  */
 @NullMarked
-public class DoubleTag extends NumberTag<Double> {
+public sealed interface DoubleTag extends NumberTag<Double> permits DoubleTagImpl {
     /**
      * Represents the unique identifier for this Tag.
      */
-    public static final int ID = 6;
-
+    int ID = 6;
+    
     /**
-     * Constructs a new instance of DoubleTag with the specified Double value.
+     * Creates a new instance of {@code DoubleTag} with the specified double value.
      *
-     * @param value the Double value to be associated with this tag
+     * @param value the double value to associate with the new {@code DoubleTag} instance
+     * @return a new {@code DoubleTag} instance holding the given double value
      */
-    public DoubleTag(Double value) {
-        super(value);
-    }
-
-    @Override
-    public double getAsDouble() {
-        return getValue();
-    }
-
-    @Override
-    public int getTypeId() {
-        return ID;
-    }
-
-    @Override
-    public void write(NBTOutputStream outputStream) throws IOException {
-        outputStream.writeDouble(getValue());
-    }
-
-    /**
-     * Reads a DoubleTag from the specified NBTInputStream.
-     *
-     * @param inputStream the input stream to read the DoubleTag from
-     * @return the DoubleTag read from the input stream
-     * @throws IOException if an I/O error occurs while reading from the input stream
-     */
-    @Contract(value = "_ -> new", mutates = "param1")
-    public static DoubleTag read(NBTInputStream inputStream) throws IOException {
-        return new DoubleTag(inputStream.readDouble());
+    @Contract(value = "_ -> new", pure = true)
+    static DoubleTag of(double value) {
+        return new DoubleTagImpl(value);
     }
 }

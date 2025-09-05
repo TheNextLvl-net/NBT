@@ -16,7 +16,7 @@ public final class DoubleAdapter implements TagAdapter<Double> {
 
     private DoubleAdapter() {
     }
-    
+
     @Override
     public Double deserialize(Tag tag, TagDeserializationContext context) throws ParserException {
         return tag.getAsDouble();
@@ -24,6 +24,6 @@ public final class DoubleAdapter implements TagAdapter<Double> {
 
     @Override
     public Tag serialize(Double object, TagSerializationContext context) throws ParserException {
-        return new DoubleTag(object);
+        return DoubleTag.of(object);
     }
 }

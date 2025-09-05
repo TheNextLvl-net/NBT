@@ -25,6 +25,7 @@ public interface Tag {
      * @param outputStream the NBTOutputStream to write the tag data to
      * @throws IOException if an I/O error occurs while writing to the stream
      */
+    @Contract(mutates = "param1")
     void write(NBTOutputStream outputStream) throws IOException;
 
     /**

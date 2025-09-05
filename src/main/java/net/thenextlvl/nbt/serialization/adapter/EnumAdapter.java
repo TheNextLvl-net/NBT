@@ -29,6 +29,6 @@ public final class EnumAdapter<T extends Enum<T>> implements TagAdapter<T> {
 
     @Override
     public Tag serialize(T object, TagSerializationContext context) throws ParserException {
-        return new StringTag(object.name());
+        return StringTag.of(object.name());
     }
 }

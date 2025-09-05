@@ -29,7 +29,7 @@ public final class AddressAdapter implements TagAdapter<InetSocketAddress> {
 
     @Override
     public Tag serialize(InetSocketAddress address, TagSerializationContext context) throws ParserException {
-        var tag = new CompoundTag();
+        var tag = CompoundTag.empty();
         tag.add("hostname", address.getHostName());
         tag.add("port", address.getPort());
         return tag;

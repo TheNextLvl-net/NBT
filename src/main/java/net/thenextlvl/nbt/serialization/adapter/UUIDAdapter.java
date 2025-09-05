@@ -28,7 +28,7 @@ public final class UUIDAdapter implements TagAdapter<UUID> {
 
     @Override
     public Tag serialize(UUID uuid, TagSerializationContext context) {
-        var tag = new CompoundTag();
+        var tag = CompoundTag.empty();
         tag.add("most", uuid.getMostSignificantBits());
         tag.add("least", uuid.getLeastSignificantBits());
         return tag;

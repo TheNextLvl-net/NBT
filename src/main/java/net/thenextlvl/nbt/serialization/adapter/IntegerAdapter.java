@@ -24,6 +24,6 @@ public final class IntegerAdapter implements TagAdapter<Integer> {
 
     @Override
     public Tag serialize(Integer object, TagSerializationContext context) throws ParserException {
-        return new IntTag(object);
+        return IntTag.of(object);
     }
 }

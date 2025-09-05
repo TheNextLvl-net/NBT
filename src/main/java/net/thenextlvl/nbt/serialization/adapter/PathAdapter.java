@@ -26,6 +26,6 @@ public final class PathAdapter implements TagAdapter<Path> {
 
     @Override
     public Tag serialize(Path path, TagSerializationContext context) throws ParserException {
-        return new StringTag(path.toString());
+        return StringTag.of(path.toString());
     }
 }
