@@ -10,7 +10,7 @@ import java.lang.reflect.Type;
  * Interface defining the context for deserializing tags into their respective objects.
  */
 @NullMarked
-public interface TagDeserializationContext {
+public sealed interface TagDeserializationContext permits NBT {
     /**
      * Deserializes a given tag to an object of the specified type.
      *
