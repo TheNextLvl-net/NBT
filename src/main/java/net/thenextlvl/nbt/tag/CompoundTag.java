@@ -24,21 +24,23 @@ public sealed interface CompoundTag extends ValueTag<Map<String, Tag>> permits C
     int ID = 10;
 
     /**
-     * Adds a tag to the compound tag with the specified name.
-     *
-     * @param name the name of the tag to be added
-     * @param tag  the tag to be added
-     */
-    void add(String name, Tag tag);
-
-    /**
      * Removes a tag from the compound tag with the specified name.
      *
      * @param name the name of the tag to be removed
      * @return the removed tag, or null if no tag with the specified name existed
      */
     @Nullable
+    @Contract(mutates = "this")
     Tag remove(String name);
+
+    /**
+     * Adds a tag to the compound tag with the specified name.
+     *
+     * @param name the name of the tag to be added
+     * @param tag  the tag to be added
+     */
+    @Contract(mutates = "this")
+    void add(String name, Tag tag);
 
     /**
      * Adds a tag to the compound tag with the specified name.
@@ -46,6 +48,7 @@ public sealed interface CompoundTag extends ValueTag<Map<String, Tag>> permits C
      * @param name  the name of the tag to be added
      * @param value the value of the tag to be added
      */
+    @Contract(mutates = "this")
     void add(String name, String value);
 
     /**
@@ -54,6 +57,7 @@ public sealed interface CompoundTag extends ValueTag<Map<String, Tag>> permits C
      * @param name  the name of the tag to be added
      * @param value the byte array to be added as a tag
      */
+    @Contract(mutates = "this")
     void add(String name, byte[] value);
 
     /**
@@ -62,6 +66,7 @@ public sealed interface CompoundTag extends ValueTag<Map<String, Tag>> permits C
      * @param name  the name of the tag to be added
      * @param value the integer array to be added as a tag
      */
+    @Contract(mutates = "this")
     void add(String name, int[] value);
 
     /**
@@ -70,6 +75,7 @@ public sealed interface CompoundTag extends ValueTag<Map<String, Tag>> permits C
      * @param name  the name of the tag to be added
      * @param value the long array to be added as a tag
      */
+    @Contract(mutates = "this")
     void add(String name, long[] value);
 
     /**
@@ -79,6 +85,7 @@ public sealed interface CompoundTag extends ValueTag<Map<String, Tag>> permits C
      * @param number the value of the number tag to be added.
      *               The method supports Integer, Float, Short, Long, Byte, and default cases to Double.
      */
+    @Contract(mutates = "this")
     void add(String name, Number number);
 
     /**
@@ -87,6 +94,7 @@ public sealed interface CompoundTag extends ValueTag<Map<String, Tag>> permits C
      * @param name  the name of the tag to be added
      * @param value the boolean value of the tag to be added
      */
+    @Contract(mutates = "this")
     void add(String name, Boolean value);
 
     /**
@@ -94,6 +102,7 @@ public sealed interface CompoundTag extends ValueTag<Map<String, Tag>> permits C
      *
      * @param tag the CompoundTag containing tags to be added to this CompoundTag
      */
+    @Contract(mutates = "this")
     void addAll(CompoundTag tag);
 
     /**
@@ -110,6 +119,7 @@ public sealed interface CompoundTag extends ValueTag<Map<String, Tag>> permits C
      *
      * @return a set view of the entries in this compound tag
      */
+    @Contract(pure = true)
     Set<Map.Entry<String, Tag>> entrySet();
 
     /**
@@ -117,6 +127,7 @@ public sealed interface CompoundTag extends ValueTag<Map<String, Tag>> permits C
      *
      * @return a set of the keys in this compound tag.
      */
+    @Contract(pure = true)
     Set<String> keySet();
 
     /**
@@ -124,6 +135,7 @@ public sealed interface CompoundTag extends ValueTag<Map<String, Tag>> permits C
      *
      * @return true if the compound tag has no entries, false otherwise
      */
+    @Contract(pure = true)
     boolean isEmpty();
 
     /**
@@ -131,6 +143,7 @@ public sealed interface CompoundTag extends ValueTag<Map<String, Tag>> permits C
      *
      * @return the number of tags in this compound tag
      */
+    @Contract(pure = true)
     int size();
 
     /**
@@ -139,6 +152,7 @@ public sealed interface CompoundTag extends ValueTag<Map<String, Tag>> permits C
      * @param property the name of the property to check for
      * @return true if the property exists in the compound tag, false otherwise
      */
+    @Contract(pure = true)
     boolean containsKey(String property);
 
     /**
@@ -150,6 +164,7 @@ public sealed interface CompoundTag extends ValueTag<Map<String, Tag>> permits C
      * or null if no such property exists
      */
     @NullUnmarked
+    @Contract(pure = true)
     <T extends Tag> T get(String property);
 
     /**
@@ -159,6 +174,7 @@ public sealed interface CompoundTag extends ValueTag<Map<String, Tag>> permits C
      * @param <E> the type of the elements in the ListTag, extending Tag
      * @return the ListTag associated with the given tag name
      */
+    @Contract(pure = true)
     <E extends Tag> ListTag<E> getAsList(String tag);
 
     /**
@@ -167,6 +183,7 @@ public sealed interface CompoundTag extends ValueTag<Map<String, Tag>> permits C
      * @param tag the name of the tag to be retrieved and cast as a CompoundTag
      * @return the CompoundTag associated with the given tag name
      */
+    @Contract(pure = true)
     CompoundTag getAsCompound(String tag);
 
     /**
@@ -177,6 +194,7 @@ public sealed interface CompoundTag extends ValueTag<Map<String, Tag>> permits C
      * @param <T>          the type of the tag extending Tag
      * @return the tag associated with the specified name, or the default tag if the name didn't previously exist
      */
+    @Contract(mutates = "this")
     <T extends Tag> T getOrAdd(String tag, T defaultValue);
 
     /**
@@ -188,6 +206,7 @@ public sealed interface CompoundTag extends ValueTag<Map<String, Tag>> permits C
      * @return the tag associated with the specified name, or the default tag if the name didn't previously exist
      */
     @NullUnmarked
+    @Contract(pure = true)
     <T extends Tag> T getOrDefault(String tag, T defaultValue);
 
     /**
@@ -198,6 +217,7 @@ public sealed interface CompoundTag extends ValueTag<Map<String, Tag>> permits C
      * @param <T> the type of the tag extending Tag
      * @return an Optional containing the tag if found, or an empty Optional if not
      */
+    @Contract(pure = true)
     <T extends Tag> Optional<T> optional(String tag);
 
     /**
@@ -223,6 +243,7 @@ public sealed interface CompoundTag extends ValueTag<Map<String, Tag>> permits C
      * Creates and returns an empty instance of a CompoundTag.
      *
      * @return a new empty CompoundTag
+     * @since 3.0.0
      */
     @Contract(value = " -> new", pure = true)
     static CompoundTag empty() {
@@ -234,6 +255,7 @@ public sealed interface CompoundTag extends ValueTag<Map<String, Tag>> permits C
      *
      * @param value the map containing the keys and corresponding tags to initialize the CompoundTag
      * @return a new CompoundTag containing the provided map of entries
+     * @since 3.0.0
      */
     @Contract(value = "_ -> new", pure = true)
     static CompoundTag of(Map<String, Tag> value) {

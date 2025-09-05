@@ -19,6 +19,7 @@ public sealed interface DoubleTag extends NumberTag<Double> permits DoubleTagImp
      *
      * @param value the double value to associate with the new {@code DoubleTag} instance
      * @return a new {@code DoubleTag} instance holding the given double value
+     * @since 3.0.0
      */
     @Contract(value = "_ -> new", pure = true)
     static DoubleTag of(double value) {

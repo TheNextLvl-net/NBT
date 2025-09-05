@@ -20,6 +20,7 @@ public sealed interface IntArrayTag extends ValueTag<int[]>, IterableTag<Integer
      *
      * @param value the integer array to initialize the IntArrayTag with
      * @return a new IntArrayTag instance containing the provided integer values
+     * @since 3.0.0
      */
     @Contract(value = "_ -> new", pure = true)
     static IntArrayTag of(int... value) {

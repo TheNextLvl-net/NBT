@@ -20,6 +20,7 @@ public sealed interface LongArrayTag extends ValueTag<long[]>, IterableTag<Long>
      *
      * @param value the array of long values to encapsulate within the {@code LongArrayTag}
      * @return a new {@code LongArrayTag} instance containing the given array of long values
+     * @since 3.0.0
      */
     @Contract(value = "_ -> new", pure = true)
     static LongArrayTag of(long... value) {

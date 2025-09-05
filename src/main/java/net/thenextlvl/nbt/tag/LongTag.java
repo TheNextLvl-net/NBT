@@ -19,6 +19,7 @@ public sealed interface LongTag extends NumberTag<Long> permits LongTagImpl {
      *
      * @param value the long value to encapsulate within the {@code LongTag}
      * @return a new {@code LongTag} instance containing the given long value
+     * @since 3.0.0
      */
     @Contract(value = "_ -> new", pure = true)
     static LongTag of(long value) {

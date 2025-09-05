@@ -35,6 +35,7 @@ public sealed interface ListTag<V extends Tag> extends ValueTag<List<V>>, List<V
      * @param content       the array of tag instances to be included in the {@link ListTag}
      * @return a new {@link ListTag} containing the specified content with the given content type ID
      * @throws IllegalArgumentException if the content type ID or content array is invalid
+     * @since 3.0.0
      */
     @SafeVarargs
     @Contract(value = "_, _ -> new", pure = true)
@@ -51,6 +52,7 @@ public sealed interface ListTag<V extends Tag> extends ValueTag<List<V>>, List<V
      * @param content       the list of tag instances to be included in the {@link ListTag}
      * @return a new {@link ListTag} containing the specified list of tags with the given content type ID
      * @throws IllegalArgumentException if the content type ID or content list is invalid
+     * @since 3.0.0
      */
     @Contract(value = "_, _ -> new", pure = true)
     static <V extends Tag> ListTag<V> of(int contentTypeId, List<V> content) throws IllegalArgumentException {
@@ -64,6 +66,7 @@ public sealed interface ListTag<V extends Tag> extends ValueTag<List<V>>, List<V
      * @param content the array of tag instances to be included in the {@link ListTag}
      * @return a new {@link ListTag} containing the specified tag instances
      * @throws IllegalArgumentException if the provided content array is empty
+     * @since 3.0.0
      */
     @SafeVarargs
     @Contract(value = "_ -> new", pure = true)
@@ -78,6 +81,7 @@ public sealed interface ListTag<V extends Tag> extends ValueTag<List<V>>, List<V
      * @param content the list of tag instances to be included in the {@link ListTag}
      * @return a new {@link ListTag} containing the specified list of tags
      * @throws IllegalArgumentException if the provided content list is empty
+     * @since 3.0.0
      */
     @Contract(value = "_ -> new", pure = true)
     static <V extends Tag> ListTag<V> of(List<V> content) throws IllegalArgumentException {

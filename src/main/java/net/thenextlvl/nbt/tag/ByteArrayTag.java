@@ -22,6 +22,7 @@ public sealed interface ByteArrayTag extends ValueTag<byte[]>, IterableTag<Byte>
      *
      * @param value the byte array to be wrapped by the {@code ByteArrayTag}
      * @return a new {@code ByteArrayTag} instance containing the provided byte array
+     * @since 3.0.0
      */
     @Contract(value = "_ -> new", pure = true)
     static ByteArrayTag of(byte... value) {

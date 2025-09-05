@@ -18,6 +18,7 @@ public sealed interface StringTag extends ValueTag<String> permits StringTagImpl
      *
      * @param value the string value to be stored in the tag
      * @return a new instance of StringTag containing the provided string value
+     * @since 3.0.0
      */
     static StringTag of(String value) {
         return new StringTagImpl(value);

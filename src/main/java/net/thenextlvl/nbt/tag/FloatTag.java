@@ -20,6 +20,7 @@ public sealed interface FloatTag extends NumberTag<Float> permits FloatTagImpl {
      *
      * @param value the float value to encapsulate within the FloatTag
      * @return a new FloatTag instance containing the given float value
+     * @since 3.0.0
      */
     @Contract(value = "_ -> new", pure = true)
     static FloatTag of(float value) {

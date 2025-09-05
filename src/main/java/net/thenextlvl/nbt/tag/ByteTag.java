@@ -20,6 +20,7 @@ public sealed interface ByteTag extends NumberTag<Byte> permits ByteTagImpl {
      *
      * @param value the byte value to encapsulate within the ByteTag
      * @return a new ByteTag instance containing the given byte value
+     * @since 3.0.0
      */
     @Contract(value = "_ -> new", pure = true)
     static ByteTag of(byte value) {
