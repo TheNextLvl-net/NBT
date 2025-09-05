@@ -14,6 +14,7 @@ import net.thenextlvl.nbt.tag.LongTag;
 import net.thenextlvl.nbt.tag.ShortTag;
 import net.thenextlvl.nbt.tag.StringTag;
 import net.thenextlvl.nbt.tag.Tag;
+import org.jetbrains.annotations.Contract;
 import org.jspecify.annotations.NullMarked;
 
 import java.io.DataInputStream;
@@ -62,6 +63,7 @@ public final class NBTInputStream extends DataInputStream {
      * @return the tag that was read
      * @throws IOException thrown if something goes wrong
      */
+    @Contract(value = " -> new", mutates = "this")
     public Tag readTag() throws IOException {
         return readNamedTag().getKey();
     }
@@ -72,6 +74,7 @@ public final class NBTInputStream extends DataInputStream {
      * @return the tag that was read
      * @throws IOException thrown if something goes wrong
      */
+    @Contract(value = " -> new", mutates = "this")
     public Map.Entry<Tag, Optional<String>> readNamedTag() throws IOException {
         var type = readByte();
         if (type == EscapeTag.ID) return Map.entry(EscapeTag.INSTANCE, Optional.empty());
@@ -88,6 +91,7 @@ public final class NBTInputStream extends DataInputStream {
      * @return the tag that was read
      * @throws IOException thrown if something goes wrong
      */
+    @Contract(value = "_ -> new", mutates = "this")
     public Tag readTag(int type) throws IOException {
         var mapping = mapper.get(type);
         if (mapping != null) return mapping.map(this);
@@ -99,6 +103,7 @@ public final class NBTInputStream extends DataInputStream {
      *
      * @return the {@link Charset} associated with this stream
      */
+    @Contract(pure = true)
     public Charset getCharset() {
         return charset;
     }
@@ -128,6 +133,7 @@ public final class NBTInputStream extends DataInputStream {
      * @param typeId   the type id of the tag to map
      * @param function the mapping function
      */
+    @Contract(mutates = "this")
     public void registerMapping(int typeId, MappingFunction function) {
         mapper.put(typeId, function);
     }
@@ -144,6 +150,7 @@ public final class NBTInputStream extends DataInputStream {
          * @return the Tag object mapped from the inputStream
          * @throws IOException if an I/O error occurs while reading from the stream
          */
+        @Contract(value = "_ -> new", mutates = "param1")
         Tag map(NBTInputStream inputStream) throws IOException;
     }
 }

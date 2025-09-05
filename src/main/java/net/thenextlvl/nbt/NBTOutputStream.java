@@ -2,6 +2,7 @@ package net.thenextlvl.nbt;
 
 import net.thenextlvl.nbt.tag.EscapeTag;
 import net.thenextlvl.nbt.tag.Tag;
+import org.jetbrains.annotations.Contract;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
@@ -51,6 +52,7 @@ public final class NBTOutputStream extends DataOutputStream {
      * @throws IOException              thrown if something goes wrong
      * @throws IllegalArgumentException thrown if an escape tag was provided
      */
+    @Contract(mutates = "this")
     public void writeTag(@Nullable String name, Tag tag) throws IOException, IllegalArgumentException {
         if (tag instanceof EscapeTag) throw new IllegalArgumentException("EscapeTag not allowed");
         var bytes = name != null ? name.getBytes(getCharset()) : new byte[0];
@@ -65,6 +67,7 @@ public final class NBTOutputStream extends DataOutputStream {
      *
      * @return the {@link Charset} used for encoding and decoding in the stream
      */
+    @Contract(pure = true)
     public Charset getCharset() {
         return charset;
     }
