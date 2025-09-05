@@ -1,6 +1,7 @@
 package net.thenextlvl.nbt.tag;
 
 import net.thenextlvl.nbt.NBTOutputStream;
+import org.jetbrains.annotations.Contract;
 import org.jspecify.annotations.NullMarked;
 
 import java.io.IOException;
@@ -15,6 +16,7 @@ public interface Tag {
      *
      * @return the integer representing the type ID of the tag
      */
+    @Contract(pure = true)
     int getTypeId();
 
     /**
@@ -30,6 +32,7 @@ public interface Tag {
      *
      * @return true if the current tag is a CompoundTag, false otherwise
      */
+    @Contract(pure = true)
     default boolean isCompound() {
         return false;
     }
@@ -39,6 +42,7 @@ public interface Tag {
      *
      * @return true if the current tag is a ListTag, false otherwise
      */
+    @Contract(pure = true)
     default boolean isList() {
         return false;
     }
@@ -48,6 +52,7 @@ public interface Tag {
      *
      * @return true if the current tag is a numeric type, false otherwise
      */
+    @Contract(pure = true)
     default boolean isNumber() {
         return false;
     }
@@ -57,6 +62,7 @@ public interface Tag {
      *
      * @return true if the current tag is a boolean type, false otherwise
      */
+    @Contract(pure = true)
     default boolean isBoolean() {
         return false;
     }
@@ -66,6 +72,7 @@ public interface Tag {
      *
      * @return true if the current tag is a string type, false otherwise
      */
+    @Contract(pure = true)
     default boolean isString() {
         return false;
     }
@@ -76,6 +83,7 @@ public interface Tag {
      * @return the tag as a CompoundTag
      * @throws UnsupportedOperationException if the current tag is not an instance of CompoundTag
      */
+    @Contract(value = " -> this", pure = true)
     default CompoundTag getAsCompound() throws UnsupportedOperationException {
         throw new UnsupportedOperationException(getClass().getSimpleName());
     }
@@ -87,6 +95,7 @@ public interface Tag {
      * @return the tag as a ListTag
      * @throws UnsupportedOperationException if the current tag is not an instance of ListTag
      */
+    @Contract(value = " -> this", pure = true)
     default <V extends Tag> ListTag<V> getAsList() throws UnsupportedOperationException {
         throw new UnsupportedOperationException(getClass().getSimpleName());
     }
@@ -97,6 +106,7 @@ public interface Tag {
      * @return the number representation of the current tag
      * @throws UnsupportedOperationException if the current tag is not a numeric type
      */
+    @Contract(pure = true)
     default Number getAsNumber() throws UnsupportedOperationException {
         throw new UnsupportedOperationException(getClass().getSimpleName());
     }
@@ -107,6 +117,7 @@ public interface Tag {
      * @return the string representation of the current tag
      * @throws UnsupportedOperationException if the current tag is not an instance of a string type
      */
+    @Contract(pure = true)
     default String getAsString() throws UnsupportedOperationException {
         throw new UnsupportedOperationException(getClass().getSimpleName());
     }
@@ -117,6 +128,7 @@ public interface Tag {
      * @return the boolean representation of the current tag
      * @throws UnsupportedOperationException if the current tag can't be represented as a boolean
      */
+    @Contract(pure = true)
     default boolean getAsBoolean() throws UnsupportedOperationException {
         throw new UnsupportedOperationException(getClass().getSimpleName());
     }
@@ -127,6 +139,7 @@ public interface Tag {
      * @return the double representation of the current tag
      * @throws UnsupportedOperationException if the current tag can't be represented as a double
      */
+    @Contract(pure = true)
     default double getAsDouble() throws UnsupportedOperationException {
         return getAsNumber().doubleValue();
     }
@@ -137,6 +150,7 @@ public interface Tag {
      * @return the float representation of the current tag
      * @throws UnsupportedOperationException if the current tag can't be represented as a float
      */
+    @Contract(pure = true)
     default float getAsFloat() throws UnsupportedOperationException {
         return getAsNumber().floatValue();
     }
@@ -147,6 +161,7 @@ public interface Tag {
      * @return the long representation of the current tag
      * @throws UnsupportedOperationException if the current tag is not a numeric type
      */
+    @Contract(pure = true)
     default long getAsLong() throws UnsupportedOperationException {
         return getAsNumber().longValue();
     }
@@ -157,6 +172,7 @@ public interface Tag {
      * @return the integer representation of the current tag
      * @throws UnsupportedOperationException if the current tag is not a numeric type
      */
+    @Contract(pure = true)
     default int getAsInt() throws UnsupportedOperationException {
         return getAsNumber().intValue();
     }
@@ -167,6 +183,7 @@ public interface Tag {
      * @return the byte representation of the current tag
      * @throws UnsupportedOperationException if the current tag is not a numeric type
      */
+    @Contract(pure = true)
     default byte getAsByte() throws UnsupportedOperationException {
         return getAsNumber().byteValue();
     }
@@ -177,6 +194,7 @@ public interface Tag {
      * @return the short representation of the current tag
      * @throws UnsupportedOperationException if the current tag is not a numeric type
      */
+    @Contract(pure = true)
     default short getAsShort() throws UnsupportedOperationException {
         return getAsNumber().shortValue();
     }

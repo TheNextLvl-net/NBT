@@ -2,6 +2,7 @@ package net.thenextlvl.nbt.tag;
 
 import net.thenextlvl.nbt.NBTInputStream;
 import net.thenextlvl.nbt.NBTOutputStream;
+import org.jetbrains.annotations.Contract;
 import org.jspecify.annotations.NullMarked;
 
 import java.io.IOException;
@@ -49,6 +50,7 @@ public class ByteTag extends NumberTag<Byte> {
      * @return a ByteTag containing the read byte value
      * @throws IOException if an I/O error occurs while reading from the input stream
      */
+    @Contract(value = "_ -> new", mutates = "param1")
     public static ByteTag read(NBTInputStream inputStream) throws IOException {
         return new ByteTag(inputStream.readByte());
     }

@@ -1,5 +1,6 @@
 package net.thenextlvl.nbt.tag;
 
+import org.jetbrains.annotations.Contract;
 import org.jspecify.annotations.NullMarked;
 
 import java.util.Objects;
@@ -18,11 +19,13 @@ public abstract class ValueTag<T> implements Tag {
         this.value = value;
     }
 
+    @Contract(pure = true)
     protected T getValue() {
         return value;
     }
 
-    protected void setValue(T value) {
+    @Contract(mutates = "this")
+    public void setValue(T value) {
         this.value = value;
     }
 

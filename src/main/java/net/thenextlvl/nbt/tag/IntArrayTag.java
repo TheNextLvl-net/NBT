@@ -2,6 +2,7 @@ package net.thenextlvl.nbt.tag;
 
 import net.thenextlvl.nbt.NBTInputStream;
 import net.thenextlvl.nbt.NBTOutputStream;
+import org.jetbrains.annotations.Contract;
 import org.jspecify.annotations.NullMarked;
 
 import java.io.IOException;
@@ -60,6 +61,7 @@ public class IntArrayTag extends ValueTag<int[]> implements IterableTag<Integer>
      * @return the {@code IntArrayTag} read from the input stream
      * @throws IOException if an I/O error occurs while reading from the input stream
      */
+    @Contract(value = "_ -> new", mutates = "param1")
     public static IntArrayTag read(NBTInputStream inputStream) throws IOException {
         var length = inputStream.readInt();
         var array = new int[length];

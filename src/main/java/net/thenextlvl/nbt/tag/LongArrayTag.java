@@ -2,6 +2,7 @@ package net.thenextlvl.nbt.tag;
 
 import net.thenextlvl.nbt.NBTInputStream;
 import net.thenextlvl.nbt.NBTOutputStream;
+import org.jetbrains.annotations.Contract;
 import org.jspecify.annotations.NullMarked;
 
 import java.io.IOException;
@@ -60,6 +61,7 @@ public class LongArrayTag extends ValueTag<long[]> implements IterableTag<Long> 
      * @return the LongArrayTag that was read from the inputStream
      * @throws IOException if an I/O error occurs while reading the stream
      */
+    @Contract(value = "_ -> new", mutates = "param1")
     public static LongArrayTag read(NBTInputStream inputStream) throws IOException {
         var length = inputStream.readInt();
         var array = new long[length];

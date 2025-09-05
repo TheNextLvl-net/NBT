@@ -1,5 +1,6 @@
 package net.thenextlvl.nbt.tag;
 
+import org.jetbrains.annotations.Contract;
 import org.jspecify.annotations.NullMarked;
 
 /**
@@ -25,6 +26,7 @@ public class BooleanTag extends ByteTag {
      *
      * @param value the boolean value to be converted to a byte and set
      */
+    @Contract(mutates = "this")
     public void setValue(boolean value) {
         setValue((byte) (value ? 1 : 0));
     }

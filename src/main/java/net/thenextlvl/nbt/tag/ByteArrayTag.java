@@ -2,6 +2,7 @@ package net.thenextlvl.nbt.tag;
 
 import net.thenextlvl.nbt.NBTInputStream;
 import net.thenextlvl.nbt.NBTOutputStream;
+import org.jetbrains.annotations.Contract;
 import org.jspecify.annotations.NullMarked;
 
 import java.io.IOException;
@@ -35,16 +36,19 @@ public class ByteArrayTag extends ValueTag<byte[]> implements IterableTag<Byte> 
     }
 
     @Override
+    @Contract(pure = true)
     public int size() {
         return getValue().length;
     }
 
     @Override
+    @Contract(pure = true)
     public Byte get(int index) {
         return getValue()[index];
     }
 
     @Override
+    @Contract(mutates = "this")
     public void set(int index, Byte element) {
         getValue()[index] = element;
     }
@@ -62,6 +66,7 @@ public class ByteArrayTag extends ValueTag<byte[]> implements IterableTag<Byte> 
      * @return a ByteArrayTag containing the byte array read from the input stream
      * @throws IOException if an I/O error occurs while reading from the input stream
      */
+    @Contract(value = "_ -> new", mutates = "param1")
     public static ByteArrayTag read(NBTInputStream inputStream) throws IOException {
         var length = inputStream.readInt();
         var bytes = new byte[length];

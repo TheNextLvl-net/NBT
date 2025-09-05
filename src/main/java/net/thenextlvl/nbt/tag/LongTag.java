@@ -2,6 +2,7 @@ package net.thenextlvl.nbt.tag;
 
 import net.thenextlvl.nbt.NBTInputStream;
 import net.thenextlvl.nbt.NBTOutputStream;
+import org.jetbrains.annotations.Contract;
 import org.jspecify.annotations.NullMarked;
 
 import java.io.IOException;
@@ -48,6 +49,7 @@ public class LongTag extends NumberTag<Long> {
      * @return a new LongTag containing the long value read from the inputStream
      * @throws IOException if an I/O error occurs while reading from the inputStream
      */
+    @Contract(value = "_ -> new", mutates = "param1")
     public static LongTag read(NBTInputStream inputStream) throws IOException {
         return new LongTag(inputStream.readLong());
     }

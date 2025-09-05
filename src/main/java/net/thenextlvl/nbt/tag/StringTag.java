@@ -2,6 +2,7 @@ package net.thenextlvl.nbt.tag;
 
 import net.thenextlvl.nbt.NBTInputStream;
 import net.thenextlvl.nbt.NBTOutputStream;
+import org.jetbrains.annotations.Contract;
 import org.jspecify.annotations.NullMarked;
 
 import java.io.IOException;
@@ -55,6 +56,7 @@ public class StringTag extends ValueTag<String> {
      * @return a new StringTag object containing the string read from the input stream
      * @throws IOException if an I/O error occurs while reading from the input stream
      */
+    @Contract(value = "_ -> new", mutates = "param1")
     public static StringTag read(NBTInputStream inputStream) throws IOException {
         var length = inputStream.readShort();
         var bytes = new byte[length];

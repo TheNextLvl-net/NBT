@@ -2,6 +2,7 @@ package net.thenextlvl.nbt.tag;
 
 import net.thenextlvl.nbt.NBTInputStream;
 import net.thenextlvl.nbt.NBTOutputStream;
+import org.jetbrains.annotations.Contract;
 import org.jspecify.annotations.NullMarked;
 
 import java.io.IOException;
@@ -49,6 +50,7 @@ public class FloatTag extends NumberTag<Float> {
      * @return the FloatTag that was read
      * @throws IOException if an I/O error occurs while reading from the stream
      */
+    @Contract(value = "_ -> new", mutates = "param1")
     public static FloatTag read(NBTInputStream inputStream) throws IOException {
         return new FloatTag(inputStream.readFloat());
     }
