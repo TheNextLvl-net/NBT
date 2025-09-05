@@ -65,7 +65,7 @@ public interface Tag {
      */
     @Contract(pure = true)
     default boolean isBoolean() {
-        return false;
+        return isNumber();
     }
 
     /**
