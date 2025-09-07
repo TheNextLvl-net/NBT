@@ -1,16 +1,16 @@
-package net.thenextlvl.nbt.tag;
+package net.thenextlvl.nbt.tag.impl;
 
 import net.thenextlvl.nbt.NBTInputStream;
 import net.thenextlvl.nbt.NBTOutputStream;
+import net.thenextlvl.nbt.tag.IntArrayTag;
 import org.jetbrains.annotations.ApiStatus;
 import org.jspecify.annotations.NullMarked;
 
 import java.io.IOException;
 
 @NullMarked
-@ApiStatus.Internal
-public final class LongArrayTagImpl extends ValueTagImpl<long[]> implements LongArrayTag {
-    LongArrayTagImpl(long... value) {
+public final class IntArrayTagImpl extends ValueTagImpl<int[]> implements IntArrayTag {
+    public IntArrayTagImpl(int... value) {
         super(value);
     }
 
@@ -25,26 +25,25 @@ public final class LongArrayTagImpl extends ValueTagImpl<long[]> implements Long
     }
 
     @Override
-    public Long get(int index) {
+    public Integer get(int index) {
         return getValue()[index];
     }
 
     @Override
-    public void set(int index, Long element) {
+    public void set(int index, Integer element) {
         getValue()[index] = element;
     }
 
     @Override
     public void write(NBTOutputStream outputStream) throws IOException {
-        outputStream.writeLong(getValue().length);
-        for (var l : getValue()) outputStream.writeLong(l);
+        outputStream.writeInt(getValue().length);
+        for (var i : getValue()) outputStream.writeInt(i);
     }
 
-    public static LongArrayTagImpl read(NBTInputStream inputStream) throws IOException {
+    public static IntArrayTagImpl read(NBTInputStream inputStream) throws IOException {
         var length = inputStream.readInt();
-        var array = new long[length];
-        for (var i = 0; i < length; i++)
-            array[i] = inputStream.readLong();
-        return new LongArrayTagImpl(array);
+        var array = new int[length];
+        for (var i = 0; i < length; i++) array[i] = inputStream.readInt();
+        return new IntArrayTagImpl(array);
     }
 }

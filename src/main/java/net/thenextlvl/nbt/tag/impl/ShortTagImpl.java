@@ -1,21 +1,21 @@
-package net.thenextlvl.nbt.tag;
+package net.thenextlvl.nbt.tag.impl;
 
 import net.thenextlvl.nbt.NBTInputStream;
 import net.thenextlvl.nbt.NBTOutputStream;
+import net.thenextlvl.nbt.tag.ShortTag;
 import org.jetbrains.annotations.ApiStatus;
 import org.jspecify.annotations.NullMarked;
 
 import java.io.IOException;
 
 @NullMarked
-@ApiStatus.Internal
-public final class FloatTagImpl extends NumberTagImpl<Float> implements FloatTag {
-    FloatTagImpl(Float value) {
+public final class ShortTagImpl extends NumberTagImpl<Short> implements ShortTag {
+    public ShortTagImpl(Short value) {
         super(value);
     }
 
     @Override
-    public float getAsFloat() {
+    public short getAsShort() {
         return getValue();
     }
 
@@ -26,10 +26,10 @@ public final class FloatTagImpl extends NumberTagImpl<Float> implements FloatTag
 
     @Override
     public void write(NBTOutputStream outputStream) throws IOException {
-        outputStream.writeFloat(getValue());
+        outputStream.writeShort(getValue());
     }
 
-    public static FloatTagImpl read(NBTInputStream inputStream) throws IOException {
-        return new FloatTagImpl(inputStream.readFloat());
+    public static ShortTagImpl read(NBTInputStream inputStream) throws IOException {
+        return new ShortTagImpl(inputStream.readShort());
     }
 }

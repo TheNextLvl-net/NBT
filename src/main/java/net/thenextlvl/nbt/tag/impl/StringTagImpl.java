@@ -1,16 +1,16 @@
-package net.thenextlvl.nbt.tag;
+package net.thenextlvl.nbt.tag.impl;
 
 import net.thenextlvl.nbt.NBTInputStream;
 import net.thenextlvl.nbt.NBTOutputStream;
+import net.thenextlvl.nbt.tag.StringTag;
 import org.jetbrains.annotations.ApiStatus;
 import org.jspecify.annotations.NullMarked;
 
 import java.io.IOException;
 
 @NullMarked
-@ApiStatus.Internal
 public final class StringTagImpl extends ValueTagImpl<String> implements StringTag {
-    StringTagImpl(String value) {
+    public StringTagImpl(String value) {
         super(value);
     }
 

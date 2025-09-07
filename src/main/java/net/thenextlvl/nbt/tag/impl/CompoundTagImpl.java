@@ -1,7 +1,16 @@
-package net.thenextlvl.nbt.tag;
+package net.thenextlvl.nbt.tag.impl;
 
 import net.thenextlvl.nbt.NBTInputStream;
 import net.thenextlvl.nbt.NBTOutputStream;
+import net.thenextlvl.nbt.tag.ByteTag;
+import net.thenextlvl.nbt.tag.CompoundTag;
+import net.thenextlvl.nbt.tag.DoubleTag;
+import net.thenextlvl.nbt.tag.FloatTag;
+import net.thenextlvl.nbt.tag.IntTag;
+import net.thenextlvl.nbt.tag.ListTag;
+import net.thenextlvl.nbt.tag.LongTag;
+import net.thenextlvl.nbt.tag.ShortTag;
+import net.thenextlvl.nbt.tag.Tag;
 import org.jetbrains.annotations.ApiStatus;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.NullUnmarked;
@@ -15,9 +24,8 @@ import java.util.Set;
 import java.util.function.BiConsumer;
 
 @NullMarked
-@ApiStatus.Internal
 public final class CompoundTagImpl extends ValueTagImpl<Map<String, Tag>> implements CompoundTag {
-    CompoundTagImpl(Map<String, Tag> value) {
+    public CompoundTagImpl(Map<String, Tag> value) {
         super(value);
     }
 
@@ -182,7 +190,7 @@ public final class CompoundTagImpl extends ValueTagImpl<Map<String, Tag>> implem
         return new Builder();
     }
 
-    static final class Builder implements CompoundTag.Builder {
+    public static final class Builder implements CompoundTag.Builder {
         private final Map<String, Tag> values = new HashMap<>();
 
         @Override
