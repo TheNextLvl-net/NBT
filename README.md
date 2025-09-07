@@ -118,7 +118,7 @@ import net.thenextlvl.nbt.tag.CompoundTag;
 public static class NBTExample {
 
     public static void writeData() throws Exception {
-        NBTFile<CompoundTag> file = new NBTFile<>(new PathIO(Path.of("data.nbt")), new CompoundTag());
+        NBTFile<CompoundTag> file = new NBTFile<>(new PathIO(Path.of("data.nbt")), CompoundTag.empty());
         CompoundTag root = file.get(); // loads if file exists, otherwise returns default root
         String rootName = file.getRootName().orElse(null);
 
@@ -161,7 +161,7 @@ public record Player(String name, int level) {
         var nbt = NBT.builder().registerTypeAdapter(Player.class, new TagAdapter<Player>() {
             @Override
             public Tag serialize(Player player, TagSerializationContext ctx) {
-                var tag = new CompoundTag();
+                var tag = CompoundTag.empty();
                 tag.add("name", player.name());
                 tag.add("level", player.level());
                 return tag;
@@ -187,7 +187,7 @@ You can also register serializer and deserializer separately:
 ```java
 NBT nbt = NBT.builder()
         .registerTypeAdapter(Player.class, (TagSerializer<Player>) (player, context) -> {
-            var tag = new net.thenextlvl.nbt.tag.CompoundTag();
+            var tag = net.thenextlvl.nbt.tag.CompoundTag.empty();
             tag.add("name", player.name());
             tag.add("level", player.level());
             return tag;
@@ -271,7 +271,7 @@ class InventoryItemAdapter implements TagAdapter<InventoryItem> {
 class PlayerDataAdapter implements TagAdapter<PlayerData> {
     @Override
     public Tag serialize(PlayerData data, TagSerializationContext context) throws ParserException {
-        var list = new ListTag<Tag>();
+        var list = ListTag.of(CompoundTag.ID);
         for (var it : data.items()) {
             // Let context use InventoryItemAdapter
             list.add(context.serialize(it));
