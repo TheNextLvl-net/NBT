@@ -1,10 +1,12 @@
 package net.thenextlvl.nbt.tag.impl;
 
 import net.thenextlvl.nbt.tag.NumberTag;
+import org.jetbrains.annotations.ApiStatus;
 import org.jspecify.annotations.NullMarked;
 
 @NullMarked
-abstract class NumberTagImpl<T extends Number> extends ValueTagImpl<T> implements NumberTag<T> {
+@ApiStatus.OverrideOnly
+public abstract class NumberTagImpl<T extends Number> extends ValueTagImpl<T> implements NumberTag<T> {
     protected NumberTagImpl(T number) {
         super(number);
     }
