@@ -9,6 +9,7 @@ import org.jspecify.annotations.NullMarked;
 import java.io.IOException;
 
 @NullMarked
+@ApiStatus.Internal
 public final class LongArrayTagImpl extends ValueTagImpl<long[]> implements LongArrayTag {
     public LongArrayTagImpl(long... value) {
         super(value);

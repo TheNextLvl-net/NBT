@@ -10,6 +10,7 @@ import org.jspecify.annotations.NullMarked;
 import java.io.IOException;
 
 @NullMarked
+@ApiStatus.Internal
 public final class ByteArrayTagImpl extends ValueTagImpl<byte[]> implements ByteArrayTag {
     public ByteArrayTagImpl(byte... array) {
         super(array);

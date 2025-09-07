@@ -24,6 +24,7 @@ import java.util.Set;
 import java.util.function.BiConsumer;
 
 @NullMarked
+@ApiStatus.Internal
 public final class CompoundTagImpl extends ValueTagImpl<Map<String, Tag>> implements CompoundTag {
     public CompoundTagImpl(Map<String, Tag> value) {
         super(value);

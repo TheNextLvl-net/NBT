@@ -9,6 +9,7 @@ import org.jspecify.annotations.NullMarked;
 import java.io.IOException;
 
 @NullMarked
+@ApiStatus.Internal
 public final class ByteTagImpl extends NumberTagImpl<Byte> implements ByteTag {
     public ByteTagImpl(Byte value) {
         super(value);
