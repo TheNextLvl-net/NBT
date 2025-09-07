@@ -1,14 +1,12 @@
 package net.thenextlvl.nbt.tag.impl;
 
 import net.thenextlvl.nbt.tag.ValueTag;
-import org.jetbrains.annotations.ApiStatus;
 import org.jspecify.annotations.NullMarked;
 
 import java.util.Objects;
 
 @NullMarked
-@ApiStatus.OverrideOnly
-public abstract class ValueTagImpl<T> implements ValueTag<T> {
+abstract class ValueTagImpl<T> implements ValueTag<T> {
     private final T value;
 
     protected ValueTagImpl(T value) {
