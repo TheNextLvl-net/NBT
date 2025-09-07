@@ -1,21 +1,21 @@
-package net.thenextlvl.nbt.tag;
+package net.thenextlvl.nbt.tag.impl;
 
 import net.thenextlvl.nbt.NBTInputStream;
 import net.thenextlvl.nbt.NBTOutputStream;
+import net.thenextlvl.nbt.tag.IntTag;
 import org.jetbrains.annotations.ApiStatus;
 import org.jspecify.annotations.NullMarked;
 
 import java.io.IOException;
 
 @NullMarked
-@ApiStatus.Internal
-public final class ByteTagImpl extends NumberTagImpl<Byte> implements ByteTag {
-    ByteTagImpl(Byte value) {
+public final class IntTagImpl extends NumberTagImpl<Integer> implements IntTag {
+    public IntTagImpl(Integer value) {
         super(value);
     }
 
     @Override
-    public byte getAsByte() {
+    public int getAsInt() {
         return getValue();
     }
 
@@ -26,10 +26,10 @@ public final class ByteTagImpl extends NumberTagImpl<Byte> implements ByteTag {
 
     @Override
     public void write(NBTOutputStream outputStream) throws IOException {
-        outputStream.write(getValue());
+        outputStream.writeInt(getValue());
     }
 
-    public static ByteTagImpl read(NBTInputStream inputStream) throws IOException {
-        return new ByteTagImpl(inputStream.readByte());
+    public static IntTagImpl read(NBTInputStream inputStream) throws IOException {
+        return new IntTagImpl(inputStream.readInt());
     }
 }

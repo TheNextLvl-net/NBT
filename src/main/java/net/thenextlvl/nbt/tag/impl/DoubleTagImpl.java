@@ -1,16 +1,16 @@
-package net.thenextlvl.nbt.tag;
+package net.thenextlvl.nbt.tag.impl;
 
 import net.thenextlvl.nbt.NBTInputStream;
 import net.thenextlvl.nbt.NBTOutputStream;
+import net.thenextlvl.nbt.tag.DoubleTag;
 import org.jetbrains.annotations.ApiStatus;
 import org.jspecify.annotations.NullMarked;
 
 import java.io.IOException;
 
 @NullMarked
-@ApiStatus.Internal
 public final class DoubleTagImpl extends NumberTagImpl<Double> implements DoubleTag {
-    DoubleTagImpl(Double value) {
+    public DoubleTagImpl(Double value) {
         super(value);
     }
 

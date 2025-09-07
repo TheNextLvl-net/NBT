@@ -1,7 +1,9 @@
-package net.thenextlvl.nbt.tag;
+package net.thenextlvl.nbt.tag.impl;
 
 import net.thenextlvl.nbt.NBTInputStream;
 import net.thenextlvl.nbt.NBTOutputStream;
+import net.thenextlvl.nbt.tag.ListTag;
+import net.thenextlvl.nbt.tag.Tag;
 import org.jetbrains.annotations.ApiStatus;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
@@ -16,11 +18,10 @@ import java.util.ListIterator;
 import java.util.Objects;
 
 @NullMarked
-@ApiStatus.Internal
 public final class ListTagImpl<V extends Tag> extends ValueTagImpl<List<V>> implements ListTag<V> {
     private final int contentTypeId;
 
-    ListTagImpl(List<V> value, int contentTypeId) {
+    public ListTagImpl(List<V> value, int contentTypeId) {
         super(value);
         this.contentTypeId = contentTypeId;
         if (value.isEmpty()) return;
@@ -28,7 +29,7 @@ public final class ListTagImpl<V extends Tag> extends ValueTagImpl<List<V>> impl
         if (first.getTypeId() != contentTypeId) throw new IllegalArgumentException("ListTag content type mismatch");
     }
 
-    ListTagImpl(List<V> value) {
+    public ListTagImpl(List<V> value) {
         super(value);
         if (value.isEmpty()) throw new IllegalArgumentException("ListTag without type must have at least one element");
         this.contentTypeId = value.getFirst().getTypeId();

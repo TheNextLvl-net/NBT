@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "net.thenextlvl"
-version = "3.0.0-pre1"
+version = "3.0.0-pre2"
 
 java {
     toolchain.languageVersion = JavaLanguageVersion.of(21)
@@ -23,10 +23,10 @@ repositories {
 }
 
 dependencies {
-    api("net.thenextlvl.core:files:3.0.0")
+    api("net.thenextlvl.core:files:3.0.1")
     compileOnly("org.jetbrains:annotations:26.0.2-1")
 
-    testImplementation("net.thenextlvl.core:files:3.0.0")
+    testImplementation("net.thenextlvl.core:files:3.0.1")
 
     testImplementation(platform("org.junit:junit-bom:6.0.0-RC2"))
     testImplementation("org.junit.jupiter:junit-jupiter")

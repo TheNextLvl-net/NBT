@@ -1,5 +1,6 @@
 package net.thenextlvl.nbt.tag;
 
+import net.thenextlvl.nbt.tag.impl.CompoundTagImpl;
 import org.jetbrains.annotations.Contract;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.NullUnmarked;

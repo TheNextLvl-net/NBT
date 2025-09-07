@@ -1,5 +1,6 @@
 package net.thenextlvl.nbt.tag;
 
+import net.thenextlvl.nbt.tag.impl.EscapeTagImpl;
 import org.jspecify.annotations.NullMarked;
 
 /**
