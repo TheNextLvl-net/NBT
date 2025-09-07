@@ -3,13 +3,11 @@ package net.thenextlvl.nbt.tag.impl;
 import net.thenextlvl.nbt.NBTInputStream;
 import net.thenextlvl.nbt.NBTOutputStream;
 import net.thenextlvl.nbt.tag.LongArrayTag;
-import org.jetbrains.annotations.ApiStatus;
 import org.jspecify.annotations.NullMarked;
 
 import java.io.IOException;
 
 @NullMarked
-@ApiStatus.Internal
 public final class LongArrayTagImpl extends ValueTagImpl<long[]> implements LongArrayTag {
     public LongArrayTagImpl(long... value) {
         super(value);

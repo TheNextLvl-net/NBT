@@ -3,13 +3,11 @@ package net.thenextlvl.nbt.tag.impl;
 import net.thenextlvl.nbt.NBTInputStream;
 import net.thenextlvl.nbt.NBTOutputStream;
 import net.thenextlvl.nbt.tag.IntTag;
-import org.jetbrains.annotations.ApiStatus;
 import org.jspecify.annotations.NullMarked;
 
 import java.io.IOException;
 
 @NullMarked
-@ApiStatus.Internal
 public final class IntTagImpl extends NumberTagImpl<Integer> implements IntTag {
     public IntTagImpl(Integer value) {
         super(value);

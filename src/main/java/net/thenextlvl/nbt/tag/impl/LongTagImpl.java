@@ -3,13 +3,11 @@ package net.thenextlvl.nbt.tag.impl;
 import net.thenextlvl.nbt.NBTInputStream;
 import net.thenextlvl.nbt.NBTOutputStream;
 import net.thenextlvl.nbt.tag.LongTag;
-import org.jetbrains.annotations.ApiStatus;
 import org.jspecify.annotations.NullMarked;
 
 import java.io.IOException;
 
 @NullMarked
-@ApiStatus.Internal
 public final class LongTagImpl extends NumberTagImpl<Long> implements LongTag {
     public LongTagImpl(Long value) {
         super(value);

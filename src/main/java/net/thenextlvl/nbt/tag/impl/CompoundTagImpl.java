@@ -11,7 +11,6 @@ import net.thenextlvl.nbt.tag.ListTag;
 import net.thenextlvl.nbt.tag.LongTag;
 import net.thenextlvl.nbt.tag.ShortTag;
 import net.thenextlvl.nbt.tag.Tag;
-import org.jetbrains.annotations.ApiStatus;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.NullUnmarked;
 import org.jspecify.annotations.Nullable;
@@ -24,7 +23,6 @@ import java.util.Set;
 import java.util.function.BiConsumer;
 
 @NullMarked
-@ApiStatus.Internal
 public final class CompoundTagImpl extends ValueTagImpl<Map<String, Tag>> implements CompoundTag {
     public CompoundTagImpl(Map<String, Tag> value) {
         super(value);

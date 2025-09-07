@@ -3,13 +3,11 @@ package net.thenextlvl.nbt.tag.impl;
 import net.thenextlvl.nbt.NBTInputStream;
 import net.thenextlvl.nbt.NBTOutputStream;
 import net.thenextlvl.nbt.tag.IntArrayTag;
-import org.jetbrains.annotations.ApiStatus;
 import org.jspecify.annotations.NullMarked;
 
 import java.io.IOException;
 
 @NullMarked
-@ApiStatus.Internal
 public final class IntArrayTagImpl extends ValueTagImpl<int[]> implements IntArrayTag {
     public IntArrayTagImpl(int... value) {
         super(value);
