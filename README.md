@@ -16,7 +16,7 @@ Gradle (Kotlin DSL):
 - Repository is published to https://repo.thenextlvl.net/#/releases/net/thenextlvl/nbt
 - Group/artifact inferred from `build.gradle.kts`
 
-```
+```kts
 repositories {
     mavenCentral()
     maven("https://repo.thenextlvl.net/releases/")
