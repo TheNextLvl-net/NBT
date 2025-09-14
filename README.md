@@ -97,7 +97,8 @@ public class NBTExample {
                             .put("x", 1)
                             .put("y", 64)
                             .put("z", 1)
-                            .build());
+                            .build())
+                    .build();
             out.writeTag("Root", root); // name can be null
         }
     }
