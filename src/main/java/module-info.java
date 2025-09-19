@@ -1,4 +1,4 @@
-module nbt.main {
+module net.thenextlvl.nbt {
     requires static org.jetbrains.annotations;
     requires static org.jspecify;
 
