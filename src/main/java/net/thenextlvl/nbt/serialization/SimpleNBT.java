@@ -26,7 +26,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-@NullMarked
 final class SimpleNBT implements NBT {
     private final SerializationRegistry registry;
 

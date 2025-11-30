@@ -9,7 +9,6 @@ import org.jspecify.annotations.NullMarked;
  * abstract class with an int array and implements the IterableTag interface for iterating over
  * the integer elements.
  */
-@NullMarked
 public sealed interface IntArrayTag extends ValueTag<int[]>, IterableTag<Integer> permits IntArrayTagImpl {
     /**
      * Represents the unique identifier for this Tag.

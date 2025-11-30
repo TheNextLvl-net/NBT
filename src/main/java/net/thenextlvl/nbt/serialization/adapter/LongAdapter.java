@@ -9,7 +9,6 @@ import net.thenextlvl.nbt.tag.Tag;
 import org.jetbrains.annotations.ApiStatus;
 import org.jspecify.annotations.NullMarked;
 
-@NullMarked
 @ApiStatus.Internal
 public final class LongAdapter implements TagAdapter<Long> {
     public static final LongAdapter INSTANCE = new LongAdapter();

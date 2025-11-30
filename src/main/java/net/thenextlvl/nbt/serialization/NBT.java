@@ -10,7 +10,6 @@ import java.lang.reflect.Type;
  * The NBT class provides methods to serialize and deserialize objects to and from NBT tags,
  * as well as to register custom serializers and deserializers for different types.
  */
-@NullMarked
 public sealed interface NBT extends TagSerializationContext, TagDeserializationContext permits SimpleNBT {
     /**
      * Creates a new instance of the Builder class for constructing NBT objects.

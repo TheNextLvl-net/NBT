@@ -7,7 +7,6 @@ import org.jspecify.annotations.NullMarked;
 
 import java.io.IOException;
 
-@NullMarked
 public final class StringTagImpl extends ValueTagImpl<String> implements StringTag {
     public StringTagImpl(String value) {
         super(value);

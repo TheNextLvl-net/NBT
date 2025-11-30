@@ -12,7 +12,6 @@ import java.util.Iterator;
  *
  * @param <E> the type of elements contained in the IterableTag
  */
-@NullMarked
 public interface IterableTag<E> extends Iterable<E> {
     /**
      * Returns the number of elements in this IterableTag.
