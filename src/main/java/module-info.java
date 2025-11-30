@@ -1,3 +1,5 @@
+import org.jspecify.annotations.NullMarked;
+
 @NullMarked
 module net.thenextlvl.nbt {
     requires static org.jetbrains.annotations;
