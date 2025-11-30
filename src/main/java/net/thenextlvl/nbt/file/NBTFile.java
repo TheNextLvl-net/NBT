@@ -24,6 +24,7 @@ import static java.nio.file.StandardOpenOption.WRITE;
  *
  * @param <R> the type of the root object, which extends {@link CompoundTag}
  */
+@Deprecated(forRemoval = true)
 public class NBTFile<R extends CompoundTag> {
     /**
      * The name of the root tag in an NBT (Named Binary Tag) file.
