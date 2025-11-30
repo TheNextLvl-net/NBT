@@ -3,7 +3,6 @@ package net.thenextlvl.nbt.file;
 import net.thenextlvl.nbt.NBTInputStream;
 import net.thenextlvl.nbt.NBTOutputStream;
 import net.thenextlvl.nbt.tag.CompoundTag;
-import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import java.io.IOException;
@@ -67,7 +66,7 @@ public class NBTFile<R extends CompoundTag> {
         return root = load();
     }
 
-    private NBTFile<R> setRoot(R root) {
+    public NBTFile<R> setRoot(R root) {
         this.loaded = true;
         this.root = root;
         return this;
@@ -90,7 +89,7 @@ public class NBTFile<R extends CompoundTag> {
         if (!Files.isRegularFile(file)) return getRoot();
         try (var inputStream = new NBTInputStream(
                 Files.newInputStream(file, READ),
-                getCharset()
+                charset
         )) {
             var entry = inputStream.readNamedTag();
             entry.getValue().ifPresent(this::setRootName);
@@ -100,13 +99,13 @@ public class NBTFile<R extends CompoundTag> {
         }
     }
 
-    public @NonNull NBTFile<R> save(@NonNull FileAttribute<?>... attributes) {
+    public NBTFile<R> save(FileAttribute<?>... attributes) {
         try {
             var root = getRoot();
-            Files.createDirectories(file.getParent());
+            Files.createDirectories(file.toAbsolutePath().getParent());
             try (var outputStream = new NBTOutputStream(
                     Files.newOutputStream(file, WRITE, CREATE, TRUNCATE_EXISTING),
-                    getCharset()
+                    charset
             )) {
                 outputStream.writeTag(getRootName(), root);
                 return this;
