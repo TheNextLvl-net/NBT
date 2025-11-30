@@ -9,7 +9,6 @@ import org.jspecify.annotations.NullMarked;
  *
  * @param <T> the type of the objects to be serialized
  */
-@NullMarked
 public interface TagSerializer<T> {
     /**
      * Serializes a given object into its corresponding Tag representation.

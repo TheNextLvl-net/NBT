@@ -42,7 +42,6 @@ import java.util.zip.GZIPInputStream;
 /**
  * An input stream for reading NBT (Named Binary Tag) data.
  */
-@NullMarked
 public final class NBTInputStream extends DataInputStream {
     private final Charset charset;
 

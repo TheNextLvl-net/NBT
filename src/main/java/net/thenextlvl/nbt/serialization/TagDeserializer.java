@@ -9,7 +9,6 @@ import org.jspecify.annotations.NullMarked;
  *
  * @param <T> the type into which the Tag should be deserialized
  */
-@NullMarked
 public interface TagDeserializer<T> {
     /**
      * Deserializes the given Tag into the specified type.

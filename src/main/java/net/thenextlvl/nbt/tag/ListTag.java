@@ -13,7 +13,6 @@ import java.util.List;
  *
  * @param <V> the type of tags contained in the list
  */
-@NullMarked
 public sealed interface ListTag<V extends Tag> extends ValueTag<List<V>>, List<V> permits ListTagImpl {
     /**
      * Represents the unique identifier for this Tag.

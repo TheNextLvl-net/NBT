@@ -11,7 +11,6 @@ import org.jspecify.annotations.NullMarked;
  * It provides methods for reading from and writing to an {@code NBTInputStream}
  * and {@code NBTOutputStream} respectively.
  */
-@NullMarked
 public sealed interface ByteArrayTag extends ValueTag<byte[]>, IterableTag<Byte> permits ByteArrayTagImpl {
     /**
      * Represents the unique identifier for this Tag.

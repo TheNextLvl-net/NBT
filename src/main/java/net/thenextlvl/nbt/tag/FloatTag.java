@@ -9,7 +9,6 @@ import org.jspecify.annotations.NullMarked;
  * It represents a tag that holds a float value and provides methods to manipulate
  * and interact with this value.
  */
-@NullMarked
 public sealed interface FloatTag extends NumberTag<Float> permits FloatTagImpl {
     /**
      * Represents the unique identifier for this Tag.

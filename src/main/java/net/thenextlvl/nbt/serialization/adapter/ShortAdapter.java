@@ -7,9 +7,7 @@ import net.thenextlvl.nbt.serialization.TagSerializationContext;
 import net.thenextlvl.nbt.tag.ShortTag;
 import net.thenextlvl.nbt.tag.Tag;
 import org.jetbrains.annotations.ApiStatus;
-import org.jspecify.annotations.NullMarked;
 
-@NullMarked
 @ApiStatus.Internal
 public final class ShortAdapter implements TagAdapter<Short> {
     public static final ShortAdapter INSTANCE = new ShortAdapter();

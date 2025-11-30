@@ -7,7 +7,6 @@ import org.jspecify.annotations.NullMarked;
 
 import java.io.IOException;
 
-@NullMarked
 public final class LongTagImpl extends NumberTagImpl<Long> implements LongTag {
     public LongTagImpl(Long value) {
         super(value);

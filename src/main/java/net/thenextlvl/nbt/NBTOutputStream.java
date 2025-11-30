@@ -18,7 +18,6 @@ import java.util.zip.GZIPOutputStream;
  * This stream supports GZIP compression and allows for writing various
  * types of NBT tags.
  */
-@NullMarked
 public final class NBTOutputStream extends DataOutputStream {
     private final Charset charset;
 

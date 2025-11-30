@@ -7,7 +7,6 @@ import org.jspecify.annotations.NullMarked;
 
 import java.io.IOException;
 
-@NullMarked
 public final class IntTagImpl extends NumberTagImpl<Integer> implements IntTag {
     public IntTagImpl(Integer value) {
         super(value);

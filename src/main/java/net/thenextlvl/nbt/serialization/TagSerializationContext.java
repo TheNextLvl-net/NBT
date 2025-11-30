@@ -9,7 +9,6 @@ import java.lang.reflect.Type;
 /**
  * TagSerializationContext defines the contract for serializing objects into tags.
  */
-@NullMarked
 public sealed interface TagSerializationContext permits NBT {
     /**
      * Serializes the given object into a Tag representation.

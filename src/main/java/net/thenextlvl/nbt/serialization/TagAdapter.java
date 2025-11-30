@@ -8,6 +8,5 @@ import org.jspecify.annotations.NullMarked;
  *
  * @param <T> the type of objects handled by this adapter
  */
-@NullMarked
 public interface TagAdapter<T> extends TagDeserializer<T>, TagSerializer<T> {
 }

@@ -7,7 +7,6 @@ import org.jspecify.annotations.NullMarked;
 
 import java.io.IOException;
 
-@NullMarked
 public final class FloatTagImpl extends NumberTagImpl<Float> implements FloatTag {
     public FloatTagImpl(Float value) {
         super(value);

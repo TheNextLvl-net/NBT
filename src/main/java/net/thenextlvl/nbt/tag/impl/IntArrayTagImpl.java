@@ -7,7 +7,6 @@ import org.jspecify.annotations.NullMarked;
 
 import java.io.IOException;
 
-@NullMarked
 public final class IntArrayTagImpl extends ValueTagImpl<int[]> implements IntArrayTag {
     public IntArrayTagImpl(int... value) {
         super(value);

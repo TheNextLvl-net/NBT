@@ -12,7 +12,6 @@ import org.jspecify.annotations.NullMarked;
 
 import java.time.Duration;
 
-@NullMarked
 @ApiStatus.Internal
 public final class DurationAdapter implements TagAdapter<Duration> {
     public static final DurationAdapter INSTANCE = new DurationAdapter();
