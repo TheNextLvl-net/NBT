@@ -11,7 +11,6 @@ import org.jspecify.annotations.NullMarked;
 
 import java.nio.file.Path;
 
-@NullMarked
 @ApiStatus.Internal
 public final class PathAdapter implements TagAdapter<Path> {
     public static final PathAdapter INSTANCE = new PathAdapter();

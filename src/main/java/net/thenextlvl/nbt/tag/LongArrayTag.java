@@ -9,7 +9,6 @@ import org.jspecify.annotations.NullMarked;
  * This class extends ValueTag providing common functionality for holding an array of long values
  * and implements IterableTag to allow iteration over the long array elements.
  */
-@NullMarked
 public sealed interface LongArrayTag extends ValueTag<long[]>, IterableTag<Long> permits LongArrayTagImpl {
     /**
      * Represents the unique identifier for this Tag.

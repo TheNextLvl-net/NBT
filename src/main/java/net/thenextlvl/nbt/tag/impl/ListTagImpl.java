@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Objects;
 
-@NullMarked
 public final class ListTagImpl<V extends Tag> extends ValueTagImpl<List<V>> implements ListTag<V> {
     private final int contentTypeId;
 

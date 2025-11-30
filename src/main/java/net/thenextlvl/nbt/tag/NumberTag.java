@@ -7,6 +7,5 @@ import org.jspecify.annotations.NullMarked;
  *
  * @param <T> the type of the {@link Number} value held by this tag
  */
-@NullMarked
 public interface NumberTag<T extends Number> extends ValueTag<T> {
 }

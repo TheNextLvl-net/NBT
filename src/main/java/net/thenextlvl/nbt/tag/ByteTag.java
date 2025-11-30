@@ -9,7 +9,6 @@ import org.jspecify.annotations.NullMarked;
  * It extends the NumberTag class with Byte as the specific number type.
  * This class provides methods to manipulate the byte value and read/write it to an NBT stream.
  */
-@NullMarked
 public sealed interface ByteTag extends NumberTag<Byte> permits ByteTagImpl {
     /**
      * Represents the unique identifier for this Tag.

@@ -9,7 +9,6 @@ import net.thenextlvl.nbt.tag.Tag;
 import org.jetbrains.annotations.ApiStatus;
 import org.jspecify.annotations.NullMarked;
 
-@NullMarked
 @ApiStatus.Internal
 public final class DoubleAdapter implements TagAdapter<Double> {
     public static final DoubleAdapter INSTANCE = new DoubleAdapter();

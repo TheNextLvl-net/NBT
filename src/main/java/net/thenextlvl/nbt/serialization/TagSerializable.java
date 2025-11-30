@@ -8,7 +8,6 @@ import org.jspecify.annotations.NullMarked;
  * An interface for objects that can be serialized into and deserialized from a Tag representation.
  * Implementing classes should provide specific mechanisms for converting their data to and from Tag instances.
  */
-@NullMarked
 public interface TagSerializable {
     /**
      * Serializes the current object into a Tag representation.

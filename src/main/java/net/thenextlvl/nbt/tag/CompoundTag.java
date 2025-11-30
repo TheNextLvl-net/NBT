@@ -17,7 +17,6 @@ import java.util.function.BiConsumer;
  * It extends the generic `ValueTag` class setting the value type to a `Map` of `String` keys and `Tag` values.
  * This class provides various methods to manipulate and retrieve tags from the compound tag structure.
  */
-@NullMarked
 public sealed interface CompoundTag extends ValueTag<Map<String, Tag>> permits CompoundTagImpl {
     /**
      * Represents the unique identifier for this Tag.

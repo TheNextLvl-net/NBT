@@ -11,7 +11,6 @@ import org.jspecify.annotations.NullMarked;
 
 import java.io.File;
 
-@NullMarked
 @ApiStatus.Internal
 public final class FileAdapter implements TagAdapter<File> {
     public static final FileAdapter INSTANCE = new FileAdapter();

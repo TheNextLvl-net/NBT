@@ -1,11 +1,9 @@
 package net.thenextlvl.nbt.tag.impl;
 
 import net.thenextlvl.nbt.tag.ValueTag;
-import org.jspecify.annotations.NullMarked;
 
 import java.util.Objects;
 
-@NullMarked
 abstract class ValueTagImpl<T> implements ValueTag<T> {
     private final T value;
 

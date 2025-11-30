@@ -9,7 +9,6 @@ import java.io.IOException;
 /**
  * Represents a generic tag with various utility methods to interact with different tag types.
  */
-@NullMarked
 public interface Tag {
     /**
      * Retrieves the type ID of the tag.

@@ -9,7 +9,6 @@ import net.thenextlvl.nbt.tag.Tag;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.NullMarked;
 
-@NullMarked
 public final class EnumAdapter<T extends Enum<T>> implements TagAdapter<T> {
     private final Class<T> enumClass;
 

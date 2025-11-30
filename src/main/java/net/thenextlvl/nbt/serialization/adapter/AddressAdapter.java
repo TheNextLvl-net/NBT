@@ -11,7 +11,6 @@ import org.jspecify.annotations.NullMarked;
 
 import java.net.InetSocketAddress;
 
-@NullMarked
 @ApiStatus.Internal
 public final class AddressAdapter implements TagAdapter<InetSocketAddress> {
     public static final AddressAdapter INSTANCE = new AddressAdapter();

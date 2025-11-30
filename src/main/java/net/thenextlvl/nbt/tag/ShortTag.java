@@ -9,7 +9,6 @@ import org.jspecify.annotations.NullMarked;
  * It extends the NumberTag class, providing specific implementations
  * for handling short values in a tag context.
  */
-@NullMarked
 public sealed interface ShortTag extends NumberTag<Short> permits ShortTagImpl {
     /**
      * Represents the unique identifier for this Tag.

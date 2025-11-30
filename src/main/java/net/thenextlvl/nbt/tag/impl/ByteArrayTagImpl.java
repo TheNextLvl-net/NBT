@@ -4,11 +4,9 @@ import net.thenextlvl.nbt.NBTInputStream;
 import net.thenextlvl.nbt.NBTOutputStream;
 import net.thenextlvl.nbt.tag.ByteArrayTag;
 import org.jetbrains.annotations.Contract;
-import org.jspecify.annotations.NullMarked;
 
 import java.io.IOException;
 
-@NullMarked
 public final class ByteArrayTagImpl extends ValueTagImpl<byte[]> implements ByteArrayTag {
     public ByteArrayTagImpl(byte... array) {
         super(array);

@@ -3,11 +3,9 @@ package net.thenextlvl.nbt.tag.impl;
 import net.thenextlvl.nbt.NBTInputStream;
 import net.thenextlvl.nbt.NBTOutputStream;
 import net.thenextlvl.nbt.tag.ShortTag;
-import org.jspecify.annotations.NullMarked;
 
 import java.io.IOException;
 
-@NullMarked
 public final class ShortTagImpl extends NumberTagImpl<Short> implements ShortTag {
     public ShortTagImpl(Short value) {
         super(value);

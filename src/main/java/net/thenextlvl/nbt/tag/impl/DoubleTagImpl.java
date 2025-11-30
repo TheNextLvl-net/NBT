@@ -3,11 +3,9 @@ package net.thenextlvl.nbt.tag.impl;
 import net.thenextlvl.nbt.NBTInputStream;
 import net.thenextlvl.nbt.NBTOutputStream;
 import net.thenextlvl.nbt.tag.DoubleTag;
-import org.jspecify.annotations.NullMarked;
 
 import java.io.IOException;
 
-@NullMarked
 public final class DoubleTagImpl extends NumberTagImpl<Double> implements DoubleTag {
     public DoubleTagImpl(Double value) {
         super(value);

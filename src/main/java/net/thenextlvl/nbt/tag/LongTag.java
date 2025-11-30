@@ -8,7 +8,6 @@ import org.jspecify.annotations.NullMarked;
  * LongTag is a specialized implementation of the NumberTag class for handling long type values.
  * This class provides functionality to read and write long values to NBT streams, and identifier management.
  */
-@NullMarked
 public sealed interface LongTag extends NumberTag<Long> permits LongTagImpl {
     /**
      * Represents the unique identifier for this Tag.

@@ -9,7 +9,6 @@ import net.thenextlvl.nbt.tag.Tag;
 import org.jetbrains.annotations.ApiStatus;
 import org.jspecify.annotations.NullMarked;
 
-@NullMarked
 @ApiStatus.Internal
 public final class FloatAdapter implements TagAdapter<Float> {
     public static final FloatAdapter INSTANCE = new FloatAdapter();

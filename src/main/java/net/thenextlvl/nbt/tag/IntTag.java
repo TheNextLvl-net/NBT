@@ -8,7 +8,6 @@ import org.jspecify.annotations.NullMarked;
  * Represents an integer tag in an NBT (Named Binary Tag) structure.
  * Extends {@link NumberTag} with the specific type parameter {@link Integer}.
  */
-@NullMarked
 public sealed interface IntTag extends NumberTag<Integer> permits IntTagImpl {
     /**
      * Represents the unique identifier for this Tag.
