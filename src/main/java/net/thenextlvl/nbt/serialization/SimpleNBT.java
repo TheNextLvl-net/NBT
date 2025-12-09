@@ -15,7 +15,6 @@ import net.thenextlvl.nbt.serialization.adapter.StringAdapter;
 import net.thenextlvl.nbt.serialization.adapter.UUIDAdapter;
 import net.thenextlvl.nbt.tag.Tag;
 import org.jspecify.annotations.NonNull;
-import org.jspecify.annotations.NullMarked;
 
 import java.io.File;
 import java.lang.reflect.Type;

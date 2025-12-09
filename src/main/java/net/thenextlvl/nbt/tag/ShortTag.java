@@ -2,7 +2,6 @@ package net.thenextlvl.nbt.tag;
 
 import net.thenextlvl.nbt.tag.impl.ShortTagImpl;
 import org.jetbrains.annotations.Contract;
-import org.jspecify.annotations.NullMarked;
 
 /**
  * The ShortTag class represents a tag that holds a short value.

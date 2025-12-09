@@ -2,7 +2,6 @@ package net.thenextlvl.nbt.tag;
 
 import net.thenextlvl.nbt.tag.impl.LongArrayTagImpl;
 import org.jetbrains.annotations.Contract;
-import org.jspecify.annotations.NullMarked;
 
 /**
  * Represents a tag containing an array of long values.

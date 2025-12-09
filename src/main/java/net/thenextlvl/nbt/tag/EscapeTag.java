@@ -1,7 +1,6 @@
 package net.thenextlvl.nbt.tag;
 
 import net.thenextlvl.nbt.tag.impl.EscapeTagImpl;
-import org.jspecify.annotations.NullMarked;
 
 /**
  * Represents a singleton instance of an escape tag used in NBT (Named Binary Tag) serialization.

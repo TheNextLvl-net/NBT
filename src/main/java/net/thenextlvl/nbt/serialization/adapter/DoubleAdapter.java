@@ -7,7 +7,6 @@ import net.thenextlvl.nbt.serialization.TagSerializationContext;
 import net.thenextlvl.nbt.tag.DoubleTag;
 import net.thenextlvl.nbt.tag.Tag;
 import org.jetbrains.annotations.ApiStatus;
-import org.jspecify.annotations.NullMarked;
 
 @ApiStatus.Internal
 public final class DoubleAdapter implements TagAdapter<Double> {

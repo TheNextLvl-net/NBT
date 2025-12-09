@@ -32,8 +32,8 @@ abstract class ValueTagImpl<T> implements ValueTag<T> {
     @Override
     public String toString() {
         return getClass().getSimpleName() +
-               "{" +
-               "value=" + value +
-               '}';
+                "{" +
+                "value=" + value +
+                '}';
     }
 }

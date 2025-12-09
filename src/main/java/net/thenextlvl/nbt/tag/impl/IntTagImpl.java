@@ -3,7 +3,6 @@ package net.thenextlvl.nbt.tag.impl;
 import net.thenextlvl.nbt.NBTInputStream;
 import net.thenextlvl.nbt.NBTOutputStream;
 import net.thenextlvl.nbt.tag.IntTag;
-import org.jspecify.annotations.NullMarked;
 
 import java.io.IOException;
 

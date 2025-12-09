@@ -6,8 +6,6 @@ import net.thenextlvl.nbt.serialization.TagDeserializationContext;
 import net.thenextlvl.nbt.serialization.TagSerializationContext;
 import net.thenextlvl.nbt.tag.StringTag;
 import net.thenextlvl.nbt.tag.Tag;
-import org.jspecify.annotations.NonNull;
-import org.jspecify.annotations.NullMarked;
 
 public final class EnumAdapter<T extends Enum<T>> implements TagAdapter<T> {
     private final Class<T> enumClass;
@@ -22,7 +20,7 @@ public final class EnumAdapter<T extends Enum<T>> implements TagAdapter<T> {
     }
 
     @Override
-    public @NonNull T deserialize(Tag tag, TagDeserializationContext context) throws ParserException {
+    public T deserialize(Tag tag, TagDeserializationContext context) throws ParserException {
         return Enum.valueOf(this.enumClass, tag.getAsString());
     }
 

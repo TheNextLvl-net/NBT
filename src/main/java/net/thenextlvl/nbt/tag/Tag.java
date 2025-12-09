@@ -2,7 +2,6 @@ package net.thenextlvl.nbt.tag;
 
 import net.thenextlvl.nbt.NBTOutputStream;
 import org.jetbrains.annotations.Contract;
-import org.jspecify.annotations.NullMarked;
 
 import java.io.IOException;
 
