@@ -15,7 +15,7 @@ import org.jspecify.annotations.NullUnmarked;
 import org.jspecify.annotations.Nullable;
 
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -23,7 +23,7 @@ import java.util.function.BiConsumer;
 
 public final class CompoundTagImpl extends ValueTagImpl<Map<String, Tag>> implements CompoundTag {
     public CompoundTagImpl(Map<String, Tag> value) {
-        super(value);
+        super(new LinkedHashMap<>(value));
     }
 
     @Override
@@ -174,7 +174,7 @@ public final class CompoundTagImpl extends ValueTagImpl<Map<String, Tag>> implem
     }
 
     public static CompoundTag read(NBTInputStream inputStream) throws IOException {
-        var value = new HashMap<String, Tag>();
+        var value = new LinkedHashMap<String, Tag>();
         while (true) {
             var entry = inputStream.readNamedTag();
             if (entry.getValue().isEmpty()) break;
@@ -188,7 +188,7 @@ public final class CompoundTagImpl extends ValueTagImpl<Map<String, Tag>> implem
     }
 
     public static final class Builder implements CompoundTag.Builder {
-        private final Map<String, Tag> values = new HashMap<>();
+        private final Map<String, Tag> values = new LinkedHashMap<>();
 
         @Override
         public Builder put(String name, Boolean value) {
@@ -241,7 +241,7 @@ public final class CompoundTagImpl extends ValueTagImpl<Map<String, Tag>> implem
 
         @Override
         public CompoundTag build() {
-            return new CompoundTagImpl(new HashMap<>(values));
+            return new CompoundTagImpl(values);
         }
     }
 }

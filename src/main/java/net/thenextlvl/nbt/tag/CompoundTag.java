@@ -5,7 +5,7 @@ import org.jetbrains.annotations.Contract;
 import org.jspecify.annotations.NullUnmarked;
 import org.jspecify.annotations.Nullable;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -246,7 +246,7 @@ public sealed interface CompoundTag extends ValueTag<Map<String, Tag>> permits C
      */
     @Contract(value = " -> new", pure = true)
     static CompoundTag empty() {
-        return of(new HashMap<>());
+        return of(new LinkedHashMap<>());
     }
 
     /**
