@@ -5,6 +5,7 @@ import net.thenextlvl.nbt.NBTOutputStream;
 import net.thenextlvl.nbt.tag.IntArrayTag;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 public final class IntArrayTagImpl extends ValueTagImpl<int[]> implements IntArrayTag {
     public IntArrayTagImpl(int... value) {
@@ -42,5 +43,25 @@ public final class IntArrayTagImpl extends ValueTagImpl<int[]> implements IntArr
         var array = new int[length];
         for (var i = 0; i < length; i++) array[i] = inputStream.readInt();
         return new IntArrayTagImpl(array);
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (!(object instanceof IntArrayTag valueTag)) return false;
+        return Arrays.equals(getValue(), valueTag.getValue());
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(getValue());
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() +
+                "{" +
+                "value=" + Arrays.toString(getValue()) +
+                '}';
     }
 }

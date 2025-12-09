@@ -5,6 +5,7 @@ import net.thenextlvl.nbt.NBTOutputStream;
 import net.thenextlvl.nbt.tag.LongArrayTag;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 public final class LongArrayTagImpl extends ValueTagImpl<long[]> implements LongArrayTag {
     public LongArrayTagImpl(long... value) {
@@ -43,5 +44,25 @@ public final class LongArrayTagImpl extends ValueTagImpl<long[]> implements Long
         for (var i = 0; i < length; i++)
             array[i] = inputStream.readLong();
         return new LongArrayTagImpl(array);
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (!(object instanceof LongArrayTag valueTag)) return false;
+        return Arrays.equals(getValue(), valueTag.getValue());
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(getValue());
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() +
+                "{" +
+                "value=" + Arrays.toString(getValue()) +
+                '}';
     }
 }
