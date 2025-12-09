@@ -2,7 +2,6 @@ package net.thenextlvl.nbt.tag.impl;
 
 import net.thenextlvl.nbt.NBTOutputStream;
 import net.thenextlvl.nbt.tag.EscapeTag;
-import org.jspecify.annotations.NullMarked;
 
 import java.io.IOException;
 

@@ -2,7 +2,6 @@ package net.thenextlvl.nbt.tag;
 
 import net.thenextlvl.nbt.tag.impl.IntArrayTagImpl;
 import org.jetbrains.annotations.Contract;
-import org.jspecify.annotations.NullMarked;
 
 /**
  * The IntArrayTag class represents a tag that holds an array of integers. It extends the ValueTag

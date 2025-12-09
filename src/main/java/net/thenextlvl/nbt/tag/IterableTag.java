@@ -1,7 +1,6 @@
 package net.thenextlvl.nbt.tag;
 
 import org.jetbrains.annotations.Contract;
-import org.jspecify.annotations.NullMarked;
 
 import java.util.Iterator;
 

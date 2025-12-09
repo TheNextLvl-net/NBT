@@ -2,7 +2,6 @@ package net.thenextlvl.nbt.tag;
 
 import net.thenextlvl.nbt.tag.impl.ByteArrayTagImpl;
 import org.jetbrains.annotations.Contract;
-import org.jspecify.annotations.NullMarked;
 
 /**
  * Represents a tag that contains a byte array.

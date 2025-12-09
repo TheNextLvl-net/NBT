@@ -1,4 +1,3 @@
-
 package net.thenextlvl.nbt.serialization.adapter;
 
 import net.thenextlvl.nbt.serialization.ParserException;
@@ -8,7 +7,6 @@ import net.thenextlvl.nbt.serialization.TagSerializationContext;
 import net.thenextlvl.nbt.tag.LongTag;
 import net.thenextlvl.nbt.tag.Tag;
 import org.jetbrains.annotations.ApiStatus;
-import org.jspecify.annotations.NullMarked;
 
 import java.time.Duration;
 

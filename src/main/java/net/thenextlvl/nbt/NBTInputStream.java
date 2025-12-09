@@ -27,7 +27,6 @@ import net.thenextlvl.nbt.tag.impl.LongTagImpl;
 import net.thenextlvl.nbt.tag.impl.ShortTagImpl;
 import net.thenextlvl.nbt.tag.impl.StringTagImpl;
 import org.jetbrains.annotations.Contract;
-import org.jspecify.annotations.NullMarked;
 
 import java.io.DataInputStream;
 import java.io.IOException;

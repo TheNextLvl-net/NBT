@@ -1,7 +1,6 @@
 package net.thenextlvl.nbt.tag;
 
 import net.thenextlvl.nbt.tag.impl.StringTagImpl;
-import org.jspecify.annotations.NullMarked;
 
 /**
  * Represents a tag that stores a string value.

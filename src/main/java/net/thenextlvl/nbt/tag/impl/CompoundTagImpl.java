@@ -11,7 +11,6 @@ import net.thenextlvl.nbt.tag.ListTag;
 import net.thenextlvl.nbt.tag.LongTag;
 import net.thenextlvl.nbt.tag.ShortTag;
 import net.thenextlvl.nbt.tag.Tag;
-import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.NullUnmarked;
 import org.jspecify.annotations.Nullable;
 
