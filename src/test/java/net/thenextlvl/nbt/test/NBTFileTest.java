@@ -1,6 +1,7 @@
 package net.thenextlvl.nbt.test;
 
-import net.thenextlvl.nbt.file.NBTFile;
+import net.thenextlvl.nbt.NBTInputStream;
+import net.thenextlvl.nbt.NBTOutputStream;
 import net.thenextlvl.nbt.tag.CompoundTag;
 import net.thenextlvl.nbt.tag.DoubleTag;
 import net.thenextlvl.nbt.tag.IntArrayTag;
@@ -12,6 +13,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import static java.nio.file.StandardOpenOption.CREATE;
+import static java.nio.file.StandardOpenOption.READ;
+import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
+import static java.nio.file.StandardOpenOption.WRITE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -20,7 +25,7 @@ public class NBTFileTest {
     private static final Path path = Path.of("test.dat");
 
     @Test
-    public void createFile() {
+    public void createFile() throws IOException {
         var contents = CompoundTag.builder()
                 .put("array", IntArrayTag.of())
                 .put("list", ListTag.of(DoubleTag.ID))
@@ -32,21 +37,33 @@ public class NBTFileTest {
 
         assertFalse(Files.isRegularFile(path), path + " already exists");
 
-        var file = new NBTFile<>(path, contents).saveIfAbsent();
+        try (var output = Files.newOutputStream(path, WRITE, CREATE, TRUNCATE_EXISTING);
+             var nbt = new NBTOutputStream(output)) {
+            nbt.writeTag(null, contents);
 
-        assertTrue(Files.isRegularFile(path), "Failed to create file");
-        assertEquals(contents, file.getRoot(), "File was not saved to disk");
+            assertTrue(Files.isRegularFile(path), "Failed to create file");
+        }
+
+        try (var input = Files.newInputStream(path, READ);
+             var reader = new NBTInputStream(input)) {
+            assertEquals(contents, reader.readTag(), "File was written incorrectly");
+        }
 
         var modified = CompoundTag.empty();
-        file.setRoot(modified);
-        file.save();
+        try (var output = Files.newOutputStream(path, WRITE, CREATE, TRUNCATE_EXISTING);
+             var nbt = new NBTOutputStream(output)) {
+            nbt.writeTag(null, modified);
+        }
 
-        assertEquals(modified, new NBTFile<>(path, contents).getRoot(), "File was not overridden");
+        try (var input = Files.newInputStream(path, READ);
+             var reader = new NBTInputStream(input)) {
+            assertEquals(modified, reader.readTag(), "File was not overridden");
+        }
     }
 
     @AfterAll
     public static void cleanup() throws IOException {
-        Files.delete(path);
+        Files.deleteIfExists(path);
         assertFalse(Files.isRegularFile(path), path + " still exists");
     }
 }
