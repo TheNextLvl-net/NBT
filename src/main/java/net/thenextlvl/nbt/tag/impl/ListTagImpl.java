@@ -7,10 +7,10 @@ import net.thenextlvl.nbt.tag.Tag;
 import org.jspecify.annotations.Nullable;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Objects;
@@ -19,7 +19,7 @@ public final class ListTagImpl<V extends Tag> extends ValueTagImpl<List<V>> impl
     private final int contentTypeId;
 
     public ListTagImpl(List<V> value, int contentTypeId) {
-        super(value);
+        super(new LinkedList<>(value));
         this.contentTypeId = contentTypeId;
         if (value.isEmpty()) return;
         var first = value.getFirst();
@@ -27,13 +27,14 @@ public final class ListTagImpl<V extends Tag> extends ValueTagImpl<List<V>> impl
     }
 
     public ListTagImpl(List<V> value) {
-        super(value);
+        super(new LinkedList<>(value));
         if (value.isEmpty()) throw new IllegalArgumentException("ListTag without type must have at least one element");
         this.contentTypeId = value.getFirst().getTypeId();
     }
 
     ListTagImpl(int contentTypeId) {
-        this(new ArrayList<>(), contentTypeId);
+        super(new LinkedList<>());
+        this.contentTypeId = contentTypeId;
     }
 
     public int getContentTypeId() {
@@ -176,9 +177,9 @@ public final class ListTagImpl<V extends Tag> extends ValueTagImpl<List<V>> impl
     @Override
     public String toString() {
         return "ListTag{" +
-               "contentTypeId=" + contentTypeId +
-               ", value=" + super.getValue() +
-               '}';
+                "contentTypeId=" + contentTypeId +
+                ", value=" + super.getValue() +
+                '}';
     }
 
     @Override
@@ -205,7 +206,7 @@ public final class ListTagImpl<V extends Tag> extends ValueTagImpl<List<V>> impl
     public static <V extends Tag> ListTagImpl<V> read(NBTInputStream inputStream) throws IOException {
         var type = inputStream.readByte();
         var length = inputStream.readInt();
-        var list = new ArrayList<V>();
+        var list = new LinkedList<V>();
         for (var i = 0; i < length; i++) list.add((V) inputStream.readTag(type));
         return new ListTagImpl<>(list, type);
     }
