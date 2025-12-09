@@ -3,7 +3,7 @@ package net.thenextlvl.nbt.tag;
 import net.thenextlvl.nbt.tag.impl.ListTagImpl;
 import org.jetbrains.annotations.Contract;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -39,7 +39,7 @@ public sealed interface ListTag<V extends Tag> extends ValueTag<List<V>>, List<V
     @SafeVarargs
     @Contract(value = "_, _ -> new", pure = true)
     static <V extends Tag> ListTag<V> of(int contentTypeId, V... content) throws IllegalArgumentException {
-        return of(contentTypeId, new ArrayList<>(List.of(content)));
+        return of(contentTypeId, new LinkedList<>(List.of(content)));
     }
 
     /**
@@ -70,7 +70,7 @@ public sealed interface ListTag<V extends Tag> extends ValueTag<List<V>>, List<V
     @SafeVarargs
     @Contract(value = "_ -> new", pure = true)
     static <V extends Tag> ListTag<V> of(V... content) throws IllegalArgumentException {
-        return of(new ArrayList<>(List.of(content)));
+        return of(new LinkedList<>(List.of(content)));
     }
 
     /**
