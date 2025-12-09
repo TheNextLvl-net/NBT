@@ -6,6 +6,7 @@ import net.thenextlvl.nbt.tag.ByteArrayTag;
 import org.jetbrains.annotations.Contract;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 public final class ByteArrayTagImpl extends ValueTagImpl<byte[]> implements ByteArrayTag {
     public ByteArrayTagImpl(byte... array) {
@@ -46,5 +47,25 @@ public final class ByteArrayTagImpl extends ValueTagImpl<byte[]> implements Byte
         var bytes = new byte[length];
         inputStream.readFully(bytes);
         return new ByteArrayTagImpl(bytes);
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (!(object instanceof ByteArrayTag valueTag)) return false;
+        return Arrays.equals(getValue(), valueTag.getValue());
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(getValue());
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() +
+                "{" +
+                "value=" + Arrays.toString(getValue()) +
+                '}';
     }
 }
