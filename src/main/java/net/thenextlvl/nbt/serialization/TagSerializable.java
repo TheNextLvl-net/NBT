@@ -6,8 +6,10 @@ import org.jetbrains.annotations.Contract;
 /**
  * An interface for objects that can be serialized into and deserialized from a Tag representation.
  * Implementing classes should provide specific mechanisms for converting their data to and from Tag instances.
+ *
+ * @param <T> the type of Tag used for serialization and deserialization
  */
-public interface TagSerializable {
+public interface TagSerializable<T extends Tag> {
     /**
      * Serializes the current object into a Tag representation.
      *
@@ -15,7 +17,7 @@ public interface TagSerializable {
      * @throws ParserException if an error occurs during serialization
      */
     @Contract(value = " -> new", pure = true)
-    Tag serialize() throws ParserException;
+    T serialize() throws ParserException;
 
     /**
      * Deserializes the given Tag into the appropriate object.
@@ -24,5 +26,5 @@ public interface TagSerializable {
      * @throws ParserException if an error occurs during deserialization
      */
     @Contract(mutates = "this")
-    void deserialize(Tag tag) throws ParserException;
+    void deserialize(T tag) throws ParserException;
 }
