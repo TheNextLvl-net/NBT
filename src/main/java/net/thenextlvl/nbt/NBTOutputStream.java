@@ -5,12 +5,12 @@ import net.thenextlvl.nbt.tag.Tag;
 import org.jetbrains.annotations.Contract;
 import org.jspecify.annotations.Nullable;
 
+import java.io.BufferedOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.util.zip.GZIPOutputStream;
 
 /**
  * A specialized DataOutputStream for writing Named Binary Tag (NBT) data.
@@ -21,7 +21,8 @@ public final class NBTOutputStream extends DataOutputStream {
     private final Charset charset;
 
     /**
-     * Create a nbt output stream
+     * Create an {@code NBTOutputStream} for writing NBT data in a GZIP-compressed format
+     * to the specified output stream, using UTF-8 encoding.
      *
      * @param outputStream the stream to write to
      * @throws IOException thrown if something goes wrong
@@ -31,14 +32,40 @@ public final class NBTOutputStream extends DataOutputStream {
     }
 
     /**
-     * Create a nbt output stream
+     * Create an {@code NBTOutputStream} for writing NBT data in a GZIP-compressed format
+     * to the specified output stream, using the specified charset.
      *
      * @param charset      the charset to write the content with
      * @param outputStream the stream to write to
      * @throws IOException thrown if something goes wrong
      */
     public NBTOutputStream(OutputStream outputStream, Charset charset) throws IOException {
-        super(new GZIPOutputStream(outputStream));
+        this(outputStream, charset, Compression.GZIP);
+    }
+
+    /**
+     * Create an {@code NBTOutputStream} for writing NBT data in a specified compression format
+     * to the specified output stream, using UTF-8 encoding.
+     *
+     * @param outputStream the stream to write to
+     * @param compression  the compression type to use
+     * @throws IOException thrown if something goes wrong
+     */
+    public NBTOutputStream(OutputStream outputStream, Compression compression) throws IOException {
+        this(outputStream, StandardCharsets.UTF_8, compression);
+    }
+
+    /**
+     * Create an {@code NBTOutputStream} for writing NBT data in a specified compression format
+     * to the specified output stream, using the specified charset.
+     *
+     * @param charset      the charset to write the content with
+     * @param outputStream the stream to write to
+     * @param compression  the compression type to use
+     * @throws IOException thrown if something goes wrong
+     */
+    public NBTOutputStream(OutputStream outputStream, Charset charset, Compression compression) throws IOException {
+        super(new DataOutputStream(new BufferedOutputStream(compression.compress(outputStream))));
         this.charset = charset;
     }
 

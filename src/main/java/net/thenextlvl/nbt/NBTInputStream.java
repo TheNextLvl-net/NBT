@@ -28,6 +28,7 @@ import net.thenextlvl.nbt.tag.impl.ShortTagImpl;
 import net.thenextlvl.nbt.tag.impl.StringTagImpl;
 import org.jetbrains.annotations.Contract;
 
+import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,7 +37,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.zip.GZIPInputStream;
 
 /**
  * An input stream for reading NBT (Named Binary Tag) data.
@@ -45,7 +45,8 @@ public final class NBTInputStream extends DataInputStream {
     private final Charset charset;
 
     /**
-     * Constructs an {@code NBTInputStream} for reading NBT data from the specified input stream.
+     * Constructs an {@code NBTInputStream} for reading NBT data in a GZIP-compressed format
+     * from the specified input stream, using UTF-8 encoding.
      *
      * @param inputStream the input stream from which the NBT data is to be read
      * @throws IOException if an I/O error occurs while reading from the stream
@@ -55,15 +56,40 @@ public final class NBTInputStream extends DataInputStream {
     }
 
     /**
-     * Constructs an {@code NBTInputStream} for reading NBT data from the specified input stream
-     * and charset.
+     * Constructs an {@code NBTInputStream} for reading NBT data in a GZIP-compressed format
+     * from the specified input stream, using the specified charset.
      *
      * @param inputStream the input stream from which the NBT data is to be read
      * @param charset     the charset to use for reading string data from the stream
      * @throws IOException if an I/O error occurs while reading from the stream
      */
     public NBTInputStream(InputStream inputStream, Charset charset) throws IOException {
-        super(new DataInputStream(new GZIPInputStream(inputStream)));
+        this(inputStream, charset, Compression.GZIP);
+    }
+
+    /**
+     * Constructs an {@code NBTInputStream} for reading NBT data in a specified compression format
+     * from the specified input stream, using UTF-8 encoding.
+     *
+     * @param inputStream the input stream from which the NBT data is to be read
+     * @param compression the compression type to use
+     * @throws IOException if an I/O error occurs while reading from the stream
+     */
+    public NBTInputStream(InputStream inputStream, Compression compression) throws IOException {
+        this(inputStream, StandardCharsets.UTF_8, compression);
+    }
+
+    /**
+     * Constructs an {@code NBTInputStream} for reading NBT data in a specified compression format
+     * from the specified input stream, using the specified charset.
+     *
+     * @param inputStream the input stream from which the NBT data is to be read
+     * @param charset     the charset to use for reading string data from the stream
+     * @param compression the compression type to use
+     * @throws IOException if an I/O error occurs while reading from the stream
+     */
+    public NBTInputStream(InputStream inputStream, Charset charset, Compression compression) throws IOException {
+        super(new DataInputStream(new BufferedInputStream(compression.decompress(inputStream))));
         this.charset = charset;
     }
 
@@ -74,7 +100,7 @@ public final class NBTInputStream extends DataInputStream {
      * @throws IOException thrown if something goes wrong
      */
     @Contract(value = " -> new", mutates = "this")
-    public Tag readTag() throws IOException {
+    public CompoundTag readTag() throws IOException {
         return readNamedTag().getKey();
     }
 
@@ -82,16 +108,17 @@ public final class NBTInputStream extends DataInputStream {
      * Read a named NBT object from the stream
      *
      * @return the tag that was read
-     * @throws IOException thrown if something goes wrong
+     * @throws IOException              thrown if something goes wrong
+     * @throws IllegalArgumentException thrown if the root tag is not a CompoundTag
      */
     @Contract(value = " -> new", mutates = "this")
-    public Map.Entry<Tag, Optional<String>> readNamedTag() throws IOException {
+    public Map.Entry<CompoundTag, Optional<String>> readNamedTag() throws IOException, IllegalArgumentException {
         var type = readByte();
-        if (type == EscapeTag.ID) return Map.entry(EscapeTag.INSTANCE, Optional.empty());
+        if (type != CompoundTag.ID) throw new IllegalArgumentException("Expected root tag to be a CompoundTag");
         var bytes = new byte[readShort()];
         readFully(bytes);
         var name = bytes.length == 0 ? null : new String(bytes, getCharset());
-        return Map.entry(readTag(type), Optional.ofNullable(name));
+        return Map.entry(readTag(type).getAsCompound(), Optional.ofNullable(name));
     }
 
     /**
