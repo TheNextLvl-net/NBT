@@ -13,10 +13,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import static java.nio.file.StandardOpenOption.CREATE;
-import static java.nio.file.StandardOpenOption.READ;
-import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
-import static java.nio.file.StandardOpenOption.WRITE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -37,26 +33,22 @@ public class NBTFileTest {
 
         assertFalse(Files.isRegularFile(path), path + " already exists");
 
-        try (var output = Files.newOutputStream(path, WRITE, CREATE, TRUNCATE_EXISTING);
-             var nbt = new NBTOutputStream(output)) {
+        try (var nbt = NBTOutputStream.builder().outputFile(path).build()) {
             nbt.writeTag(null, contents);
 
             assertTrue(Files.isRegularFile(path), "Failed to create file");
         }
 
-        try (var input = Files.newInputStream(path, READ);
-             var reader = new NBTInputStream(input)) {
+        try (var reader = NBTInputStream.builder().inputFile(path).build()) {
             assertEquals(contents, reader.readTag(), "File was written incorrectly");
         }
 
         var modified = CompoundTag.empty();
-        try (var output = Files.newOutputStream(path, WRITE, CREATE, TRUNCATE_EXISTING);
-             var nbt = new NBTOutputStream(output)) {
+        try (var nbt = NBTOutputStream.builder().outputFile(path).build()) {
             nbt.writeTag(null, modified);
         }
 
-        try (var input = Files.newInputStream(path, READ);
-             var reader = new NBTInputStream(input)) {
+        try (var reader = NBTInputStream.builder().inputFile(path).build()) {
             assertEquals(modified, reader.readTag(), "File was not overridden");
         }
     }
