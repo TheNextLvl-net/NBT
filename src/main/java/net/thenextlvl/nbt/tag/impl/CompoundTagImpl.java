@@ -173,10 +173,10 @@ public final class CompoundTagImpl extends ValueTagImpl<Map<String, Tag>> implem
         EscapeTagImpl.INSTANCE.write(outputStream);
     }
 
-    public static CompoundTag read(NBTInputStream inputStream) throws IOException {
+    public static CompoundTag read(NBTInputStream input) throws IOException {
         var value = new LinkedHashMap<String, Tag>();
         while (true) {
-            var entry = inputStream.readNamedTag();
+            var entry = input.readNamedTag();
             if (entry.getValue().isEmpty()) break;
             value.put(entry.getValue().get(), entry.getKey());
         }

@@ -26,7 +26,7 @@ public final class IntTagImpl extends NumberTagImpl<Integer> implements IntTag {
         outputStream.writeInt(getValue());
     }
 
-    public static IntTagImpl read(NBTInputStream inputStream) throws IOException {
-        return new IntTagImpl(inputStream.readInt());
+    public static IntTagImpl read(NBTInputStream input) throws IOException {
+        return new IntTagImpl(input.readInt());
     }
 }

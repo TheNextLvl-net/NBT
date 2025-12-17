@@ -26,7 +26,7 @@ public final class FloatTagImpl extends NumberTagImpl<Float> implements FloatTag
         outputStream.writeFloat(getValue());
     }
 
-    public static FloatTagImpl read(NBTInputStream inputStream) throws IOException {
-        return new FloatTagImpl(inputStream.readFloat());
+    public static FloatTagImpl read(NBTInputStream input) throws IOException {
+        return new FloatTagImpl(input.readFloat());
     }
 }

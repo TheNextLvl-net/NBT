@@ -38,10 +38,10 @@ public final class IntArrayTagImpl extends ValueTagImpl<int[]> implements IntArr
         for (var i : getValue()) outputStream.writeInt(i);
     }
 
-    public static IntArrayTagImpl read(NBTInputStream inputStream) throws IOException {
-        var length = inputStream.readInt();
+    public static IntArrayTagImpl read(NBTInputStream input) throws IOException {
+        var length = input.readInt();
         var array = new int[length];
-        for (var i = 0; i < length; i++) array[i] = inputStream.readInt();
+        for (var i = 0; i < length; i++) array[i] = input.readInt();
         return new IntArrayTagImpl(array);
     }
 

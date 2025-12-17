@@ -26,7 +26,7 @@ public final class LongTagImpl extends NumberTagImpl<Long> implements LongTag {
         outputStream.writeLong(getValue());
     }
 
-    public static LongTagImpl read(NBTInputStream inputStream) throws IOException {
-        return new LongTagImpl(inputStream.readLong());
+    public static LongTagImpl read(NBTInputStream input) throws IOException {
+        return new LongTagImpl(input.readLong());
     }
 }

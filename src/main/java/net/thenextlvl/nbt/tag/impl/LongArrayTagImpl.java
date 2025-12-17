@@ -38,11 +38,11 @@ public final class LongArrayTagImpl extends ValueTagImpl<long[]> implements Long
         for (var l : getValue()) outputStream.writeLong(l);
     }
 
-    public static LongArrayTagImpl read(NBTInputStream inputStream) throws IOException {
-        var length = inputStream.readInt();
+    public static LongArrayTagImpl read(NBTInputStream input) throws IOException {
+        var length = input.readInt();
         var array = new long[length];
         for (var i = 0; i < length; i++)
-            array[i] = inputStream.readLong();
+            array[i] = input.readLong();
         return new LongArrayTagImpl(array);
     }
 

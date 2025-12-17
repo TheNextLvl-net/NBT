@@ -20,11 +20,11 @@ public interface Tag {
     /**
      * Writes the tag data to the given NBT output stream.
      *
-     * @param outputStream the NBTOutputStream to write the tag data to
+     * @param output the NBTOutput to write the tag data to
      * @throws IOException if an I/O error occurs while writing to the stream
      */
     @Contract(mutates = "param1")
-    void write(NBTOutputStream outputStream) throws IOException;
+    void write(NBTOutputStream output) throws IOException;
 
     /**
      * Checks whether the current tag is an instance of CompoundTag.

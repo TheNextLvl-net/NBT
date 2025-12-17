@@ -26,7 +26,7 @@ public final class DoubleTagImpl extends NumberTagImpl<Double> implements Double
         outputStream.writeDouble(getValue());
     }
 
-    public static DoubleTagImpl read(NBTInputStream inputStream) throws IOException {
-        return new DoubleTagImpl(inputStream.readDouble());
+    public static DoubleTagImpl read(NBTInputStream input) throws IOException {
+        return new DoubleTagImpl(input.readDouble());
     }
 }

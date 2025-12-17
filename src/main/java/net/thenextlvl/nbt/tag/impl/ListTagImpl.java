@@ -203,11 +203,11 @@ public final class ListTagImpl<V extends Tag> extends ValueTagImpl<List<V>> impl
     }
 
     @SuppressWarnings("unchecked")
-    public static <V extends Tag> ListTagImpl<V> read(NBTInputStream inputStream) throws IOException {
-        var type = inputStream.readByte();
-        var length = inputStream.readInt();
+    public static <V extends Tag> ListTagImpl<V> read(NBTInputStream input) throws IOException {
+        var type = input.readByte();
+        var length = input.readInt();
         var list = new LinkedList<V>();
-        for (var i = 0; i < length; i++) list.add((V) inputStream.readTag(type));
+        for (var i = 0; i < length; i++) list.add((V) input.readTag(type));
         return new ListTagImpl<>(list, type);
     }
 }

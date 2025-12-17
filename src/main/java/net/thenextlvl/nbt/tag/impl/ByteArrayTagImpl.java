@@ -1,7 +1,7 @@
 package net.thenextlvl.nbt.tag.impl;
 
-import net.thenextlvl.nbt.NBTInputStream;
 import net.thenextlvl.nbt.NBTOutputStream;
+import net.thenextlvl.nbt.NBTInputStream;
 import net.thenextlvl.nbt.tag.ByteArrayTag;
 import org.jetbrains.annotations.Contract;
 
@@ -42,10 +42,10 @@ public final class ByteArrayTagImpl extends ValueTagImpl<byte[]> implements Byte
         outputStream.write(getValue());
     }
 
-    public static ByteArrayTagImpl read(NBTInputStream inputStream) throws IOException {
-        var length = inputStream.readInt();
+    public static ByteArrayTagImpl read(NBTInputStream input) throws IOException {
+        var length = input.readInt();
         var bytes = new byte[length];
-        inputStream.readFully(bytes);
+        input.readFully(bytes);
         return new ByteArrayTagImpl(bytes);
     }
 

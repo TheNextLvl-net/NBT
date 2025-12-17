@@ -1,73 +1,24 @@
 package net.thenextlvl.nbt;
 
-import net.thenextlvl.nbt.tag.EscapeTag;
 import net.thenextlvl.nbt.tag.Tag;
 import org.jetbrains.annotations.Contract;
 import org.jspecify.annotations.Nullable;
 
-import java.io.BufferedOutputStream;
-import java.io.DataOutputStream;
+import java.io.Closeable;
+import java.io.DataOutput;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 
-/**
- * A specialized DataOutputStream for writing Named Binary Tag (NBT) data.
- * This stream supports GZIP compression and allows for writing various
- * types of NBT tags.
- */
-public final class NBTOutputStream extends DataOutputStream {
-    private final Charset charset;
-
+public sealed interface NBTOutputStream extends DataOutput, Closeable permits NBTOutputStreamImpl {
     /**
-     * Create an {@code NBTOutputStream} for writing NBT data in a GZIP-compressed format
-     * to the specified output stream, using UTF-8 encoding.
+     * Retrieves the charset used by this writer for encoding data.
      *
-     * @param outputStream the stream to write to
-     * @throws IOException thrown if something goes wrong
+     * @return the {@link Charset} associated with this writer
      */
-    public NBTOutputStream(OutputStream outputStream) throws IOException {
-        this(outputStream, StandardCharsets.UTF_8);
-    }
-
-    /**
-     * Create an {@code NBTOutputStream} for writing NBT data in a GZIP-compressed format
-     * to the specified output stream, using the specified charset.
-     *
-     * @param charset      the charset to write the content with
-     * @param outputStream the stream to write to
-     * @throws IOException thrown if something goes wrong
-     */
-    public NBTOutputStream(OutputStream outputStream, Charset charset) throws IOException {
-        this(outputStream, charset, Compression.GZIP);
-    }
-
-    /**
-     * Create an {@code NBTOutputStream} for writing NBT data in a specified compression format
-     * to the specified output stream, using UTF-8 encoding.
-     *
-     * @param outputStream the stream to write to
-     * @param compression  the compression type to use
-     * @throws IOException thrown if something goes wrong
-     */
-    public NBTOutputStream(OutputStream outputStream, Compression compression) throws IOException {
-        this(outputStream, StandardCharsets.UTF_8, compression);
-    }
-
-    /**
-     * Create an {@code NBTOutputStream} for writing NBT data in a specified compression format
-     * to the specified output stream, using the specified charset.
-     *
-     * @param charset      the charset to write the content with
-     * @param outputStream the stream to write to
-     * @param compression  the compression type to use
-     * @throws IOException thrown if something goes wrong
-     */
-    public NBTOutputStream(OutputStream outputStream, Charset charset, Compression compression) throws IOException {
-        super(new DataOutputStream(new BufferedOutputStream(compression.compress(outputStream))));
-        this.charset = charset;
-    }
+    @Contract(pure = true)
+    Charset getCharset();
 
     /**
      * Write a tag to the output stream
@@ -78,22 +29,70 @@ public final class NBTOutputStream extends DataOutputStream {
      * @throws IllegalArgumentException thrown if an escape tag was provided
      */
     @Contract(mutates = "this")
-    public void writeTag(@Nullable String name, Tag tag) throws IOException, IllegalArgumentException {
-        if (tag instanceof EscapeTag) throw new IllegalArgumentException("EscapeTag not allowed");
-        var bytes = name != null ? name.getBytes(getCharset()) : new byte[0];
-        writeByte(tag.getTypeId());
-        writeShort(bytes.length);
-        write(bytes);
-        tag.write(this);
+    void writeTag(@Nullable String name, Tag tag) throws IOException, IllegalArgumentException;
+
+
+    @Contract(value = " -> new", pure = true)
+    static Builder builder() {
+        return new NBTOutputStreamImpl.Builder();
     }
 
-    /**
-     * Retrieves the charset associated with this stream.
-     *
-     * @return the {@link Charset} used for encoding and decoding in the stream
-     */
-    @Contract(pure = true)
-    public Charset getCharset() {
-        return charset;
+    sealed interface Builder permits NBTOutputStreamImpl.Builder {
+        /**
+         * Sets the character encoding for the output stream.
+         * <p>
+         * Defaults to {@link java.nio.charset.StandardCharsets#UTF_8}.
+         *
+         * @param charset the character encoding to use
+         * @return the builder instance, allowing for method chaining
+         * @since 4.0.0
+         */
+        @Contract(value = "_ -> this", mutates = "this")
+        Builder charset(Charset charset);
+
+        /**
+         * Sets the compression algorithm for the output stream.
+         * <p>
+         * Defaults to {@link Compression#GZIP}.
+         *
+         * @param compression the compression algorithm to use
+         * @return the builder instance, allowing for method chaining
+         * @since 4.0.0
+         */
+        @Contract(value = "_ -> this", mutates = "this")
+        Builder compression(Compression compression);
+
+        /**
+         * Sets the output stream for the NBTOutputStream.
+         *
+         * @param outputStream the output stream to use
+         * @return the builder instance, allowing for method chaining
+         * @since 4.0.0
+         */
+        @Contract(value = "_ -> this", mutates = "this")
+        Builder outputStream(OutputStream outputStream);
+
+        /**
+         * Sets the output file for the NBTOutputStream.
+         *
+         * @param file the file to use
+         * @return the builder instance, allowing for method chaining
+         * @throws IOException if an error occurs while creating the output stream
+         * @since 4.0.0
+         */
+        @Contract(value = "_ -> this", mutates = "this")
+        Builder outputFile(Path file) throws IOException;
+
+        /**
+         * Builds the NBTOutputStream.
+         *
+         * @throws IllegalStateException if no output stream was provided
+         * @throws IOException           if an error occurs while creating the output stream
+         * @see #outputStream(OutputStream)
+         * @see #outputFile(Path)
+         * @since 4.0.0
+         */
+        @Contract(value = "-> new", pure = true)
+        NBTOutputStream build() throws IOException, IllegalStateException;
     }
 }

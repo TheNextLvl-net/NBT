@@ -1,7 +1,7 @@
 package net.thenextlvl.nbt.tag.impl;
 
-import net.thenextlvl.nbt.NBTInputStream;
 import net.thenextlvl.nbt.NBTOutputStream;
+import net.thenextlvl.nbt.NBTInputStream;
 import net.thenextlvl.nbt.tag.StringTag;
 
 import java.io.IOException;
@@ -33,11 +33,11 @@ public final class StringTagImpl extends ValueTagImpl<String> implements StringT
         outputStream.write(bytes);
     }
 
-    public static StringTagImpl read(NBTInputStream inputStream) throws IOException {
-        var length = inputStream.readShort();
+    public static StringTagImpl read(NBTInputStream input) throws IOException {
+        var length = input.readShort();
         var bytes = new byte[length];
-        inputStream.readFully(bytes);
-        var value = new String(bytes, inputStream.getCharset());
+        input.readFully(bytes);
+        var value = new String(bytes, input.getCharset());
         return new StringTagImpl(value);
     }
 }

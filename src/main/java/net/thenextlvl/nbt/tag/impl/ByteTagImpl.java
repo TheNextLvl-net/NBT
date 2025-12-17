@@ -26,7 +26,7 @@ public final class ByteTagImpl extends NumberTagImpl<Byte> implements ByteTag {
         outputStream.write(getValue());
     }
 
-    public static ByteTagImpl read(NBTInputStream inputStream) throws IOException {
-        return new ByteTagImpl(inputStream.readByte());
+    public static ByteTagImpl read(NBTInputStream input) throws IOException {
+        return new ByteTagImpl(input.readByte());
     }
 }

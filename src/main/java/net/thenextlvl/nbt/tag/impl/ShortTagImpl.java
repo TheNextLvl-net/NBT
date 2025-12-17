@@ -26,7 +26,7 @@ public final class ShortTagImpl extends NumberTagImpl<Short> implements ShortTag
         outputStream.writeShort(getValue());
     }
 
-    public static ShortTagImpl read(NBTInputStream inputStream) throws IOException {
-        return new ShortTagImpl(inputStream.readShort());
+    public static ShortTagImpl read(NBTInputStream input) throws IOException {
+        return new ShortTagImpl(input.readShort());
     }
 }
