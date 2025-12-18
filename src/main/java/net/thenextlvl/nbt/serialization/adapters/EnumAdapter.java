@@ -4,8 +4,8 @@ import net.thenextlvl.nbt.serialization.ParserException;
 import net.thenextlvl.nbt.serialization.TagAdapter;
 import net.thenextlvl.nbt.serialization.TagDeserializationContext;
 import net.thenextlvl.nbt.serialization.TagSerializationContext;
-import net.thenextlvl.nbt.tag.StringTag;
-import net.thenextlvl.nbt.tag.Tag;
+import net.thenextlvl.nbt.StringTag;
+import net.thenextlvl.nbt.Tag;
 
 public final class EnumAdapter<T extends Enum<T>> implements TagAdapter<T> {
     private final Class<T> enumClass;

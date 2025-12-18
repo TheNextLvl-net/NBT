@@ -13,7 +13,7 @@ import net.thenextlvl.nbt.serialization.adapters.PathAdapter;
 import net.thenextlvl.nbt.serialization.adapters.ShortAdapter;
 import net.thenextlvl.nbt.serialization.adapters.StringAdapter;
 import net.thenextlvl.nbt.serialization.adapters.UUIDAdapter;
-import net.thenextlvl.nbt.tag.Tag;
+import net.thenextlvl.nbt.Tag;
 import org.jspecify.annotations.NonNull;
 
 import java.io.File;

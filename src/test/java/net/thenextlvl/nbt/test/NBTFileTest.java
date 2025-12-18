@@ -2,10 +2,10 @@ package net.thenextlvl.nbt.test;
 
 import net.thenextlvl.nbt.NBTInputStream;
 import net.thenextlvl.nbt.NBTOutputStream;
-import net.thenextlvl.nbt.tag.CompoundTag;
-import net.thenextlvl.nbt.tag.DoubleTag;
-import net.thenextlvl.nbt.tag.IntArrayTag;
-import net.thenextlvl.nbt.tag.ListTag;
+import net.thenextlvl.nbt.CompoundTag;
+import net.thenextlvl.nbt.DoubleTag;
+import net.thenextlvl.nbt.IntArrayTag;
+import net.thenextlvl.nbt.ListTag;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 
@@ -33,22 +33,22 @@ public class NBTFileTest {
 
         assertFalse(Files.isRegularFile(path), path + " already exists");
 
-        try (var nbt = NBTOutputStream.builder().outputFile(path).build()) {
+        try (var nbt = NBTOutputStream.create(path)) {
             nbt.writeTag(null, contents);
 
             assertTrue(Files.isRegularFile(path), "Failed to create file");
         }
 
-        try (var reader = NBTInputStream.builder().inputFile(path).build()) {
+        try (var reader = NBTInputStream.create(path)) {
             assertEquals(contents, reader.readTag(), "File was written incorrectly");
         }
 
         var modified = CompoundTag.empty();
-        try (var nbt = NBTOutputStream.builder().outputFile(path).build()) {
+        try (var nbt = NBTOutputStream.create(path)) {
             nbt.writeTag(null, modified);
         }
 
-        try (var reader = NBTInputStream.builder().inputFile(path).build()) {
+        try (var reader = NBTInputStream.create(path)) {
             assertEquals(modified, reader.readTag(), "File was not overridden");
         }
     }
