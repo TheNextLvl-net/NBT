@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
-class TagReaders {
+final class TagReaders {
     public static StringTag readString(NBTInputStream input) throws IOException {
         var length = input.readShort();
         var bytes = new byte[length];
