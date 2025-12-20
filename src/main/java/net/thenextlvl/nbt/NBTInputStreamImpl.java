@@ -1,5 +1,19 @@
 package net.thenextlvl.nbt;
 
+import net.thenextlvl.nbt.tag.ByteArrayTag;
+import net.thenextlvl.nbt.tag.ByteTag;
+import net.thenextlvl.nbt.tag.CompoundTag;
+import net.thenextlvl.nbt.tag.DoubleTag;
+import net.thenextlvl.nbt.tag.EscapeTag;
+import net.thenextlvl.nbt.tag.FloatTag;
+import net.thenextlvl.nbt.tag.IntArrayTag;
+import net.thenextlvl.nbt.tag.IntTag;
+import net.thenextlvl.nbt.tag.ListTag;
+import net.thenextlvl.nbt.tag.LongArrayTag;
+import net.thenextlvl.nbt.tag.LongTag;
+import net.thenextlvl.nbt.tag.ShortTag;
+import net.thenextlvl.nbt.tag.StringTag;
+import net.thenextlvl.nbt.tag.Tag;
 import org.jetbrains.annotations.CheckReturnValue;
 import org.jetbrains.annotations.Contract;
 import org.jspecify.annotations.Nullable;
@@ -25,7 +39,7 @@ final class NBTInputStreamImpl extends DataInputStream implements NBTInputStream
         var type = readByte();
         if (type != CompoundTag.ID) throw new IllegalArgumentException("Root tag must be a CompoundTag");
         skipNBytes(readShort());
-        return CompoundTagImpl.read(this);
+        return TagReaders.readCompound(this);
     }
 
     @Override
@@ -37,9 +51,11 @@ final class NBTInputStreamImpl extends DataInputStream implements NBTInputStream
         var bytes = new byte[nameLength];
         readFully(bytes);
         var name = new String(bytes, getCharset());
-        return Map.entry(name, CompoundTagImpl.read(this));
+        return Map.entry(name, TagReaders.readCompound(this));
     }
 
+    @CheckReturnValue
+    @Contract(mutates = "this")
     public Map.@Nullable Entry<String, Tag> readNamedTagInternal() throws IOException, IllegalArgumentException {
         var type = readByte();
         if (type == EscapeTag.ID) return null;
@@ -53,7 +69,7 @@ final class NBTInputStreamImpl extends DataInputStream implements NBTInputStream
 
     @CheckReturnValue
     @Contract(value = "_ -> new", mutates = "this")
-    public Tag readTag(int type) throws IOException {
+    public Tag readTag(byte type) throws IOException {
         var mapping = readers.get(type);
         if (mapping != null) return mapping.read(this);
         throw new IllegalArgumentException("Unknown tag type: " + type);
@@ -64,30 +80,30 @@ final class NBTInputStreamImpl extends DataInputStream implements NBTInputStream
         return charset;
     }
 
-    private final Map<Integer, ReadingFunction> readers = new HashMap<>(Map.ofEntries(
-            Map.entry(ByteArrayTag.ID, ByteArrayTagImpl::read),
-            Map.entry(ByteTag.ID, ByteTagImpl::read),
-            Map.entry(CompoundTag.ID, input -> CompoundTagImpl.read((NBTInputStreamImpl) input)),
-            Map.entry(DoubleTag.ID, DoubleTagImpl::read),
+    private final Map<Byte, ReadingFunction> readers = new HashMap<>(Map.ofEntries(
+            Map.entry(ByteArrayTag.ID, TagReaders::readByteArray),
+            Map.entry(ByteTag.ID, TagReaders::readByte),
+            Map.entry(CompoundTag.ID, input -> TagReaders.readCompound((NBTInputStreamImpl) input)),
+            Map.entry(DoubleTag.ID, TagReaders::readDouble),
             Map.entry(EscapeTag.ID, ignored -> EscapeTag.INSTANCE),
-            Map.entry(FloatTag.ID, FloatTagImpl::read),
-            Map.entry(IntArrayTag.ID, IntArrayTagImpl::read),
-            Map.entry(IntTag.ID, IntTagImpl::read),
-            Map.entry(ListTag.ID, input -> ListTagImpl.read((NBTInputStreamImpl) input)),
-            Map.entry(LongArrayTag.ID, LongArrayTagImpl::read),
-            Map.entry(LongTag.ID, LongTagImpl::read),
-            Map.entry(ShortTag.ID, ShortTagImpl::read),
-            Map.entry(StringTag.ID, StringTagImpl::read)
+            Map.entry(FloatTag.ID, TagReaders::readFloat),
+            Map.entry(IntArrayTag.ID, TagReaders::readIntArray),
+            Map.entry(IntTag.ID, TagReaders::readInt),
+            Map.entry(ListTag.ID, input -> TagReaders.readList((NBTInputStreamImpl) input)),
+            Map.entry(LongArrayTag.ID, TagReaders::readLongArray),
+            Map.entry(LongTag.ID, TagReaders::readLong),
+            Map.entry(ShortTag.ID, TagReaders::readShort),
+            Map.entry(StringTag.ID, TagReaders::readString)
     ));
 
     @Override
-    public void registerReader(int typeId, ReadingFunction function) throws IllegalArgumentException {
+    public void registerReader(byte typeId, ReadingFunction function) throws IllegalArgumentException {
         if (!readers.containsKey(typeId)) readers.put(typeId, function);
         else throw new IllegalArgumentException("Reader for type " + typeId + " is already registered");
     }
 
     @Override
-    public boolean unregisterReader(int typeId) {
+    public boolean unregisterReader(byte typeId) {
         return readers.remove(typeId) != null;
     }
 }         

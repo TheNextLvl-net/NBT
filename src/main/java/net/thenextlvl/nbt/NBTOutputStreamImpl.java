@@ -1,5 +1,7 @@
 package net.thenextlvl.nbt;
 
+import net.thenextlvl.nbt.tag.EscapeTag;
+import net.thenextlvl.nbt.tag.Tag;
 import org.jspecify.annotations.Nullable;
 
 import java.io.BufferedOutputStream;

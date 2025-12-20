@@ -4,8 +4,8 @@ import net.thenextlvl.nbt.serialization.ParserException;
 import net.thenextlvl.nbt.serialization.TagAdapter;
 import net.thenextlvl.nbt.serialization.TagDeserializationContext;
 import net.thenextlvl.nbt.serialization.TagSerializationContext;
-import net.thenextlvl.nbt.IntTag;
-import net.thenextlvl.nbt.Tag;
+import net.thenextlvl.nbt.tag.IntTag;
+import net.thenextlvl.nbt.tag.Tag;
 import org.jetbrains.annotations.ApiStatus;
 
 @ApiStatus.Internal

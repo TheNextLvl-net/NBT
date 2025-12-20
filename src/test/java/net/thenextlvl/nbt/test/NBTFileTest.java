@@ -2,10 +2,10 @@ package net.thenextlvl.nbt.test;
 
 import net.thenextlvl.nbt.NBTInputStream;
 import net.thenextlvl.nbt.NBTOutputStream;
-import net.thenextlvl.nbt.CompoundTag;
-import net.thenextlvl.nbt.DoubleTag;
-import net.thenextlvl.nbt.IntArrayTag;
-import net.thenextlvl.nbt.ListTag;
+import net.thenextlvl.nbt.tag.CompoundTag;
+import net.thenextlvl.nbt.tag.DoubleTag;
+import net.thenextlvl.nbt.tag.IntArrayTag;
+import net.thenextlvl.nbt.tag.ListTag;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 

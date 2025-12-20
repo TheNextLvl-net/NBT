@@ -44,8 +44,8 @@ You can read any NBT file using NBTInputStream. The stream transparently handles
 
 ```java
 import net.thenextlvl.nbt.NBTInputStream;
-import net.thenextlvl.nbt.CompoundTag;
-import net.thenextlvl.nbt.Tag;
+import net.thenextlvl.nbt.tag.CompoundTag;
+import net.thenextlvl.nbt.tag.Tag;
 
 import javax.swing.text.html.Option;
 import java.io.FileInputStream;
@@ -82,7 +82,7 @@ Use NBTOutputStream to write a named root tag. The stream writes GZIP-compressed
 
 ```java
 import net.thenextlvl.nbt.NBTOutputStream;
-import net.thenextlvl.nbt.CompoundTag;
+import net.thenextlvl.nbt.tag.CompoundTag;
 
 import java.io.FileOutputStream;
 
@@ -114,7 +114,7 @@ If you prefer a small wrapper for file IO, NBTFile<R extends CompoundTag> can lo
 ```java
 import core.io.PathIO; // from net.thenextlvl.core:files
 import net.thenextlvl.nbt.file.NBTFile;
-import net.thenextlvl.nbt.CompoundTag;
+import net.thenextlvl.nbt.tag.CompoundTag;
 
 public static class NBTExample {
 
@@ -153,8 +153,8 @@ An `NBT` instance comes with built-in adapters for common types:
 
 ```java
 import net.thenextlvl.nbt.serialization.NBT;
-import net.thenextlvl.nbt.CompoundTag;
-import net.thenextlvl.nbt.Tag;
+import net.thenextlvl.nbt.tag.CompoundTag;
+import net.thenextlvl.nbt.tag.Tag;
 
 public record Player(String name, int level) {
 
@@ -162,10 +162,10 @@ public record Player(String name, int level) {
         var nbt = NBT.builder().registerTypeAdapter(Player.class, new TagAdapter<Player>() {
             @Override
             public Tag serialize(Player player, TagSerializationContext ctx) {
-                var tag = CompoundTag.empty();
-                tag.add("name", player.name());
-                tag.add("level", player.level());
-                return tag;
+                return CompoundTag.builder()
+                        .put("name", player.name())
+                        .put("level", player.level())
+                        .build();
             }
 
             @Override
@@ -188,10 +188,10 @@ You can also register serializer and deserializer separately:
 ```java
 NBT nbt = NBT.builder()
         .registerTypeAdapter(Player.class, (TagSerializer<Player>) (player, context) -> {
-            var tag = net.thenextlvl.nbt.CompoundTag.empty();
-            tag.add("name", player.name());
-            tag.add("level", player.level());
-            return tag;
+            return CompoundTag.builder()
+                    .put("name", player.name())
+                    .put("level", player.level())
+                    .build();
         })
         .registerTypeAdapter(Player.class, (TagDeserializer<Player>) (tag, context) -> {
             var root = tag.getAsCompound();
@@ -272,15 +272,16 @@ class InventoryItemAdapter implements TagAdapter<InventoryItem> {
 class PlayerDataAdapter implements TagAdapter<PlayerData> {
     @Override
     public Tag serialize(PlayerData data, TagSerializationContext context) throws ParserException {
-        var list = ListTag.of(CompoundTag.ID);
+        var builder = ListTag.builder()
+                .contentType(CompoundTag.ID);
         for (var it : data.items()) {
             // Let context use InventoryItemAdapter
-            list.add(context.serialize(it));
+            builder.add(context.serialize(it));
         }
         return CompoundTag.builder()
                 .put("name", data.name())
                 .put("pos", context.serialize(data.pos())) // delegate to PositionAdapter
-                .put("items", list)
+                .put("items", builder.build())
                 .build();
     }
 

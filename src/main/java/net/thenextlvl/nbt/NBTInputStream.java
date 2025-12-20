@@ -1,5 +1,7 @@
 package net.thenextlvl.nbt;
 
+import net.thenextlvl.nbt.tag.CompoundTag;
+import net.thenextlvl.nbt.tag.Tag;
 import org.jetbrains.annotations.CheckReturnValue;
 import org.jetbrains.annotations.Contract;
 
@@ -57,7 +59,7 @@ public sealed interface NBTInputStream extends DataInput, Closeable permits NBTI
      * @since 4.0.0
      */
     @Contract(mutates = "this")
-    void registerReader(int typeId, ReadingFunction function) throws IllegalArgumentException;
+    void registerReader(byte typeId, ReadingFunction function) throws IllegalArgumentException;
 
     /**
      * Unregister a tag reader
@@ -67,7 +69,7 @@ public sealed interface NBTInputStream extends DataInput, Closeable permits NBTI
      * @since 4.0.0
      */
     @Contract(mutates = "this")
-    boolean unregisterReader(int typeId);
+    boolean unregisterReader(byte typeId);
 
     /**
      * A functional interface for reading tags

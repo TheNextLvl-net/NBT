@@ -1,6 +1,6 @@
 package net.thenextlvl.nbt.serialization;
 
-import net.thenextlvl.nbt.Tag;
+import net.thenextlvl.nbt.tag.Tag;
 import org.jetbrains.annotations.Contract;
 
 import java.lang.reflect.Type;

@@ -3,8 +3,8 @@ package net.thenextlvl.nbt.serialization.adapters;
 import net.thenextlvl.nbt.serialization.TagAdapter;
 import net.thenextlvl.nbt.serialization.TagDeserializationContext;
 import net.thenextlvl.nbt.serialization.TagSerializationContext;
-import net.thenextlvl.nbt.CompoundTag;
-import net.thenextlvl.nbt.Tag;
+import net.thenextlvl.nbt.tag.CompoundTag;
+import net.thenextlvl.nbt.tag.Tag;
 import org.jetbrains.annotations.ApiStatus;
 
 import java.util.UUID;
@@ -26,9 +26,9 @@ public final class UUIDAdapter implements TagAdapter<UUID> {
 
     @Override
     public Tag serialize(UUID uuid, TagSerializationContext context) {
-        var tag = CompoundTag.empty();
-        tag.add("most", uuid.getMostSignificantBits());
-        tag.add("least", uuid.getLeastSignificantBits());
-        return tag;
+        return CompoundTag.builder()
+                .put("most", uuid.getMostSignificantBits())
+                .put("least", uuid.getLeastSignificantBits())
+                .build();
     }
 }

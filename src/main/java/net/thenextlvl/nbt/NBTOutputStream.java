@@ -1,5 +1,6 @@
 package net.thenextlvl.nbt;
 
+import net.thenextlvl.nbt.tag.Tag;
 import org.jetbrains.annotations.Contract;
 import org.jspecify.annotations.Nullable;
 
