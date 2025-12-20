@@ -42,13 +42,12 @@ public sealed interface NBTInputStream extends DataInput, Closeable permits NBTI
      * @return a {@code Map.Entry} containing the tag and its name
      * @throws IOException              thrown if something goes wrong
      * @throws IllegalArgumentException thrown if the root tag is not a CompoundTag
-     * @throws IllegalStateException    thrown if the root tag name is not defined
      * @see #readTag()
      * @since 4.0.0
      */
     @CheckReturnValue
     @Contract(value = " -> new", mutates = "this")
-    Map.Entry<String, CompoundTag> readNamedTag() throws IOException, IllegalArgumentException, IllegalStateException;
+    Map.Entry<String, CompoundTag> readNamedTag() throws IOException, IllegalArgumentException;
 
     /**
      * Register a custom tag reader

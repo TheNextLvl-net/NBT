@@ -43,13 +43,12 @@ final class NBTInputStreamImpl extends DataInputStream implements NBTInputStream
     }
 
     @Override
-    public Map.Entry<String, CompoundTag> readNamedTag() throws IOException, IllegalArgumentException, IllegalStateException {
+    public Map.Entry<String, CompoundTag> readNamedTag() throws IOException, IllegalArgumentException {
         var type = readByte();
         if (type != CompoundTag.ID) throw new IllegalArgumentException("Root tag must be a CompoundTag");
         var nameLength = readShort();
-        if (nameLength == 0) throw new IllegalStateException("Root tag name is not defined");
         var bytes = new byte[nameLength];
-        readFully(bytes);
+        if (nameLength > 0) readFully(bytes);
         var name = new String(bytes, getCharset());
         return Map.entry(name, TagReaders.readCompound(this));
     }
