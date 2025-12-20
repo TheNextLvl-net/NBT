@@ -17,37 +17,42 @@ final class IntArrayTagImpl extends ValueTagImpl<int[]> implements IntArrayTag {
 
     @Override
     public int size() {
-        return getValue().length;
+        return value.length;
     }
 
     @Override
     public Integer get(int index) {
-        return getValue()[index];
+        return value[index];
+    }
+
+    @Override
+    public int[] getValue() {
+        return value.clone();
     }
 
     @Override
     public void write(NBTOutputStream outputStream) throws IOException {
-        outputStream.writeInt(getValue().length);
-        for (var i : getValue()) outputStream.writeInt(i);
+        outputStream.writeInt(value.length);
+        for (var i : value) outputStream.writeInt(i);
     }
 
     @Override
     public boolean equals(Object object) {
         if (this == object) return true;
-        if (!(object instanceof IntArrayTag valueTag)) return false;
-        return Arrays.equals(getValue(), valueTag.getValue());
+        if (!(object instanceof IntArrayTagImpl valueTag)) return false;
+        return Arrays.equals(value, valueTag.value);
     }
 
     @Override
     public int hashCode() {
-        return Arrays.hashCode(getValue());
+        return Arrays.hashCode(value);
     }
 
     @Override
     public String toString() {
         return getClass().getSimpleName() +
                 "{" +
-                "value=" + Arrays.toString(getValue()) +
+                "value=" + Arrays.toString(value) +
                 '}';
     }
 }

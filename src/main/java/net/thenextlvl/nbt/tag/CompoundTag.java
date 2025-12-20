@@ -3,7 +3,6 @@ package net.thenextlvl.nbt.tag;
 import org.jetbrains.annotations.Contract;
 import org.jspecify.annotations.NullUnmarked;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -151,7 +150,7 @@ public sealed interface CompoundTag extends ValueTag<Map<String, Tag>> permits C
      */
     @Contract(value = " -> new", pure = true)
     static CompoundTag empty() {
-        return of(new LinkedHashMap<>());
+        return new CompoundTagImpl();
     }
 
     /**
@@ -181,7 +180,7 @@ public sealed interface CompoundTag extends ValueTag<Map<String, Tag>> permits C
          * @return the builder instance, allowing for method chaining
          */
         @Contract(value = "_, _ -> this", mutates = "this")
-        Builder put(String name, Boolean value);
+        Builder put(String name, boolean value);
 
         /**
          * Adds a byte array value to the builder with the given name.
@@ -218,15 +217,6 @@ public sealed interface CompoundTag extends ValueTag<Map<String, Tag>> permits C
 
         /**
          * Adds a numerical value to the builder with the specified name.
-         * The numerical value is internally represented using a tag corresponding to its type:
-         * <ul>
-         *     <li>Integer values are stored as {@link IntTag}.</li>
-         *     <li>Float values are stored as {@link FloatTag}.</li>
-         *     <li>Short values are stored as {@link ShortTag}.</li>
-         *     <li>Long values are stored as {@link LongTag}.</li>
-         *     <li>Byte values are stored as {@link ByteTag}.</li>
-         *     <li>Any other numeric type defaults to {@link DoubleTag}.</li>
-         * </ul>
          *
          * @param name   the name of the value to be inserted
          * @param number the numerical value to be inserted

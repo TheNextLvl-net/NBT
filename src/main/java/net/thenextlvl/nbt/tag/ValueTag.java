@@ -10,9 +10,9 @@ import org.jetbrains.annotations.Contract;
  */
 public interface ValueTag<T> extends Tag {
     /**
-     * Retrieves the value held by this tag.
+     * Retrieves the immutable value held by this tag.
      *
-     * @return the value of type {@code T} associated with this tag
+     * @return the immutable value of type {@code T} associated with this tag
      */
     @Contract(pure = true)
     T getValue();

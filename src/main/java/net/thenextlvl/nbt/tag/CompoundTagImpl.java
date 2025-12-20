@@ -15,6 +15,9 @@ final class CompoundTagImpl extends ValueTagImpl<Map<String, Tag>> implements Co
     public CompoundTagImpl(Map<String, Tag> value) {
         super(Collections.unmodifiableMap(new LinkedHashMap<>(value)));
     }
+    public CompoundTagImpl() {
+        super(Collections.emptyMap());
+    }
 
     @Override
     public boolean isCompound() {
@@ -106,17 +109,12 @@ final class CompoundTagImpl extends ValueTagImpl<Map<String, Tag>> implements Co
         return new Builder();
     }
 
-    @Override
-    public Map<String, Tag> getValue() {
-        return value;
-    }
-
     public static final class Builder implements CompoundTag.Builder {
         private final Map<String, Tag> values = new LinkedHashMap<>();
 
         @Override
-        public Builder put(String name, Boolean value) {
-            return put(name, new ByteTagImpl(value ? (byte) 1 : 0));
+        public Builder put(String name, boolean value) {
+            return put(name, ByteTag.of(value));
         }
 
         @Override
@@ -136,14 +134,7 @@ final class CompoundTagImpl extends ValueTagImpl<Map<String, Tag>> implements Co
 
         @Override
         public Builder put(String name, Number number) {
-            return switch (number) {
-                case Integer value -> put(name, new IntTagImpl(value));
-                case Float value -> put(name, new FloatTagImpl(value));
-                case Short value -> put(name, new ShortTagImpl(value));
-                case Long value -> put(name, LongTag.of(value));
-                case Byte value -> put(name, ByteTag.of(value));
-                default -> put(name, new DoubleTagImpl(number.doubleValue()));
-            };
+            return put(name, NumberTag.of(number));
         }
 
         @Override

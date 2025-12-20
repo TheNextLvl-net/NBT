@@ -24,4 +24,17 @@ public sealed interface ByteTag extends NumberTag<Byte> permits ByteTagImpl {
     static ByteTag of(byte value) {
         return new ByteTagImpl(value);
     }
+
+    /**
+     * Creates a new instance of ByteTag with the specified boolean value.
+     * The boolean value is converted to a byte value (1 for true, 0 for false).
+     *
+     * @param value the boolean value to encapsulate within the ByteTag
+     * @return a new ByteTag instance containing the converted byte value
+     * @since 4.0.0
+     */
+    @Contract(value = "_ -> new", pure = true)
+    static ByteTag of(boolean value) {
+        return of(value ? (byte) 1 : (byte) 0);
+    }
 }

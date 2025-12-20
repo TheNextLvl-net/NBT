@@ -198,7 +198,8 @@ final class ListTagImpl<T extends Tag> extends ValueTagImpl<@Unmodifiable List<T
         private @Nullable Byte contentTypeId;
 
         @Override
-        public ListTag.Builder<T> contentType(byte contentTypeId) throws IllegalStateException {
+        public ListTag.Builder<T> contentType(byte contentTypeId) throws IllegalStateException, IllegalArgumentException {
+            if (contentTypeId == EscapeTag.ID) throw new IllegalArgumentException("Content type cannot be EscapeTag");
             if (this.contentTypeId != null && !value.isEmpty())
                 throw new IllegalStateException("Content type cannot be changed after adding values");
             this.contentTypeId = contentTypeId;
@@ -212,9 +213,7 @@ final class ListTagImpl<T extends Tag> extends ValueTagImpl<@Unmodifiable List<T
 
         @Override
         public ListTag.Builder<T> add(int index, T tag) throws IllegalArgumentException {
-            if (contentTypeId == null) contentTypeId = tag.getTypeId();
-            else if (contentTypeId != tag.getTypeId())
-                throw new IllegalArgumentException("ListTag content type mismatch");
+            checkOrReplaceContentType(tag);
             value.add(index, tag);
             return this;
         }
@@ -246,9 +245,7 @@ final class ListTagImpl<T extends Tag> extends ValueTagImpl<@Unmodifiable List<T
 
         @Override
         public ListTag.Builder<T> set(int index, T tag) throws IllegalArgumentException {
-            if (contentTypeId == null) contentTypeId = tag.getTypeId();
-            else if (contentTypeId != tag.getTypeId())
-                throw new IllegalArgumentException("ListTag content type mismatch");
+            checkOrReplaceContentType(tag);
             value.set(index, tag);
             return this;
         }
@@ -281,6 +278,15 @@ final class ListTagImpl<T extends Tag> extends ValueTagImpl<@Unmodifiable List<T
         public ListTag<T> build() {
             if (contentTypeId == null) throw new IllegalStateException("Empty ListTag must have a content type");
             return new ListTagImpl<>(value, contentTypeId);
+        }
+
+        private void checkOrReplaceContentType(T tag) {
+            if (contentTypeId == null) {
+                if (tag.getTypeId() == EscapeTag.ID)
+                    throw new IllegalArgumentException("Content type cannot be EscapeTag");
+                contentTypeId = tag.getTypeId();
+            } else if (contentTypeId != tag.getTypeId())
+                throw new IllegalArgumentException("ListTag content type mismatch");
         }
     }
 }

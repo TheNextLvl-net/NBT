@@ -101,10 +101,12 @@ public sealed interface ListTag<T extends Tag> extends ValueTag<@Unmodifiable Li
      * @param <T>           the type of tags contained in the list
      * @param contentTypeId the byte ID representing the content type of the tag
      * @return a new empty {@link ListTag} with the given content type ID
+     * @throws IllegalArgumentException if the content type ID is EscapeTag
      * @since 4.0.0
      */
     @Contract(value = "_ -> new", pure = true)
-    static <T extends Tag> ListTag<T> empty(byte contentTypeId) {
+    static <T extends Tag> ListTag<T> empty(byte contentTypeId) throws IllegalArgumentException {
+        if (contentTypeId == EscapeTag.ID) throw new IllegalArgumentException("Content type cannot be EscapeTag");
         return new ListTagImpl<>(contentTypeId);
     }
 
@@ -133,10 +135,11 @@ public sealed interface ListTag<T extends Tag> extends ValueTag<@Unmodifiable Li
          *
          * @param contentTypeId the byte ID representing the content type of the tag
          * @return the builder instance, allowing for method chaining
-         * @throws IllegalStateException if the content type ID is already set and values have been added
+         * @throws IllegalStateException    if the content type ID is already set and values have been added
+         * @throws IllegalArgumentException if the content type ID is EscapeTag
          */
         @Contract(value = "_ -> this", mutates = "this")
-        Builder<T> contentType(byte contentTypeId) throws IllegalStateException;
+        Builder<T> contentType(byte contentTypeId) throws IllegalStateException, IllegalArgumentException;
 
         /**
          * Adds a tag value to the builder.

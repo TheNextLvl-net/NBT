@@ -19,38 +19,43 @@ final class ByteArrayTagImpl extends ValueTagImpl<byte[]> implements ByteArrayTa
     @Override
     @Contract(pure = true)
     public int size() {
-        return getValue().length;
+        return value.length;
     }
 
     @Override
     @Contract(pure = true)
     public Byte get(int index) {
-        return getValue()[index];
+        return value[index];
+    }
+
+    @Override
+    public byte[] getValue() {
+        return value.clone();
     }
 
     @Override
     public void write(NBTOutputStream outputStream) throws IOException {
-        outputStream.writeInt(getValue().length);
-        outputStream.write(getValue());
+        outputStream.writeInt(value.length);
+        outputStream.write(value);
     }
 
     @Override
     public boolean equals(Object object) {
         if (this == object) return true;
-        if (!(object instanceof ByteArrayTag valueTag)) return false;
-        return Arrays.equals(getValue(), valueTag.getValue());
+        if (!(object instanceof ByteArrayTagImpl valueTag)) return false;
+        return Arrays.equals(value, valueTag.value);
     }
 
     @Override
     public int hashCode() {
-        return Arrays.hashCode(getValue());
+        return Arrays.hashCode(value);
     }
 
     @Override
     public String toString() {
         return getClass().getSimpleName() +
                 "{" +
-                "value=" + Arrays.toString(getValue()) +
+                "value=" + Arrays.toString(value) +
                 '}';
     }
 }
