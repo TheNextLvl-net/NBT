@@ -71,6 +71,14 @@ public class NBTFileTest {
     }
 
     @Test
+    public void testCompoundTagImmutability() {
+        var tag = CompoundTag.of(Map.of("test", IntTag.of(1)));
+        assertThrows(UnsupportedOperationException.class, () -> tag.getValue().put("test", IntTag.of(2)));
+        assertThrows(UnsupportedOperationException.class, () -> tag.getValue().remove("test"));
+        assertThrows(UnsupportedOperationException.class, () -> tag.getValue().clear());
+    }
+
+    @Test
     public void testListTagImmutability() {
         var list = ListTag.of(IntTag.of(1));
         assertThrows(UnsupportedOperationException.class, () -> list.add(IntTag.of(2)));
