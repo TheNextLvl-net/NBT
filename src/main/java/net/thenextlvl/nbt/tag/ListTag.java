@@ -122,6 +122,118 @@ public sealed interface ListTag<T extends Tag> extends ValueTag<@Unmodifiable Li
         return new ListTagImpl.Builder<>();
     }
 
+    @Override
+    @Deprecated
+    @Contract(value = "_ -> fail")
+    default boolean add(T t) throws UnsupportedOperationException {
+        throw new UnsupportedOperationException("ListTag is immutable");
+    }
+
+    @Override
+    @Deprecated
+    @Contract(value = "_, _ -> fail")
+    default void add(int i, T t) throws UnsupportedOperationException {
+        throw new UnsupportedOperationException("ListTag is immutable");
+    }
+
+    @Override
+    @Deprecated
+    @Contract(value = "_ -> fail")
+    default boolean addAll(Collection<? extends T> collection) throws UnsupportedOperationException {
+        throw new UnsupportedOperationException("ListTag is immutable");
+    }
+
+    @Override
+    @Deprecated
+    @Contract(value = "_, _ -> fail")
+    default boolean addAll(int i, Collection<? extends T> collection) throws UnsupportedOperationException {
+        throw new UnsupportedOperationException("ListTag is immutable");
+    }
+
+    @Override
+    @Deprecated
+    @Contract(value = "_ -> fail")
+    default boolean remove(Object o) throws UnsupportedOperationException {
+        throw new UnsupportedOperationException("ListTag is immutable");
+    }
+
+    @Override
+    @Deprecated
+    @Contract(value = "_ -> fail")
+    default boolean removeAll(Collection<?> collection) throws UnsupportedOperationException {
+        throw new UnsupportedOperationException("ListTag is immutable");
+    }
+
+    @Override
+    @Deprecated
+    @Contract(value = "_ -> fail")
+    default boolean retainAll(Collection<?> collection) throws UnsupportedOperationException {
+        throw new UnsupportedOperationException("ListTag is immutable");
+    }
+
+    @Override
+    @Deprecated
+    @Contract(value = "_ -> fail")
+    default void addFirst(T t) throws UnsupportedOperationException {
+        throw new UnsupportedOperationException("ListTag is immutable");
+    }
+
+    @Override
+    @Deprecated
+    @Contract(value = "_ -> fail")
+    default void addLast(T t) throws UnsupportedOperationException {
+        throw new UnsupportedOperationException("ListTag is immutable");
+    }
+
+    @Override
+    @Deprecated
+    @Contract(value = "_ -> fail")
+    default boolean removeIf(Predicate<? super T> filter) throws UnsupportedOperationException {
+        throw new UnsupportedOperationException("ListTag is immutable");
+    }
+
+    @Override
+    @Deprecated
+    @Contract(value = "_ -> fail")
+    default T remove(int i) throws UnsupportedOperationException {
+        throw new UnsupportedOperationException("ListTag is immutable");
+    }
+
+    @Override
+    @Deprecated
+    @Contract(value = " -> fail")
+    default T removeFirst() throws UnsupportedOperationException {
+        throw new UnsupportedOperationException("ListTag is immutable");
+    }
+
+    @Override
+    @Deprecated
+    @Contract(value = " -> fail")
+    default T removeLast() throws UnsupportedOperationException {
+        throw new UnsupportedOperationException("ListTag is immutable");
+    }
+
+    @Override
+    @Deprecated
+    @Contract(value = "_ -> fail")
+    default void replaceAll(UnaryOperator<T> operator) throws UnsupportedOperationException {
+        throw new UnsupportedOperationException("ListTag is immutable");
+    }
+
+    @Override
+    @Deprecated
+    @Contract(value = " -> fail")
+    default void clear() throws UnsupportedOperationException {
+        throw new UnsupportedOperationException("ListTag is immutable");
+    }
+
+    @Override
+    @Deprecated
+    @Contract(value = "_, _ -> fail")
+    default T set(int i, T t) throws UnsupportedOperationException {
+        throw new UnsupportedOperationException("ListTag is immutable");
+    }
+
     /**
      * A static nested builder class for constructing instances of {@code ListTag}.
      * Provides methods to configure and build a {@code ListTag} using a fluent API.
