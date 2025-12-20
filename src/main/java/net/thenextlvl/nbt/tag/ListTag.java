@@ -58,10 +58,7 @@ public sealed interface ListTag<T extends Tag> extends ValueTag<@Unmodifiable Li
      */
     @Contract(value = "_, _ -> new", pure = true)
     static <T extends Tag> ListTag<T> of(byte contentTypeId, List<T> content) throws IllegalArgumentException {
-        return ListTag.<T>builder()
-                .contentType(contentTypeId)
-                .addAll(content)
-                .build();
+        return ListTag.<T>builder().contentType(contentTypeId).addAll(content).build();
     }
 
     /**
@@ -90,9 +87,7 @@ public sealed interface ListTag<T extends Tag> extends ValueTag<@Unmodifiable Li
      */
     @Contract(value = "_ -> new", pure = true)
     static <T extends Tag> ListTag<T> of(List<T> content) throws IllegalArgumentException {
-        return ListTag.<T>builder()
-                .addAll(content)
-                .build();
+        return ListTag.<T>builder().addAll(content).build();
     }
 
     /**
