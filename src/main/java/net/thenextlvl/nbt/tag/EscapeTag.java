@@ -1,13 +1,9 @@
 package net.thenextlvl.nbt.tag;
 
-import net.thenextlvl.nbt.tag.impl.EscapeTagImpl;
-import org.jspecify.annotations.NullMarked;
-
 /**
  * Represents a singleton instance of an escape tag used in NBT (Named Binary Tag) serialization.
  * This class is used as a unique identifier for escape tags in NBT serialization streams.
  */
-@NullMarked
 public sealed interface EscapeTag extends Tag permits EscapeTagImpl {
     /**
      * Singleton instance of {@link EscapeTag}. Represents a unique escape tag used in
@@ -19,5 +15,5 @@ public sealed interface EscapeTag extends Tag permits EscapeTagImpl {
     /**
      * Represents the unique identifier for this Tag.
      */
-    int ID = 0;
+    byte ID = 0;
 }

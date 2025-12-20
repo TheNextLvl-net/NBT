@@ -2,14 +2,12 @@ package net.thenextlvl.nbt.serialization;
 
 import net.thenextlvl.nbt.tag.Tag;
 import org.jetbrains.annotations.Contract;
-import org.jspecify.annotations.NullMarked;
 
 import java.lang.reflect.Type;
 
 /**
  * Interface defining the context for deserializing tags into their respective objects.
  */
-@NullMarked
 public sealed interface TagDeserializationContext permits NBT {
     /**
      * Deserializes a given tag to an object of the specified type.

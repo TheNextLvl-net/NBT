@@ -1,20 +1,17 @@
 package net.thenextlvl.nbt.tag;
 
-import net.thenextlvl.nbt.tag.impl.ByteTagImpl;
 import org.jetbrains.annotations.Contract;
-import org.jspecify.annotations.NullMarked;
 
 /**
  * The ByteTag class represents a byte value in the tag structure.
  * It extends the NumberTag class with Byte as the specific number type.
  * This class provides methods to manipulate the byte value and read/write it to an NBT stream.
  */
-@NullMarked
 public sealed interface ByteTag extends NumberTag<Byte> permits ByteTagImpl {
     /**
      * Represents the unique identifier for this Tag.
      */
-    int ID = 1;
+    byte ID = 1;
 
     /**
      * Creates a new instance of ByteTag with the specified byte value.
@@ -26,5 +23,18 @@ public sealed interface ByteTag extends NumberTag<Byte> permits ByteTagImpl {
     @Contract(value = "_ -> new", pure = true)
     static ByteTag of(byte value) {
         return new ByteTagImpl(value);
+    }
+
+    /**
+     * Creates a new instance of ByteTag with the specified boolean value.
+     * The boolean value is converted to a byte value (1 for true, 0 for false).
+     *
+     * @param value the boolean value to encapsulate within the ByteTag
+     * @return a new ByteTag instance containing the converted byte value
+     * @since 4.0.0
+     */
+    @Contract(value = "_ -> new", pure = true)
+    static ByteTag of(boolean value) {
+        return of(value ? (byte) 1 : (byte) 0);
     }
 }

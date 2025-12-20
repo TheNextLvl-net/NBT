@@ -1,12 +1,8 @@
 package net.thenextlvl.nbt.tag;
 
-import net.thenextlvl.nbt.tag.impl.CompoundTagImpl;
 import org.jetbrains.annotations.Contract;
-import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.NullUnmarked;
-import org.jspecify.annotations.Nullable;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -17,94 +13,11 @@ import java.util.function.BiConsumer;
  * It extends the generic `ValueTag` class setting the value type to a `Map` of `String` keys and `Tag` values.
  * This class provides various methods to manipulate and retrieve tags from the compound tag structure.
  */
-@NullMarked
 public sealed interface CompoundTag extends ValueTag<Map<String, Tag>> permits CompoundTagImpl {
     /**
      * Represents the unique identifier for this Tag.
      */
-    int ID = 10;
-
-    /**
-     * Removes a tag from the compound tag with the specified name.
-     *
-     * @param name the name of the tag to be removed
-     * @return the removed tag, or null if no tag with the specified name existed
-     */
-    @Nullable
-    @Contract(mutates = "this")
-    Tag remove(String name);
-
-    /**
-     * Adds a tag to the compound tag with the specified name.
-     *
-     * @param name the name of the tag to be added
-     * @param tag  the tag to be added
-     */
-    @Contract(mutates = "this")
-    void add(String name, Tag tag);
-
-    /**
-     * Adds a tag to the compound tag with the specified name.
-     *
-     * @param name  the name of the tag to be added
-     * @param value the value of the tag to be added
-     */
-    @Contract(mutates = "this")
-    void add(String name, String value);
-
-    /**
-     * Adds a byte array tag to the compound tag with the specified name.
-     *
-     * @param name  the name of the tag to be added
-     * @param value the byte array to be added as a tag
-     */
-    @Contract(mutates = "this")
-    void add(String name, byte[] value);
-
-    /**
-     * Adds an integer array tag to the compound tag with the specified name.
-     *
-     * @param name  the name of the tag to be added
-     * @param value the integer array to be added as a tag
-     */
-    @Contract(mutates = "this")
-    void add(String name, int[] value);
-
-    /**
-     * Adds a long array tag to the compound tag with the specified name.
-     *
-     * @param name  the name of the tag to be added
-     * @param value the long array to be added as a tag
-     */
-    @Contract(mutates = "this")
-    void add(String name, long[] value);
-
-    /**
-     * Adds a number tag to the compound tag with the specified name.
-     *
-     * @param name   the name of the tag to be added
-     * @param number the value of the number tag to be added.
-     *               The method supports Integer, Float, Short, Long, Byte, and default cases to Double.
-     */
-    @Contract(mutates = "this")
-    void add(String name, Number number);
-
-    /**
-     * Adds a boolean tag to the compound tag with the specified name.
-     *
-     * @param name  the name of the tag to be added
-     * @param value the boolean value of the tag to be added
-     */
-    @Contract(mutates = "this")
-    void add(String name, Boolean value);
-
-    /**
-     * Adds all tags from the provided CompoundTag to this CompoundTag.
-     *
-     * @param tag the CompoundTag containing tags to be added to this CompoundTag
-     */
-    @Contract(mutates = "this")
-    void addAll(CompoundTag tag);
+    byte ID = 10;
 
     /**
      * Performs the given action for each entry in this compound tag.
@@ -188,17 +101,6 @@ public sealed interface CompoundTag extends ValueTag<Map<String, Tag>> permits C
     CompoundTag getAsCompound(String tag);
 
     /**
-     * Retrieves the tag associated with the specified name or adds a default tag if it doesn't exist.
-     *
-     * @param tag          the name of the tag to be retrieved
-     * @param defaultValue the default tag to be added if no tag with the specified name exists
-     * @param <T>          the type of the tag extending Tag
-     * @return the tag associated with the specified name, or the default tag if the name didn't previously exist
-     */
-    @Contract(mutates = "this")
-    <T extends Tag> T getOrAdd(String tag, T defaultValue);
-
-    /**
      * Retrieves the tag associated with the specified name or returns a default tag if it doesn't exist.
      *
      * @param tag          the name of the tag to be retrieved
@@ -248,7 +150,7 @@ public sealed interface CompoundTag extends ValueTag<Map<String, Tag>> permits C
      */
     @Contract(value = " -> new", pure = true)
     static CompoundTag empty() {
-        return of(new HashMap<>());
+        return new CompoundTagImpl();
     }
 
     /**
@@ -278,7 +180,7 @@ public sealed interface CompoundTag extends ValueTag<Map<String, Tag>> permits C
          * @return the builder instance, allowing for method chaining
          */
         @Contract(value = "_, _ -> this", mutates = "this")
-        Builder put(String name, Boolean value);
+        Builder put(String name, boolean value);
 
         /**
          * Adds a byte array value to the builder with the given name.
@@ -315,15 +217,6 @@ public sealed interface CompoundTag extends ValueTag<Map<String, Tag>> permits C
 
         /**
          * Adds a numerical value to the builder with the specified name.
-         * The numerical value is internally represented using a tag corresponding to its type:
-         * <ul>
-         *     <li>Integer values are stored as {@link IntTag}.</li>
-         *     <li>Float values are stored as {@link FloatTag}.</li>
-         *     <li>Short values are stored as {@link ShortTag}.</li>
-         *     <li>Long values are stored as {@link LongTag}.</li>
-         *     <li>Byte values are stored as {@link ByteTag}.</li>
-         *     <li>Any other numeric type defaults to {@link DoubleTag}.</li>
-         * </ul>
          *
          * @param name   the name of the value to be inserted
          * @param number the numerical value to be inserted

@@ -1,8 +1,6 @@
 package net.thenextlvl.nbt.tag;
 
-import net.thenextlvl.nbt.tag.impl.ByteArrayTagImpl;
 import org.jetbrains.annotations.Contract;
-import org.jspecify.annotations.NullMarked;
 
 /**
  * Represents a tag that contains a byte array.
@@ -11,12 +9,11 @@ import org.jspecify.annotations.NullMarked;
  * It provides methods for reading from and writing to an {@code NBTInputStream}
  * and {@code NBTOutputStream} respectively.
  */
-@NullMarked
 public sealed interface ByteArrayTag extends ValueTag<byte[]>, IterableTag<Byte> permits ByteArrayTagImpl {
     /**
      * Represents the unique identifier for this Tag.
      */
-    int ID = 7;
+    byte ID = 7;
 
     /**
      * Creates a new instance of {@code ByteArrayTag} with the specified byte array value.

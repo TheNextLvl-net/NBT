@@ -2,14 +2,12 @@ package net.thenextlvl.nbt.serialization;
 
 import net.thenextlvl.nbt.tag.Tag;
 import org.jetbrains.annotations.Contract;
-import org.jspecify.annotations.NullMarked;
 
 /**
  * Interface for serializing objects of type {@code T} into {@link Tag} representations.
  *
  * @param <T> the type of the objects to be serialized
  */
-@NullMarked
 public interface TagSerializer<T> {
     /**
      * Serializes a given object into its corresponding Tag representation.

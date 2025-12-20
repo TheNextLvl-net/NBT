@@ -2,31 +2,29 @@ package net.thenextlvl.nbt.tag;
 
 import net.thenextlvl.nbt.NBTOutputStream;
 import org.jetbrains.annotations.Contract;
-import org.jspecify.annotations.NullMarked;
 
 import java.io.IOException;
 
 /**
  * Represents a generic tag with various utility methods to interact with different tag types.
  */
-@NullMarked
 public interface Tag {
     /**
      * Retrieves the type ID of the tag.
      *
-     * @return the integer representing the type ID of the tag
+     * @return the byte representing the type ID of the tag
      */
     @Contract(pure = true)
-    int getTypeId();
+    byte getTypeId();
 
     /**
      * Writes the tag data to the given NBT output stream.
      *
-     * @param outputStream the NBTOutputStream to write the tag data to
+     * @param output the NBTOutput to write the tag data to
      * @throws IOException if an I/O error occurs while writing to the stream
      */
     @Contract(mutates = "param1")
-    void write(NBTOutputStream outputStream) throws IOException;
+    void write(NBTOutputStream output) throws IOException;
 
     /**
      * Checks whether the current tag is an instance of CompoundTag.

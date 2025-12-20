@@ -1,21 +1,20 @@
 package net.thenextlvl.nbt.serialization;
 
-import net.thenextlvl.nbt.serialization.adapter.AddressAdapter;
-import net.thenextlvl.nbt.serialization.adapter.BooleanAdapter;
-import net.thenextlvl.nbt.serialization.adapter.ByteAdapter;
-import net.thenextlvl.nbt.serialization.adapter.DoubleAdapter;
-import net.thenextlvl.nbt.serialization.adapter.DurationAdapter;
-import net.thenextlvl.nbt.serialization.adapter.FileAdapter;
-import net.thenextlvl.nbt.serialization.adapter.FloatAdapter;
-import net.thenextlvl.nbt.serialization.adapter.IntegerAdapter;
-import net.thenextlvl.nbt.serialization.adapter.LongAdapter;
-import net.thenextlvl.nbt.serialization.adapter.PathAdapter;
-import net.thenextlvl.nbt.serialization.adapter.ShortAdapter;
-import net.thenextlvl.nbt.serialization.adapter.StringAdapter;
-import net.thenextlvl.nbt.serialization.adapter.UUIDAdapter;
+import net.thenextlvl.nbt.serialization.adapters.AddressAdapter;
+import net.thenextlvl.nbt.serialization.adapters.BooleanAdapter;
+import net.thenextlvl.nbt.serialization.adapters.ByteAdapter;
+import net.thenextlvl.nbt.serialization.adapters.DoubleAdapter;
+import net.thenextlvl.nbt.serialization.adapters.DurationAdapter;
+import net.thenextlvl.nbt.serialization.adapters.FileAdapter;
+import net.thenextlvl.nbt.serialization.adapters.FloatAdapter;
+import net.thenextlvl.nbt.serialization.adapters.IntegerAdapter;
+import net.thenextlvl.nbt.serialization.adapters.LongAdapter;
+import net.thenextlvl.nbt.serialization.adapters.PathAdapter;
+import net.thenextlvl.nbt.serialization.adapters.ShortAdapter;
+import net.thenextlvl.nbt.serialization.adapters.StringAdapter;
+import net.thenextlvl.nbt.serialization.adapters.UUIDAdapter;
 import net.thenextlvl.nbt.tag.Tag;
 import org.jspecify.annotations.NonNull;
-import org.jspecify.annotations.NullMarked;
 
 import java.io.File;
 import java.lang.reflect.Type;
@@ -26,7 +25,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-@NullMarked
 final class SimpleNBT implements NBT {
     private final SerializationRegistry registry;
 

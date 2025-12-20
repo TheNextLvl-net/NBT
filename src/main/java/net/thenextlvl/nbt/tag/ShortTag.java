@@ -1,20 +1,17 @@
 package net.thenextlvl.nbt.tag;
 
-import net.thenextlvl.nbt.tag.impl.ShortTagImpl;
 import org.jetbrains.annotations.Contract;
-import org.jspecify.annotations.NullMarked;
 
 /**
  * The ShortTag class represents a tag that holds a short value.
  * It extends the NumberTag class, providing specific implementations
  * for handling short values in a tag context.
  */
-@NullMarked
 public sealed interface ShortTag extends NumberTag<Short> permits ShortTagImpl {
     /**
      * Represents the unique identifier for this Tag.
      */
-    int ID = 2;
+    byte ID = 2;
 
     /**
      * Creates a new instance of {@code ShortTag} with the specified short value.
