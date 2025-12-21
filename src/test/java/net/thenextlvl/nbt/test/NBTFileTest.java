@@ -6,7 +6,6 @@ import net.thenextlvl.nbt.tag.ByteArrayTag;
 import net.thenextlvl.nbt.tag.ByteTag;
 import net.thenextlvl.nbt.tag.CompoundTag;
 import net.thenextlvl.nbt.tag.DoubleTag;
-import net.thenextlvl.nbt.tag.EscapeTag;
 import net.thenextlvl.nbt.tag.FloatTag;
 import net.thenextlvl.nbt.tag.IntArrayTag;
 import net.thenextlvl.nbt.tag.IntTag;
@@ -103,7 +102,6 @@ public class NBTFileTest {
 
         assertThrows(IllegalArgumentException.class, () -> ListTag.of(DoubleTag.of(1.0), StringTag.of("Hello World!")));
         assertThrows(IllegalArgumentException.class, () -> ListTag.of(IntTag.ID, DoubleTag.of(1.0)));
-        assertThrows(IllegalArgumentException.class, () -> ListTag.empty(EscapeTag.ID));
     }
 
     @Test

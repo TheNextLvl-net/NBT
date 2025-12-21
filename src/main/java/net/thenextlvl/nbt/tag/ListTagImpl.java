@@ -198,8 +198,7 @@ final class ListTagImpl<T extends Tag> extends ValueTagImpl<@Unmodifiable List<T
         private @Nullable Byte contentTypeId;
 
         @Override
-        public ListTag.Builder<T> contentType(byte contentTypeId) throws IllegalStateException, IllegalArgumentException {
-            if (contentTypeId == EscapeTag.ID) throw new IllegalArgumentException("Content type cannot be EscapeTag");
+        public ListTag.Builder<T> contentType(byte contentTypeId) throws IllegalStateException {
             if (this.contentTypeId != null && !value.isEmpty())
                 throw new IllegalStateException("Content type cannot be changed after adding values");
             this.contentTypeId = contentTypeId;
@@ -282,8 +281,6 @@ final class ListTagImpl<T extends Tag> extends ValueTagImpl<@Unmodifiable List<T
 
         private void checkOrReplaceContentType(T tag) {
             if (contentTypeId == null) {
-                if (tag.getTypeId() == EscapeTag.ID)
-                    throw new IllegalArgumentException("Content type cannot be EscapeTag");
                 contentTypeId = tag.getTypeId();
             } else if (contentTypeId != tag.getTypeId())
                 throw new IllegalArgumentException("ListTag content type mismatch");
