@@ -13,6 +13,9 @@ import net.thenextlvl.nbt.serialization.adapters.PathAdapter;
 import net.thenextlvl.nbt.serialization.adapters.ShortAdapter;
 import net.thenextlvl.nbt.serialization.adapters.StringAdapter;
 import net.thenextlvl.nbt.serialization.adapters.UUIDAdapter;
+import net.thenextlvl.nbt.tag.CompoundTag;
+import net.thenextlvl.nbt.tag.IterableTag;
+import net.thenextlvl.nbt.tag.ListTag;
 import net.thenextlvl.nbt.tag.Tag;
 import org.jspecify.annotations.NonNull;
 
@@ -27,9 +30,13 @@ import java.util.UUID;
 
 final class SimpleNBT implements NBT {
     private final SerializationRegistry registry;
+    private final boolean prettyPrinting;
+    private final int indents;
 
-    private SimpleNBT(SerializationRegistry registry) {
+    private SimpleNBT(SerializationRegistry registry, boolean prettyPrinting, int indents) {
         this.registry = registry;
+        this.prettyPrinting = prettyPrinting;
+        this.indents = indents;
     }
 
     @Override
@@ -79,8 +86,64 @@ final class SimpleNBT implements NBT {
         throw new ParserException("No tag serializer registered for type: " + type);
     }
 
+    @Override
+    public boolean isPrettyPrinting() {
+        return prettyPrinting;
+    }
+
+    @Override
+    public int getIndents() {
+        return indents;
+    }
+
+    @Override
+    public String toString(Tag tag) {
+        return prettyPrinting ? "\"\": " + prettify(tag, 0) : tag.toString();
+    }
+
+    private String prettify(Tag tag, int depth) {
+        final var indent = " ".repeat(indents);
+        final var currentIndent = indent.repeat(depth);
+        return switch (tag) {
+            case CompoundTag compoundTag -> {
+                var builder = new StringBuilder("{");
+                for (var entry : compoundTag.entrySet()) {
+                    builder.append("\n");
+                    builder.append(indent.repeat(depth + 1)).append(entry.getKey()).append(": ")
+                            .append(prettify(entry.getValue(), depth + 1));
+                }
+                yield builder.append("\n").append(currentIndent).append("}").toString();
+            }
+            case ListTag<?> listTag -> {
+                var builder = new StringBuilder("[");
+                boolean first = true;
+                for (var value : listTag) {
+                    if (!first) builder.append(",");
+                    first = false;
+                    builder.append("\n");
+                    builder.append(indent.repeat(depth + 1)).append(prettify(value, depth + 1));
+                }
+                yield builder.append("\n").append(currentIndent).append("]").toString();
+            }
+            case IterableTag<?> iterableTag -> {
+                var builder = new StringBuilder("[ ");
+                for (int i = 0; i < iterableTag.size(); i++) {
+                    if (i > 0) builder.append(", ");
+                    Object obj = iterableTag.get(i);
+                    builder.append(obj);
+                    if (obj instanceof Long) builder.append("l");
+                    else if (obj instanceof Byte) builder.append("b");
+                }
+                yield builder.append(" ]").toString();
+            }
+            default -> tag.toString();
+        };
+    }
+
     static final class Builder implements NBT.Builder {
         private final SerializationRegistry registry = new SerializationRegistry();
+        private boolean prettyPrinting = false;
+        private int indents = 4;
 
         @Override
         public <T> NBT.Builder registerTypeHierarchyAdapter(Class<?> type, TagAdapter<T> adapter) {
@@ -119,8 +182,20 @@ final class SimpleNBT implements NBT {
         }
 
         @Override
+        public NBT.Builder setPrettyPrinting(boolean prettyPrinting) {
+            this.prettyPrinting = prettyPrinting;
+            return this;
+        }
+
+        @Override
+        public NBT.Builder setIndents(int indents) {
+            this.indents = indents;
+            return this;
+        }
+
+        @Override
         public NBT build() {
-            return new SimpleNBT(registry.immutableCopy());
+            return new SimpleNBT(registry.immutableCopy(), prettyPrinting, indents);
         }
     }
 

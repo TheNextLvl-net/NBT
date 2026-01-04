@@ -34,6 +34,27 @@ public class NBTFileTest {
     private static final Path path = Path.of("test.dat");
 
     @Test
+    public void testSNBT() {
+        assertEquals("[1,2,3]", IntArrayTag.of(1, 2, 3).toString());
+        assertEquals("[]", IntArrayTag.of().toString());
+        assertEquals("[1b,2b]", ByteArrayTag.of((byte) 1, (byte) 2).toString());
+        assertEquals("[]", ByteArrayTag.of().toString());
+        assertEquals("[1l,2l,3l]", LongArrayTag.of(1L, 2L, 3L).toString());
+        assertEquals("[]", LongArrayTag.of().toString());
+        assertEquals("{test:1}", CompoundTag.builder().put("test", 1).build().toString());
+        assertEquals("{}", CompoundTag.empty().toString());
+        assertEquals("[test,test,\"Hello World!\"]", ListTag.of(StringTag.of("test"), StringTag.of("test"), StringTag.of("Hello World!")).toString());
+        assertEquals("[]", ListTag.empty(StringTag.ID).toString());
+        assertEquals("1", IntTag.of(1).toString());
+        assertEquals("1.0", DoubleTag.of(1).toString());
+        assertEquals("1.0f", FloatTag.of(1).toString());
+        assertEquals("1l", LongTag.of(1).toString());
+        assertEquals("1b", ByteTag.of((byte) 1).toString());
+        assertEquals("1s", ShortTag.of((short) 1).toString());
+        assertEquals("\"Hello World!\"", StringTag.of("Hello World!").toString());
+    }
+
+    @Test
     public void testCompoundTagEquality() {
         assertEquals(CompoundTag.empty(), CompoundTag.of(Map.of()));
 

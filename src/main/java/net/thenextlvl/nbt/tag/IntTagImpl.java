@@ -11,7 +11,7 @@ final class IntTagImpl extends NumberTagImpl<Integer> implements IntTag {
 
     @Override
     public int getAsInt() {
-        return getValue();
+        return value;
     }
 
     @Override
@@ -21,6 +21,6 @@ final class IntTagImpl extends NumberTagImpl<Integer> implements IntTag {
 
     @Override
     public void write(NBTOutputStream outputStream) throws IOException {
-        outputStream.writeInt(getValue());
+        outputStream.writeInt(value);
     }
 }

@@ -109,6 +109,19 @@ final class CompoundTagImpl extends ValueTagImpl<Map<String, Tag>> implements Co
         return new Builder();
     }
 
+    @Override
+    public String toString() {
+        if (isEmpty()) return "{}";
+        var builder = new StringBuilder("{");
+        var iterator = entrySet().iterator();
+        while (iterator.hasNext()) {
+            var entry = iterator.next();
+            builder.append(entry.getKey()).append(':').append(entry.getValue());
+            if (iterator.hasNext()) builder.append(",");
+        }
+        return builder.append('}').toString();
+    }
+
     public static final class Builder implements CompoundTag.Builder {
         private final Map<String, Tag> values = new LinkedHashMap<>();
 

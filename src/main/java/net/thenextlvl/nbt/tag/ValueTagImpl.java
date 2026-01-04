@@ -19,19 +19,16 @@ abstract class ValueTagImpl<T> implements ValueTag<T> {
         if (this == object) return true;
         if (object == null || getClass() != object.getClass()) return false;
         var valueTag = (ValueTagImpl<?>) object;
-        return Objects.equals(getValue(), valueTag.getValue());
+        return Objects.equals(value, valueTag.value);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getValue());
+        return Objects.hash(value);
     }
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() +
-                "{" +
-                "value=" + value +
-                '}';
+        return String.valueOf(value);
     }
 }

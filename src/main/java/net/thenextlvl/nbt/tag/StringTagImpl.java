@@ -16,7 +16,7 @@ final class StringTagImpl extends ValueTagImpl<String> implements StringTag {
 
     @Override
     public String getAsString() {
-        return getValue();
+        return value;
     }
 
     @Override
@@ -26,8 +26,17 @@ final class StringTagImpl extends ValueTagImpl<String> implements StringTag {
 
     @Override
     public void write(NBTOutputStream outputStream) throws IOException {
-        var bytes = getValue().getBytes(outputStream.getCharset());
+        var bytes = value.getBytes(outputStream.getCharset());
         outputStream.writeShort(bytes.length);
         outputStream.write(bytes);
+    }
+
+    @Override
+    public String toString() {
+        return shouldQuote(value) ? '"' + value + '"' : value;
+    }
+    
+    private boolean shouldQuote(String str) {
+        return !str.chars().allMatch(c -> c >= 48 && c <= 57 || c >= 65 && c <= 90 || c >= 97 && c <= 122 || c == 95);
     }
 }

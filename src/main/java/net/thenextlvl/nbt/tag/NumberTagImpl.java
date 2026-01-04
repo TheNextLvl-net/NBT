@@ -12,11 +12,11 @@ abstract class NumberTagImpl<T extends Number> extends ValueTagImpl<T> implement
 
     @Override
     public boolean getAsBoolean() {
-        return getAsNumber().byteValue() == 1;
+        return value.byteValue() == 1;
     }
 
     @Override
     public Number getAsNumber() {
-        return getValue();
+        return value;
     }
 }
