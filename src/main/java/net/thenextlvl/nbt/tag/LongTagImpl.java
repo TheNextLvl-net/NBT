@@ -11,7 +11,7 @@ final class LongTagImpl extends NumberTagImpl<Long> implements LongTag {
 
     @Override
     public long getAsLong() {
-        return getValue();
+        return value;
     }
 
     @Override
@@ -21,6 +21,11 @@ final class LongTagImpl extends NumberTagImpl<Long> implements LongTag {
 
     @Override
     public void write(NBTOutputStream outputStream) throws IOException {
-        outputStream.writeLong(getValue());
+        outputStream.writeLong(value);
+    }
+
+    @Override
+    public String toString() {
+        return value + "l";
     }
 }

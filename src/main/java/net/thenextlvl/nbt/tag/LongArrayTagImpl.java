@@ -50,9 +50,12 @@ final class LongArrayTagImpl extends ValueTagImpl<long[]> implements LongArrayTa
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() +
-                "{" +
-                "value=" + Arrays.toString(value) +
-                '}';
+        if (value.length == 0) return "[]";
+        var builder = new StringBuilder("[");
+        for (int i = 0; i < value.length; i++) {
+            if (i > 0) builder.append(",");
+            builder.append(value[i]).append("l");
+        }
+        return builder.append(']').toString();
     }
 }

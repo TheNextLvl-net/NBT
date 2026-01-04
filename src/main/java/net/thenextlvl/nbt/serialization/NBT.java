@@ -1,5 +1,6 @@
 package net.thenextlvl.nbt.serialization;
 
+import net.thenextlvl.nbt.tag.Tag;
 import org.jetbrains.annotations.Contract;
 
 import java.lang.reflect.Type;
@@ -9,6 +10,33 @@ import java.lang.reflect.Type;
  * as well as to register custom serializers and deserializers for different types.
  */
 public sealed interface NBT extends TagSerializationContext, TagDeserializationContext permits SimpleNBT {
+    /**
+     * Returns whether the NBT output is formatted with indentation and line breaks.
+     *
+     * @return true if pretty printing is enabled, false otherwise
+     * @since 4.1.0
+     */
+    @Contract(pure = true)
+    boolean isPrettyPrinting();
+
+    /**
+     * Returns the number of indents used for pretty printing.
+     *
+     * @return the number of indents used for pretty printing
+     * @since 4.1.0
+     */
+    @Contract(pure = true)
+    int getIndents();
+
+    /**
+     * Returns a string representation of the given Tag.
+     *
+     * @param tag the Tag to be converted to a string
+     * @return a string representation of the Tag
+     */
+    @Contract(value = "_ -> new", pure = true)
+    String toString(Tag tag);
+
     /**
      * Creates a new instance of the Builder class for constructing NBT objects.
      *
@@ -90,6 +118,26 @@ public sealed interface NBT extends TagSerializationContext, TagDeserializationC
          */
         @Contract(value = "_, _ -> this", mutates = "this")
         <T> Builder registerTypeAdapter(Type type, TagSerializer<T> serializer);
+
+        /**
+         * Sets whether the NBT output should be formatted with indentation and line breaks.
+         *
+         * @param prettyPrinting whether to enable pretty printing
+         * @return the current builder instance for chaining
+         * @since 4.1.0
+         */
+        @Contract(value = "_ -> this", mutates = "this")
+        Builder setPrettyPrinting(boolean prettyPrinting);
+
+        /**
+         * Sets the number of indents to use for pretty printing.
+         *
+         * @param indents the number of indents to use
+         * @return the current builder instance for chaining
+         * @since 4.1.0
+         */
+        @Contract(value = "_ -> this", mutates = "this")
+        Builder setIndents(int indents);
 
         /**
          * Constructs and returns an instance of NBT using the configured serializers and deserializers.

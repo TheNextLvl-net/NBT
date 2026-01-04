@@ -11,7 +11,7 @@ final class ShortTagImpl extends NumberTagImpl<Short> implements ShortTag {
 
     @Override
     public short getAsShort() {
-        return getValue();
+        return value;
     }
 
     @Override
@@ -21,6 +21,11 @@ final class ShortTagImpl extends NumberTagImpl<Short> implements ShortTag {
 
     @Override
     public void write(NBTOutputStream outputStream) throws IOException {
-        outputStream.writeShort(getValue());
+        outputStream.writeShort(value);
+    }
+
+    @Override
+    public String toString() {
+        return value + "s";
     }
 }

@@ -11,7 +11,7 @@ final class FloatTagImpl extends NumberTagImpl<Float> implements FloatTag {
 
     @Override
     public float getAsFloat() {
-        return getValue();
+        return value;
     }
 
     @Override
@@ -21,6 +21,11 @@ final class FloatTagImpl extends NumberTagImpl<Float> implements FloatTag {
 
     @Override
     public void write(NBTOutputStream outputStream) throws IOException {
-        outputStream.writeFloat(getValue());
+        outputStream.writeFloat(value);
+    }
+
+    @Override
+    public String toString() {
+        return value + "f";
     }
 }

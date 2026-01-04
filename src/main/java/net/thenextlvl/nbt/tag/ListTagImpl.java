@@ -166,14 +166,6 @@ final class ListTagImpl<T extends Tag> extends ValueTagImpl<@Unmodifiable List<T
     }
 
     @Override
-    public String toString() {
-        return "ListTag{" +
-                "contentTypeId=" + contentTypeId +
-                ", value=" + super.value +
-                '}';
-    }
-
-    @Override
     public boolean equals(@Nullable Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
@@ -191,6 +183,17 @@ final class ListTagImpl<T extends Tag> extends ValueTagImpl<@Unmodifiable List<T
         outputStream.writeByte(contentTypeId);
         outputStream.writeInt(value.size());
         for (var tag : value) tag.write(outputStream);
+    }
+
+    @Override
+    public String toString() {
+        if (value.isEmpty()) return "[]";
+        var builder = new StringBuilder("[");
+        for (int i = 0; i < value.size(); i++) {
+            if (i > 0) builder.append(",");
+            builder.append(value.get(i));
+        }
+        return builder.append(']').toString();
     }
 
     public static final class Builder<T extends Tag> implements ListTag.Builder<T> {

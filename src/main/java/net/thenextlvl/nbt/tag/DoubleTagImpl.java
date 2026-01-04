@@ -11,7 +11,7 @@ final class DoubleTagImpl extends NumberTagImpl<Double> implements DoubleTag {
 
     @Override
     public double getAsDouble() {
-        return getValue();
+        return value;
     }
 
     @Override
@@ -21,6 +21,6 @@ final class DoubleTagImpl extends NumberTagImpl<Double> implements DoubleTag {
 
     @Override
     public void write(NBTOutputStream outputStream) throws IOException {
-        outputStream.writeDouble(getValue());
+        outputStream.writeDouble(value);
     }
 }

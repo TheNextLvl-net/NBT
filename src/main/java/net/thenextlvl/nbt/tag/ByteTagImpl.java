@@ -11,7 +11,7 @@ final class ByteTagImpl extends NumberTagImpl<Byte> implements ByteTag {
 
     @Override
     public byte getAsByte() {
-        return getValue();
+        return value;
     }
 
     @Override
@@ -21,6 +21,11 @@ final class ByteTagImpl extends NumberTagImpl<Byte> implements ByteTag {
 
     @Override
     public void write(NBTOutputStream outputStream) throws IOException {
-        outputStream.write(getValue());
+        outputStream.write(value);
+    }
+
+    @Override
+    public String toString() {
+        return value + "b";
     }
 }
