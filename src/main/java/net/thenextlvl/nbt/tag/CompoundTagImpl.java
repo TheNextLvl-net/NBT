@@ -168,6 +168,16 @@ final class CompoundTagImpl extends ValueTagImpl<Map<String, Tag>> implements Co
         }
 
         @Override
+        public boolean isEmpty() {
+            return values.isEmpty();
+        }
+
+        @Override
+        public int size() {
+            return values.size();
+        }
+
+        @Override
         public CompoundTag build() {
             return new CompoundTagImpl(values);
         }

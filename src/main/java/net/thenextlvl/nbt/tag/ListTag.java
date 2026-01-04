@@ -372,6 +372,24 @@ public sealed interface ListTag<T extends Tag> extends ValueTag<@Unmodifiable Li
         Builder<T> clear();
 
         /**
+         * Checks if the builder is empty.
+         *
+         * @return true if the builder has no tag values, false otherwise
+         * @since 4.2.0
+         */
+        @Contract(pure = true)
+        boolean isEmpty();
+
+        /**
+         * Returns the number of tag values in the builder.
+         *
+         * @return the number of tag values in the builder
+         * @since 4.2.0
+         */
+        @Contract(pure = true)
+        int size();
+
+        /**
          * Builds and returns a new {@link ListTag} instance based on the configured values.
          *
          * @return a new {@link ListTag} instance
