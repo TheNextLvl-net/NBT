@@ -277,6 +277,16 @@ final class ListTagImpl<T extends Tag> extends ValueTagImpl<@Unmodifiable List<T
         }
 
         @Override
+        public boolean isEmpty() {
+            return value.isEmpty();
+        }
+
+        @Override
+        public int size() {
+            return value.size();
+        }
+
+        @Override
         public ListTag<T> build() {
             if (contentTypeId == null) throw new IllegalStateException("Empty ListTag must have a content type");
             return new ListTagImpl<>(value, contentTypeId);

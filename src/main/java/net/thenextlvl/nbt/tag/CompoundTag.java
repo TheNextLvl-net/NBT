@@ -258,6 +258,24 @@ public sealed interface CompoundTag extends ValueTag<Map<String, Tag>> permits C
         Builder putAll(CompoundTag tag);
 
         /**
+         * Checks if the builder is empty.
+         *
+         * @return true if the builder has no tags, false otherwise
+         * @since 4.2.0
+         */
+        @Contract(pure = true)
+        boolean isEmpty();
+
+        /**
+         * Returns the number of tags contained in the builder.
+         *
+         * @return the number of tags in the builder
+         * @since 4.2.0
+         */
+        @Contract(pure = true)
+        int size();
+
+        /**
          * Builds and returns a new {@link CompoundTag} using the current state
          * of values within the builder.
          *
