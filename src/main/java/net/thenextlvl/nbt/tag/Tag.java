@@ -77,6 +77,36 @@ public interface Tag {
     }
 
     /**
+     * Checks whether the current tag is an instance of a byte array type.
+     *
+     * @return true if the current tag is a byte array type, false otherwise
+     */
+    @Contract(pure = true)
+    default boolean isByteArray() {
+        return false;
+    }
+
+    /**
+     * Checks whether the current tag is an instance of a long array type.
+     *
+     * @return true if the current tag is a long array type, false otherwise
+     */
+    @Contract(pure = true)
+    default boolean isLongArray() {
+        return false;
+    }
+
+    /**
+     * Checks whether the current tag is an instance of an integer array type.
+     *
+     * @return true if the current tag is an integer array type, false otherwise
+     */
+    @Contract(pure = true)
+    default boolean isIntArray() {
+        return false;
+    }
+
+    /**
      * Returns the current tag as a CompoundTag if it is an instance of CompoundTag.
      *
      * @return the tag as a CompoundTag
@@ -196,5 +226,38 @@ public interface Tag {
     @Contract(pure = true)
     default short getAsShort() throws UnsupportedOperationException {
         return getAsNumber().shortValue();
+    }
+
+    /**
+     * Returns the current tag as a byte array.
+     *
+     * @return the byte array representation of the current tag
+     * @throws UnsupportedOperationException if the current tag is not a byte array type
+     */
+    @Contract(value = " -> new", pure = true)
+    default byte[] getAsByteArray() throws UnsupportedOperationException {
+        throw new UnsupportedOperationException(getClass().getSimpleName());
+    }
+
+    /**
+     * Returns the current tag as a long array.
+     *
+     * @return the long array representation of the current tag
+     * @throws UnsupportedOperationException if the current tag is not a long array type
+     */
+    @Contract(value = " -> new", pure = true)
+    default long[] getAsLongArray() throws UnsupportedOperationException {
+        throw new UnsupportedOperationException(getClass().getSimpleName());
+    }
+
+    /**
+     * Returns the current tag as an integer array.
+     *
+     * @return the integer array representation of the current tag
+     * @throws UnsupportedOperationException if the current tag is not an integer array type
+     */
+    @Contract(value = " -> new", pure = true)
+    default int[] getAsIntArray() throws UnsupportedOperationException {
+        throw new UnsupportedOperationException(getClass().getSimpleName());
     }
 }
