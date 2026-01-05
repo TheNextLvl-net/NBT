@@ -55,6 +55,7 @@ final class SimpleNBT implements NBT {
     @Override
     @SuppressWarnings("unchecked")
     public <T> T deserialize(Tag tag, Type type) throws ParserException {
+        if (type instanceof Class<?> clazz) return (T) deserialize(tag, clazz);
         var deserializer = registry.deserializers.get(type);
         if (deserializer != null) return (T) deserializer.deserialize(tag, this);
         throw new ParserException("No tag deserializer registered for type: " + type);
@@ -81,6 +82,7 @@ final class SimpleNBT implements NBT {
     @Override
     @SuppressWarnings("unchecked")
     public Tag serialize(Object object, Type type) throws ParserException {
+        if (type instanceof Class<?> clazz) return serialize(object, clazz);
         var serializer = (TagSerializer<@NonNull Object>) registry.serializers.get(type);
         if (serializer != null) return serializer.serialize(object, this);
         throw new ParserException("No tag serializer registered for type: " + type);
