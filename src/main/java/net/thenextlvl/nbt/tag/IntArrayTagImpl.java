@@ -11,6 +11,11 @@ final class IntArrayTagImpl extends ValueTagImpl<int[]> implements IntArrayTag {
     }
 
     @Override
+    public int[] getAsIntArray() {
+        return getValue();
+    }
+
+    @Override
     public byte getTypeId() {
         return ID;
     }

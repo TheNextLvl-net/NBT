@@ -11,6 +11,11 @@ final class LongArrayTagImpl extends ValueTagImpl<long[]> implements LongArrayTa
     }
 
     @Override
+    public long[] getAsLongArray() {
+        return getValue();
+    }
+
+    @Override
     public byte getTypeId() {
         return ID;
     }

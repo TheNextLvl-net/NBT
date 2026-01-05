@@ -12,6 +12,11 @@ final class ByteArrayTagImpl extends ValueTagImpl<byte[]> implements ByteArrayTa
     }
 
     @Override
+    public byte[] getAsByteArray() {
+        return getValue();
+    }
+
+    @Override
     public byte getTypeId() {
         return ID;
     }
