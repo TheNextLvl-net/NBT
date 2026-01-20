@@ -48,16 +48,16 @@ final class SimpleNBT implements NBT {
                 .filter(entry -> type.isAssignableFrom(entry.getKey()))
                 .findAny()
                 .map(entry -> (T) entry.getValue().deserialize(tag, this))
-                .orElseGet(() -> deserialize(tag, (Type) type));
+                .orElseThrow(() -> new ParserException("No tag deserializer registered for type: " + type));
     }
 
 
     @Override
     @SuppressWarnings("unchecked")
     public <T> T deserialize(Tag tag, Type type) throws ParserException {
-        if (type instanceof Class<?> clazz) return (T) deserialize(tag, clazz);
         var deserializer = registry.deserializers.get(type);
         if (deserializer != null) return (T) deserializer.deserialize(tag, this);
+        if (type instanceof Class<?> clazz) return (T) deserialize(tag, clazz);
         throw new ParserException("No tag deserializer registered for type: " + type);
     }
 
@@ -76,15 +76,15 @@ final class SimpleNBT implements NBT {
                 .findAny()
                 .map(entry -> (TagSerializer<@NonNull Object>) entry.getValue())
                 .map(value -> value.serialize(object, this))
-                .orElseGet(() -> serialize(object, (Type) object.getClass()));
+                .orElseThrow(() -> new ParserException("No tag serializer registered for type: " + object.getClass()));
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public Tag serialize(Object object, Type type) throws ParserException {
-        if (type instanceof Class<?> clazz) return serialize(object, clazz);
         var serializer = (TagSerializer<@NonNull Object>) registry.serializers.get(type);
         if (serializer != null) return serializer.serialize(object, this);
+        if (type instanceof Class<?> clazz) return serialize(object, clazz);
         throw new ParserException("No tag serializer registered for type: " + type);
     }
 
