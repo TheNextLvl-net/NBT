@@ -2,6 +2,8 @@ package net.thenextlvl.nbt.test;
 
 import net.thenextlvl.nbt.NBTInputStream;
 import net.thenextlvl.nbt.NBTOutputStream;
+import net.thenextlvl.nbt.serialization.NBT;
+import net.thenextlvl.nbt.serialization.ParserException;
 import net.thenextlvl.nbt.tag.ByteArrayTag;
 import net.thenextlvl.nbt.tag.ByteTag;
 import net.thenextlvl.nbt.tag.CompoundTag;
@@ -156,6 +158,30 @@ public class NBTFileTest {
         try (var reader = NBTInputStream.create(path)) {
             assertEquals(modified, reader.readTag(), "File was not overridden");
         }
+    }
+
+    @Test
+    public void testUnregisteredSerializer() {
+        var nbt = NBT.builder().build();
+
+        // Create a simple object that has no registered serializer
+        var unserializable = new Object();
+
+        // Without the fix, this would cause a StackOverflowError due to infinite recursion
+        // With the fix, it throws a ParserException
+        assertThrows(ParserException.class, () -> nbt.serialize(unserializable), "StackOverflowError expected");
+    }
+
+    @Test
+    public void testUnregisteredDeserializer() {
+        var nbt = NBT.builder().build();
+
+        // Create a simple tag that has no registered deserializer for Object
+        var tag = IntTag.of(42);
+
+        // Without the fix, this would cause a StackOverflowError due to infinite recursion
+        // With the fix, it throws a ParserException
+        assertThrows(ParserException.class, () -> nbt.deserialize(tag, Object.class), "StackOverflowError expected");
     }
 
     @AfterAll
