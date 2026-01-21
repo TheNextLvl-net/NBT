@@ -17,7 +17,6 @@ import net.thenextlvl.nbt.tag.CompoundTag;
 import net.thenextlvl.nbt.tag.IterableTag;
 import net.thenextlvl.nbt.tag.ListTag;
 import net.thenextlvl.nbt.tag.Tag;
-import org.jspecify.annotations.NonNull;
 
 import java.io.File;
 import java.lang.reflect.Type;
@@ -48,7 +47,11 @@ final class SimpleNBT implements NBT {
                 .filter(entry -> type.isAssignableFrom(entry.getKey()))
                 .findAny()
                 .map(entry -> (T) entry.getValue().deserialize(tag, this))
-                .orElseThrow(() -> new ParserException("No tag deserializer registered for type: " + type));
+                .orElseGet(() -> {
+                    var typed = (TagDeserializer<Object>) registry.deserializers.get(type);
+                    if (typed != null) return (T) typed.deserialize(tag, this);
+                    throw new ParserException("No tag deserializer registered for type: " + type);
+                });
     }
 
 
@@ -69,20 +72,24 @@ final class SimpleNBT implements NBT {
     @Override
     @SuppressWarnings("unchecked")
     public Tag serialize(Object object, Class<?> type) throws ParserException {
-        var serializer = (TagSerializer<@NonNull Object>) registry.hierarchySerializers.get(object.getClass());
+        var serializer = (TagSerializer<Object>) registry.hierarchySerializers.get(type);
         if (serializer != null) return serializer.serialize(object, this);
         return registry.hierarchySerializers.entrySet().stream()
                 .filter(entry -> entry.getKey().isInstance(object))
                 .findAny()
-                .map(entry -> (TagSerializer<@NonNull Object>) entry.getValue())
+                .map(entry -> (TagSerializer<Object>) entry.getValue())
                 .map(value -> value.serialize(object, this))
-                .orElseThrow(() -> new ParserException("No tag serializer registered for type: " + object.getClass()));
+                .orElseGet(() -> {
+                    var typed = (TagSerializer<Object>) registry.serializers.get(type);
+                    if (typed != null) return typed.serialize(object, this);
+                    throw new ParserException("No tag serializer registered for type: " + object.getClass());
+                });
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public Tag serialize(Object object, Type type) throws ParserException {
-        var serializer = (TagSerializer<@NonNull Object>) registry.serializers.get(type);
+        var serializer = (TagSerializer<Object>) registry.serializers.get(type);
         if (serializer != null) return serializer.serialize(object, this);
         if (type instanceof Class<?> clazz) return serialize(object, clazz);
         throw new ParserException("No tag serializer registered for type: " + type);
