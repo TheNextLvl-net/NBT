@@ -19,16 +19,25 @@ import net.thenextlvl.nbt.tag.ShortTag;
 import net.thenextlvl.nbt.tag.StringTag;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
+import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.net.InetSocketAddress;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.Duration;
 import java.util.Map;
+import java.util.UUID;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -182,6 +191,92 @@ public class NBTFileTest {
         // Without the fix, this would cause a StackOverflowError due to infinite recursion
         // With the fix, it throws a ParserException
         assertThrows(ParserException.class, () -> nbt.deserialize(tag, Object.class), "StackOverflowError expected");
+    }
+
+    private static Stream<Arguments> provideDefaultAdapters() {
+        return Stream.of(
+                // Boolean types
+                Arguments.of(true, Boolean.class, Boolean.class),
+                Arguments.of(false, Boolean.class, Boolean.class),
+                Arguments.of(true, boolean.class, Boolean.class),
+                Arguments.of(false, boolean.class, Boolean.class),
+
+                // Byte types
+                Arguments.of((byte) 42, Byte.class, Byte.class),
+                Arguments.of((byte) -10, Byte.class, Byte.class),
+                Arguments.of((byte) 42, byte.class, Byte.class),
+                Arguments.of((byte) -10, byte.class, Byte.class),
+
+                // Short types
+                Arguments.of((short) 1000, Short.class, Short.class),
+                Arguments.of((short) -500, Short.class, Short.class),
+                Arguments.of((short) 1000, short.class, Short.class),
+                Arguments.of((short) -500, short.class, Short.class),
+
+                // Integer types
+                Arguments.of(42, Integer.class, Integer.class),
+                Arguments.of(-100, Integer.class, Integer.class),
+                Arguments.of(42, int.class, Integer.class),
+                Arguments.of(-100, int.class, Integer.class),
+
+                // Long types
+                Arguments.of(42L, Long.class, Long.class),
+                Arguments.of(-100L, Long.class, Long.class),
+                Arguments.of(42L, long.class, Long.class),
+                Arguments.of(-100L, long.class, Long.class),
+
+                // Float types
+                Arguments.of(42.5f, Float.class, Float.class),
+                Arguments.of(-100.75f, Float.class, Float.class),
+                Arguments.of(42.5f, float.class, Float.class),
+                Arguments.of(-100.75f, float.class, Float.class),
+
+                // Double types
+                Arguments.of(42.5, Double.class, Double.class),
+                Arguments.of(-100.75, Double.class, Double.class),
+                Arguments.of(42.5, double.class, Double.class),
+                Arguments.of(-100.75, double.class, Double.class),
+
+                // String types
+                Arguments.of("Hello World!", String.class, String.class),
+                Arguments.of("", String.class, String.class),
+                Arguments.of("Special chars: \n\t\r", String.class, String.class),
+
+                // UUID types
+                Arguments.of(UUID.randomUUID(), UUID.class, UUID.class),
+                Arguments.of(UUID.fromString("00000000-0000-0000-0000-000000000000"), UUID.class, UUID.class),
+
+                // Duration types
+                Arguments.of(Duration.ofSeconds(60), Duration.class, Duration.class),
+                Arguments.of(Duration.ofDays(1), Duration.class, Duration.class),
+                Arguments.of(Duration.ofMillis(500), Duration.class, Duration.class),
+
+                // File types
+                Arguments.of(new File("/tmp/test.txt"), File.class, File.class),
+                Arguments.of(new File("relative/path.txt"), File.class, File.class),
+
+                // Path types
+                Arguments.of(Path.of("/tmp/test.txt"), Path.class, Path.class),
+                Arguments.of(Path.of("relative/path.txt"), Path.class, Path.class),
+
+                // InetSocketAddress types
+                Arguments.of(new InetSocketAddress("localhost", 8080), InetSocketAddress.class, InetSocketAddress.class),
+                Arguments.of(new InetSocketAddress("127.0.0.1", 25565), InetSocketAddress.class, InetSocketAddress.class)
+        );
+    }
+
+    @MethodSource("provideDefaultAdapters")
+    @ParameterizedTest(name = "[{index}] {1}: {0}")
+    public <T> void testDefaultAdapters(T value, Class<T> type, Class<T> expectedClass) {
+        var nbt = NBT.builder().build();
+
+        var tag = nbt.serialize(value, type);
+        assertNotNull(tag, "Serialization must not return null for type: " + type);
+
+        var deserialized = nbt.deserialize(tag, expectedClass);
+        assertNotNull(deserialized, "Deserialization must not return null for type: " + type);
+
+        assertEquals(value, deserialized, "Values must be equal for type: " + type);
     }
 
     @AfterAll
