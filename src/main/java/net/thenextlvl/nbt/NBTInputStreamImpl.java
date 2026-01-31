@@ -44,13 +44,8 @@ final class NBTInputStreamImpl extends DataInputStream implements NBTInputStream
 
     @Override
     public Map.Entry<String, CompoundTag> readNamedTag() throws IOException, IllegalArgumentException {
-        var type = readByte();
-        if (type != CompoundTag.ID) throw new IllegalArgumentException("Root tag must be a CompoundTag");
-        var nameLength = readShort();
-        var bytes = new byte[nameLength];
-        if (nameLength > 0) readFully(bytes);
-        var name = new String(bytes, getCharset());
-        return Map.entry(name, TagReaders.readCompound(this));
+        if (readByte() != CompoundTag.ID) throw new IllegalArgumentException("Root tag must be a CompoundTag");
+        return Map.entry(readName(), TagReaders.readCompound(this));
     }
 
     @CheckReturnValue
@@ -58,12 +53,14 @@ final class NBTInputStreamImpl extends DataInputStream implements NBTInputStream
     public Map.@Nullable Entry<String, Tag> readNamedTagInternal() throws IOException, IllegalArgumentException {
         var type = readByte();
         if (type == EscapeTag.ID) return null;
+        return Map.entry(readName(), readTag(type));
+    }
+
+    private String readName() throws IOException {
         var nameLength = readShort();
-        if (nameLength == 0) throw new IllegalStateException("Root tag name is not defined");
         var bytes = new byte[nameLength];
-        readFully(bytes);
-        var name = new String(bytes, getCharset());
-        return Map.entry(name, readTag(type));
+        if (nameLength > 0) readFully(bytes);
+        return new String(bytes, getCharset());
     }
 
     @CheckReturnValue
