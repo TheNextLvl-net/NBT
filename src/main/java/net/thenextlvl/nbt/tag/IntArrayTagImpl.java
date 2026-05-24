@@ -11,6 +11,11 @@ final class IntArrayTagImpl extends ValueTagImpl<int[]> implements IntArrayTag {
     }
 
     @Override
+    public boolean isIntArray() {
+        return true;
+    }
+
+    @Override
     public int[] getAsIntArray() {
         return getValue();
     }
