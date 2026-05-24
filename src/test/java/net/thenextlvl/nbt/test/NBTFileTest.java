@@ -2,6 +2,7 @@ package net.thenextlvl.nbt.test;
 
 import net.thenextlvl.nbt.NBTInputStream;
 import net.thenextlvl.nbt.NBTOutputStream;
+import net.thenextlvl.nbt.Compression;
 import net.thenextlvl.nbt.serialization.NBT;
 import net.thenextlvl.nbt.serialization.ParserException;
 import net.thenextlvl.nbt.tag.ByteArrayTag;
@@ -23,6 +24,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -167,6 +170,36 @@ public class NBTFileTest {
         try (var reader = NBTInputStream.create(path)) {
             assertEquals(modified, reader.readTag(), "File was not overridden");
         }
+    }
+
+    @Test
+    public void testLongStringRoundTrip() throws IOException {
+        var value = "a".repeat(0x8000);
+        var contents = CompoundTag.builder()
+                .put("string", value)
+                .build();
+
+        var bytes = new ByteArrayOutputStream();
+        try (var nbt = NBTOutputStream.create(bytes, Compression.NONE)) {
+            nbt.writeTag(null, contents);
+        }
+
+        try (var reader = NBTInputStream.create(new ByteArrayInputStream(bytes.toByteArray()), Compression.NONE)) {
+            assertEquals(contents, reader.readTag());
+        }
+    }
+
+    @Test
+    public void testOversizedStringFailsBeforeLengthTruncation() {
+        var contents = CompoundTag.builder()
+                .put("string", "a".repeat(0x1_0000))
+                .build();
+
+        assertThrows(IOException.class, () -> {
+            try (var nbt = NBTOutputStream.create(new ByteArrayOutputStream(), Compression.NONE)) {
+                nbt.writeTag(null, contents);
+            }
+        });
     }
 
     @Test

@@ -38,7 +38,7 @@ final class NBTInputStreamImpl extends DataInputStream implements NBTInputStream
     public CompoundTag readTag() throws IOException {
         var type = readByte();
         if (type != CompoundTag.ID) throw new IllegalArgumentException("Root tag must be a CompoundTag");
-        skipNBytes(readShort());
+        skipNBytes(readUnsignedShort());
         return TagReaders.readCompound(this);
     }
 
@@ -57,7 +57,7 @@ final class NBTInputStreamImpl extends DataInputStream implements NBTInputStream
     }
 
     private String readName() throws IOException {
-        var nameLength = readShort();
+        var nameLength = readUnsignedShort();
         var bytes = new byte[nameLength];
         if (nameLength > 0) readFully(bytes);
         return new String(bytes, getCharset());

@@ -27,6 +27,7 @@ final class StringTagImpl extends ValueTagImpl<String> implements StringTag {
     @Override
     public void write(NBTOutputStream outputStream) throws IOException {
         var bytes = value.getBytes(outputStream.getCharset());
+        if (bytes.length > 0xffff) throw new IOException("StringTag is too long: " + bytes.length + " bytes");
         outputStream.writeShort(bytes.length);
         outputStream.write(bytes);
     }
