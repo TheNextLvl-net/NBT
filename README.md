@@ -35,8 +35,8 @@ dependencies {
 - NBTInputStream / NBTOutputStream: Low-level, GZIP-compressed streams for reading/writing tags. Strings are encoded
   using the configured Charset (UTF-8 by default).
 - NBTFile: Small utility to load/save a CompoundTag from a file path with charset handling.
-- Serialization API: The NBT interface that converts between Tag and arbitrary Java
-  objects using TagSerializer and TagDeserializer (or a combined TagAdapter).
+- Serialization API: The NBT interface that converts between Tag and arbitrary Java objects using TagSerializer and
+  TagDeserializer (or a combined TagAdapter).
 
 ## Reading NBT files
 
@@ -220,6 +220,8 @@ This example shows how to write a dedicated adapter for a complex type containin
 import net.thenextlvl.nbt.serialization.*;
 import net.thenextlvl.nbt.tag.*;
 
+import java.util.List;
+
 record Position(int x, int y, int z) {
 }
 
@@ -291,11 +293,11 @@ class PlayerDataAdapter implements TagAdapter<PlayerData> {
         var name = c.get("name").getAsString();
         var pos = context.deserialize(c.get("pos"), Position.class);
         var listTag = c.getAsList("items");
-        var items = new java.util.ArrayList<InventoryItem>(listTag.size());
+        final var items = new java.util.ArrayList<InventoryItem>(listTag.size());
         for (final var t : listTag) {
             items.add(context.deserialize(t, InventoryItem.class));
         }
-        return new PlayerData(name, pos, java.util.List.copyOf(items));
+        return new PlayerData(name, pos, List.copyOf(items));
     }
 }
 
@@ -305,7 +307,7 @@ var nbt = NBT.builder()
         .registerTypeAdapter(PlayerData.class, new PlayerDataAdapter())
         .build();
 
-var data = new PlayerData("Alex", new Position(1, 64, 1), java.util.List.of(new InventoryItem("minecraft:stone", 32)));
+var data = new PlayerData("Alex", new Position(1, 64, 1), List.of(new InventoryItem("minecraft:stone", 32)));
 Tag tag = nbt.serialize(data);
 PlayerData back = nbt.deserialize(tag, PlayerData.class);
 ```

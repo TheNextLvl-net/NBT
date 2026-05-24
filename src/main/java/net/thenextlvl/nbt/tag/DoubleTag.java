@@ -20,7 +20,7 @@ public sealed interface DoubleTag extends NumberTag<Double> permits DoubleTagImp
      * @since 3.0.0
      */
     @Contract(value = "_ -> new", pure = true)
-    static DoubleTag of(double value) {
+    static DoubleTag of(final double value) {
         return new DoubleTagImpl(value);
     }
 }

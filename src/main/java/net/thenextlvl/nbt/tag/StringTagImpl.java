@@ -5,7 +5,7 @@ import net.thenextlvl.nbt.NBTOutputStream;
 import java.io.IOException;
 
 final class StringTagImpl extends ValueTagImpl<String> implements StringTag {
-    public StringTagImpl(String value) {
+    public StringTagImpl(final String value) {
         super(value);
     }
 
@@ -25,8 +25,8 @@ final class StringTagImpl extends ValueTagImpl<String> implements StringTag {
     }
 
     @Override
-    public void write(NBTOutputStream outputStream) throws IOException {
-        var bytes = value.getBytes(outputStream.getCharset());
+    public void write(final NBTOutputStream outputStream) throws IOException {
+        final var bytes = value.getBytes(outputStream.getCharset());
         if (bytes.length > 0xffff) throw new IOException("StringTag is too long: " + bytes.length + " bytes");
         outputStream.writeShort(bytes.length);
         outputStream.write(bytes);
@@ -36,8 +36,8 @@ final class StringTagImpl extends ValueTagImpl<String> implements StringTag {
     public String toString() {
         return shouldQuote(value) ? '"' + value + '"' : value;
     }
-    
-    private boolean shouldQuote(String str) {
+
+    private boolean shouldQuote(final String str) {
         return !str.chars().allMatch(c -> c >= 48 && c <= 57 || c >= 65 && c <= 90 || c >= 97 && c <= 122 || c == 95);
     }
 }

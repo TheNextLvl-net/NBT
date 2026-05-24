@@ -12,9 +12,10 @@ import java.util.Set;
 import java.util.function.BiConsumer;
 
 final class CompoundTagImpl extends ValueTagImpl<Map<String, Tag>> implements CompoundTag {
-    public CompoundTagImpl(Map<String, Tag> value) {
+    public CompoundTagImpl(final Map<String, Tag> value) {
         super(Collections.unmodifiableMap(new LinkedHashMap<>(value)));
     }
+
     public CompoundTagImpl() {
         super(Collections.emptyMap());
     }
@@ -35,7 +36,7 @@ final class CompoundTagImpl extends ValueTagImpl<Map<String, Tag>> implements Co
     }
 
     @Override
-    public void forEach(BiConsumer<? super String, ? super Tag> action) {
+    public void forEach(final BiConsumer<? super String, ? super Tag> action) {
         value.forEach(action);
     }
 
@@ -60,37 +61,37 @@ final class CompoundTagImpl extends ValueTagImpl<Map<String, Tag>> implements Co
     }
 
     @Override
-    public boolean containsKey(String property) {
+    public boolean containsKey(final String property) {
         return value.containsKey(property);
     }
 
     @Override
     @NullUnmarked
     @SuppressWarnings("unchecked")
-    public <T extends Tag> T get(String property) {
+    public <T extends Tag> T get(final String property) {
         return (T) value.get(property);
     }
 
     @Override
-    public <E extends Tag> ListTag<E> getAsList(String tag) {
+    public <E extends Tag> ListTag<E> getAsList(final String tag) {
         return get(tag).getAsList();
     }
 
     @Override
-    public CompoundTag getAsCompound(String tag) {
+    public CompoundTag getAsCompound(final String tag) {
         return get(tag).getAsCompound();
     }
 
     @Override
     @NullUnmarked
     @SuppressWarnings("unchecked")
-    public <T extends Tag> T getOrDefault(String tag, T defaultValue) {
+    public <T extends Tag> T getOrDefault(final String tag, final T defaultValue) {
         return (T) value.getOrDefault(tag, defaultValue);
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T extends Tag> Optional<T> optional(String tag) {
+    public <T extends Tag> Optional<T> optional(final String tag) {
         return Optional.ofNullable(get(tag)).map(value -> (T) value);
     }
 
@@ -100,8 +101,8 @@ final class CompoundTagImpl extends ValueTagImpl<Map<String, Tag>> implements Co
     }
 
     @Override
-    public void write(NBTOutputStream outputStream) throws IOException {
-        for (var entry : entrySet()) outputStream.writeTag(entry.getKey(), entry.getValue());
+    public void write(final NBTOutputStream outputStream) throws IOException {
+        for (final var entry : entrySet()) outputStream.writeTag(entry.getKey(), entry.getValue());
         EscapeTagImpl.INSTANCE.write(outputStream);
     }
 
@@ -112,10 +113,10 @@ final class CompoundTagImpl extends ValueTagImpl<Map<String, Tag>> implements Co
     @Override
     public String toString() {
         if (isEmpty()) return "{}";
-        var builder = new StringBuilder("{");
-        var iterator = entrySet().iterator();
+        final var builder = new StringBuilder("{");
+        final var iterator = entrySet().iterator();
         while (iterator.hasNext()) {
-            var entry = iterator.next();
+            final var entry = iterator.next();
             builder.append(entry.getKey()).append(':').append(entry.getValue());
             if (iterator.hasNext()) builder.append(",");
         }
@@ -126,43 +127,43 @@ final class CompoundTagImpl extends ValueTagImpl<Map<String, Tag>> implements Co
         private final Map<String, Tag> values = new LinkedHashMap<>();
 
         @Override
-        public Builder put(String name, boolean value) {
+        public Builder put(final String name, final boolean value) {
             return put(name, ByteTag.of(value));
         }
 
         @Override
-        public Builder put(String name, byte... array) {
+        public Builder put(final String name, final byte... array) {
             return put(name, new ByteArrayTagImpl(array));
         }
 
         @Override
-        public Builder put(String name, int... array) {
+        public Builder put(final String name, final int... array) {
             return put(name, new IntArrayTagImpl(array));
         }
 
         @Override
-        public Builder put(String name, long... array) {
+        public Builder put(final String name, final long... array) {
             return put(name, new LongArrayTagImpl(array));
         }
 
         @Override
-        public Builder put(String name, Number number) {
+        public Builder put(final String name, final Number number) {
             return put(name, NumberTag.of(number));
         }
 
         @Override
-        public Builder put(String name, String value) {
+        public Builder put(final String name, final String value) {
             return put(name, new StringTagImpl(value));
         }
 
         @Override
-        public Builder put(String name, Tag tag) {
+        public Builder put(final String name, final Tag tag) {
             values.put(name, tag);
             return this;
         }
 
         @Override
-        public Builder putAll(CompoundTag tag) {
+        public Builder putAll(final CompoundTag tag) {
             values.putAll(tag.getValue());
             return this;
         }

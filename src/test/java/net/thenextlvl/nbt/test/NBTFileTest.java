@@ -1,8 +1,8 @@
 package net.thenextlvl.nbt.test;
 
+import net.thenextlvl.nbt.Compression;
 import net.thenextlvl.nbt.NBTInputStream;
 import net.thenextlvl.nbt.NBTOutputStream;
-import net.thenextlvl.nbt.Compression;
 import net.thenextlvl.nbt.serialization.NBT;
 import net.thenextlvl.nbt.serialization.ParserException;
 import net.thenextlvl.nbt.tag.ByteArrayTag;
