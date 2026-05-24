@@ -20,7 +20,7 @@ import java.util.LinkedList;
 
 final class TagReaders {
     public static StringTag readString(NBTInputStream input) throws IOException {
-        var length = input.readShort();
+        var length = input.readUnsignedShort();
         var bytes = new byte[length];
         input.readFully(bytes);
         var value = new String(bytes, input.getCharset());

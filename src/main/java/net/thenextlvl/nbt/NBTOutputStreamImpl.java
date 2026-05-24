@@ -11,6 +11,8 @@ import java.io.OutputStream;
 import java.nio.charset.Charset;
 
 final class NBTOutputStreamImpl extends DataOutputStream implements NBTOutputStream {
+    static final int MAX_STRING_LENGTH = 0xffff;
+
     private final Charset charset;
 
     public NBTOutputStreamImpl(OutputStream outputStream, Charset charset, Compression compression) throws IOException {
@@ -22,6 +24,7 @@ final class NBTOutputStreamImpl extends DataOutputStream implements NBTOutputStr
     public void writeTag(@Nullable String name, Tag tag) throws IOException, IllegalArgumentException {
         if (tag instanceof EscapeTag) throw new IllegalArgumentException("EscapeTag not allowed");
         var bytes = name != null ? name.getBytes(getCharset()) : new byte[0];
+        if (bytes.length > MAX_STRING_LENGTH) throw new IOException("Tag name is too long: " + bytes.length + " bytes");
         writeByte(tag.getTypeId());
         writeShort(bytes.length);
         write(bytes);
