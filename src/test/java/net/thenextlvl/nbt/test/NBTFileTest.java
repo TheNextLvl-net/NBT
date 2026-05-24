@@ -90,6 +90,19 @@ public class NBTFileTest {
         assertEquals(NumberTag.of(BigDecimal.ONE), DoubleTag.of(1));
     }
 
+    @ParameterizedTest
+    @MethodSource("tagPredicateProvider")
+    public void testTagPredicates(final Tag tag, final TagPredicates predicates) {
+        assertEquals(predicates.compound(), tag.isCompound(), "isCompound");
+        assertEquals(predicates.list(), tag.isList(), "isList");
+        assertEquals(predicates.number(), tag.isNumber(), "isNumber");
+        assertEquals(predicates.bool(), tag.isBoolean(), "isBoolean");
+        assertEquals(predicates.string(), tag.isString(), "isString");
+        assertEquals(predicates.byteArray(), tag.isByteArray(), "isByteArray");
+        assertEquals(predicates.longArray(), tag.isLongArray(), "isLongArray");
+        assertEquals(predicates.intArray(), tag.isIntArray(), "isIntArray");
+    }
+
     @Test
     public void testArrayTagImmutability() {
         final var longs = LongArrayTag.of(1, 2, 3, 4, 5);
@@ -227,6 +240,23 @@ public class NBTFileTest {
         assertThrows(ParserException.class, () -> nbt.deserialize(tag, Object.class), "StackOverflowError expected");
     }
 
+    private static Stream<Arguments> tagPredicateProvider() {
+        return Stream.of(
+                Arguments.of(CompoundTag.empty(), TagPredicates.onlyCompound()),
+                Arguments.of(ListTag.empty(IntTag.ID), TagPredicates.onlyList()),
+                Arguments.of(ByteTag.of((byte) 1), TagPredicates.onlyNumber()),
+                Arguments.of(ShortTag.of((short) 1), TagPredicates.onlyNumber()),
+                Arguments.of(IntTag.of(1), TagPredicates.onlyNumber()),
+                Arguments.of(LongTag.of(1L), TagPredicates.onlyNumber()),
+                Arguments.of(FloatTag.of(1f), TagPredicates.onlyNumber()),
+                Arguments.of(DoubleTag.of(1d), TagPredicates.onlyNumber()),
+                Arguments.of(StringTag.of("test"), TagPredicates.onlyString()),
+                Arguments.of(ByteArrayTag.of((byte) 1), TagPredicates.onlyByteArray()),
+                Arguments.of(LongArrayTag.of(1L), TagPredicates.onlyLongArray()),
+                Arguments.of(IntArrayTag.of(1), TagPredicates.onlyIntArray())
+        );
+    }
+
     private static Stream<Arguments> provideDefaultAdapters() {
         return Stream.of(
                 // Boolean types
@@ -317,5 +347,44 @@ public class NBTFileTest {
     public static void cleanup() throws IOException {
         Files.deleteIfExists(path);
         assertFalse(Files.isRegularFile(path), path + " still exists");
+    }
+
+    public record TagPredicates(
+            boolean compound,
+            boolean list,
+            boolean number,
+            boolean bool,
+            boolean string,
+            boolean byteArray,
+            boolean longArray,
+            boolean intArray
+    ) {
+        private static TagPredicates onlyCompound() {
+            return new TagPredicates(true, false, false, false, false, false, false, false);
+        }
+
+        private static TagPredicates onlyList() {
+            return new TagPredicates(false, true, false, false, false, false, false, false);
+        }
+
+        private static TagPredicates onlyNumber() {
+            return new TagPredicates(false, false, true, true, false, false, false, false);
+        }
+
+        private static TagPredicates onlyString() {
+            return new TagPredicates(false, false, false, false, true, false, false, false);
+        }
+
+        private static TagPredicates onlyByteArray() {
+            return new TagPredicates(false, false, false, false, false, true, false, false);
+        }
+
+        private static TagPredicates onlyLongArray() {
+            return new TagPredicates(false, false, false, false, false, false, true, false);
+        }
+
+        private static TagPredicates onlyIntArray() {
+            return new TagPredicates(false, false, false, false, false, false, false, true);
+        }
     }
 }
