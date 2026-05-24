@@ -292,7 +292,7 @@ class PlayerDataAdapter implements TagAdapter<PlayerData> {
         var pos = context.deserialize(c.get("pos"), Position.class);
         var listTag = c.getAsList("items");
         var items = new java.util.ArrayList<InventoryItem>(listTag.size());
-        for (var t : listTag) {
+        for (final var t : listTag) {
             items.add(context.deserialize(t, InventoryItem.class));
         }
         return new PlayerData(name, pos, java.util.List.copyOf(items));
@@ -321,7 +321,7 @@ If you introduce your own `Tag` implementation with a custom type ID, you can te
 
 ```java
 public static void createCustomTag() throws Exception {
-    NBTInputStream input = new NBTInputStream(new FileInputStream("data.nbt"));
+    final NBTInputStream input = new NBTInputStream(new FileInputStream("data.nbt"));
     input.registerMapping(MyCustomTag.ID, MyCustomTag::read);
 }
 ```

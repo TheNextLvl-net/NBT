@@ -15,17 +15,17 @@ public final class EnumAdapter<T extends Enum<T>> implements TagAdapter<T> {
      *
      * @param enumClass the {@code Class} representing the specific enum type handled by this adapter
      */
-    public EnumAdapter(Class<T> enumClass) {
+    public EnumAdapter(final Class<T> enumClass) {
         this.enumClass = enumClass;
     }
 
     @Override
-    public T deserialize(Tag tag, TagDeserializationContext context) throws ParserException {
+    public T deserialize(final Tag tag, final TagDeserializationContext context) throws ParserException {
         return Enum.valueOf(this.enumClass, tag.getAsString());
     }
 
     @Override
-    public Tag serialize(T object, TagSerializationContext context) throws ParserException {
+    public Tag serialize(final T object, final TagSerializationContext context) throws ParserException {
         return StringTag.of(object.name());
     }
 }

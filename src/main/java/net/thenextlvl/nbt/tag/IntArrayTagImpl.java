@@ -6,8 +6,13 @@ import java.io.IOException;
 import java.util.Arrays;
 
 final class IntArrayTagImpl extends ValueTagImpl<int[]> implements IntArrayTag {
-    public IntArrayTagImpl(int... value) {
+    public IntArrayTagImpl(final int... value) {
         super(value);
+    }
+
+    @Override
+    public boolean isIntArray() {
+        return true;
     }
 
     @Override
@@ -26,7 +31,7 @@ final class IntArrayTagImpl extends ValueTagImpl<int[]> implements IntArrayTag {
     }
 
     @Override
-    public Integer get(int index) {
+    public Integer get(final int index) {
         return value[index];
     }
 
@@ -36,15 +41,15 @@ final class IntArrayTagImpl extends ValueTagImpl<int[]> implements IntArrayTag {
     }
 
     @Override
-    public void write(NBTOutputStream outputStream) throws IOException {
+    public void write(final NBTOutputStream outputStream) throws IOException {
         outputStream.writeInt(value.length);
-        for (var i : value) outputStream.writeInt(i);
+        for (final var i : value) outputStream.writeInt(i);
     }
 
     @Override
-    public boolean equals(Object object) {
+    public boolean equals(final Object object) {
         if (this == object) return true;
-        if (!(object instanceof IntArrayTagImpl valueTag)) return false;
+        if (!(object instanceof final IntArrayTagImpl valueTag)) return false;
         return Arrays.equals(value, valueTag.value);
     }
 
@@ -56,7 +61,7 @@ final class IntArrayTagImpl extends ValueTagImpl<int[]> implements IntArrayTag {
     @Override
     public String toString() {
         if (value.length == 0) return "[]";
-        var builder = new StringBuilder("[");
+        final var builder = new StringBuilder("[");
         for (int i = 0; i < value.length; i++) {
             if (i > 0) builder.append(",");
             builder.append(value[i]);

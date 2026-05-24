@@ -7,8 +7,13 @@ import java.io.IOException;
 import java.util.Arrays;
 
 final class ByteArrayTagImpl extends ValueTagImpl<byte[]> implements ByteArrayTag {
-    public ByteArrayTagImpl(byte... array) {
+    public ByteArrayTagImpl(final byte... array) {
         super(array);
+    }
+
+    @Override
+    public boolean isByteArray() {
+        return true;
     }
 
     @Override
@@ -29,7 +34,7 @@ final class ByteArrayTagImpl extends ValueTagImpl<byte[]> implements ByteArrayTa
 
     @Override
     @Contract(pure = true)
-    public Byte get(int index) {
+    public Byte get(final int index) {
         return value[index];
     }
 
@@ -39,15 +44,15 @@ final class ByteArrayTagImpl extends ValueTagImpl<byte[]> implements ByteArrayTa
     }
 
     @Override
-    public void write(NBTOutputStream outputStream) throws IOException {
+    public void write(final NBTOutputStream outputStream) throws IOException {
         outputStream.writeInt(value.length);
         outputStream.write(value);
     }
 
     @Override
-    public boolean equals(Object object) {
+    public boolean equals(final Object object) {
         if (this == object) return true;
-        if (!(object instanceof ByteArrayTagImpl valueTag)) return false;
+        if (!(object instanceof final ByteArrayTagImpl valueTag)) return false;
         return Arrays.equals(value, valueTag.value);
     }
 
@@ -59,7 +64,7 @@ final class ByteArrayTagImpl extends ValueTagImpl<byte[]> implements ByteArrayTa
     @Override
     public String toString() {
         if (value.length == 0) return "[]";
-        var builder = new StringBuilder("[");
+        final var builder = new StringBuilder("[");
         for (int i = 0; i < value.length; i++) {
             if (i > 0) builder.append(",");
             builder.append(value[i]).append("b");

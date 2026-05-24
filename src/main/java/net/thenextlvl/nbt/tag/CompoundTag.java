@@ -161,7 +161,7 @@ public sealed interface CompoundTag extends ValueTag<Map<String, Tag>> permits C
      * @since 3.0.0
      */
     @Contract(value = "_ -> new", pure = true)
-    static CompoundTag of(Map<String, Tag> value) {
+    static CompoundTag of(final Map<String, Tag> value) {
         return new CompoundTagImpl(value);
     }
 

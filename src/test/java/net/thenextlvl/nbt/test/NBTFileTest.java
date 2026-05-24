@@ -18,6 +18,7 @@ import net.thenextlvl.nbt.tag.LongTag;
 import net.thenextlvl.nbt.tag.NumberTag;
 import net.thenextlvl.nbt.tag.ShortTag;
 import net.thenextlvl.nbt.tag.StringTag;
+import net.thenextlvl.nbt.tag.Tag;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -72,7 +73,7 @@ public class NBTFileTest {
     public void testCompoundTagEquality() {
         assertEquals(CompoundTag.empty(), CompoundTag.of(Map.of()));
 
-        var tag = CompoundTag.builder()
+        final var tag = CompoundTag.builder()
                 .put("test", 1)
                 .build();
         assertEquals(tag, CompoundTag.of(Map.of("test", IntTag.of(1))));
@@ -89,24 +90,37 @@ public class NBTFileTest {
         assertEquals(NumberTag.of(BigDecimal.ONE), DoubleTag.of(1));
     }
 
+    @ParameterizedTest
+    @MethodSource("tagPredicateProvider")
+    public void testTagPredicates(final Tag tag, final TagPredicates predicates) {
+        assertEquals(predicates.compound(), tag.isCompound(), "isCompound");
+        assertEquals(predicates.list(), tag.isList(), "isList");
+        assertEquals(predicates.number(), tag.isNumber(), "isNumber");
+        assertEquals(predicates.bool(), tag.isBoolean(), "isBoolean");
+        assertEquals(predicates.string(), tag.isString(), "isString");
+        assertEquals(predicates.byteArray(), tag.isByteArray(), "isByteArray");
+        assertEquals(predicates.longArray(), tag.isLongArray(), "isLongArray");
+        assertEquals(predicates.intArray(), tag.isIntArray(), "isIntArray");
+    }
+
     @Test
     public void testArrayTagImmutability() {
-        var longs = LongArrayTag.of(1, 2, 3, 4, 5);
+        final var longs = LongArrayTag.of(1, 2, 3, 4, 5);
         longs.getValue()[0] = 2;
         assertEquals(1, longs.get(0));
 
-        var ints = IntArrayTag.of(1, 2, 3, 4, 5);
+        final var ints = IntArrayTag.of(1, 2, 3, 4, 5);
         ints.getValue()[0] = 2;
         assertEquals(1, ints.get(0));
 
-        var bytes = ByteArrayTag.of((byte) 1, (byte) 2, (byte) 3, (byte) 4, (byte) 5);
+        final var bytes = ByteArrayTag.of((byte) 1, (byte) 2, (byte) 3, (byte) 4, (byte) 5);
         bytes.getValue()[0] = (byte) 2;
         assertEquals((byte) 1, bytes.get(0));
     }
 
     @Test
     public void testCompoundTagImmutability() {
-        var tag = CompoundTag.of(Map.of("test", IntTag.of(1)));
+        final var tag = CompoundTag.of(Map.of("test", IntTag.of(1)));
         assertThrows(UnsupportedOperationException.class, () -> tag.getValue().put("test", IntTag.of(2)));
         assertThrows(UnsupportedOperationException.class, () -> tag.getValue().remove("test"));
         assertThrows(UnsupportedOperationException.class, () -> tag.getValue().clear());
@@ -114,7 +128,7 @@ public class NBTFileTest {
 
     @Test
     public void testListTagImmutability() {
-        var list = ListTag.of(IntTag.of(1));
+        final var list = ListTag.of(IntTag.of(1));
         assertThrows(UnsupportedOperationException.class, () -> list.add(IntTag.of(2)));
         assertThrows(UnsupportedOperationException.class, list::removeFirst);
         assertThrows(UnsupportedOperationException.class, () -> list.set(0, IntTag.of(2)));
@@ -125,10 +139,10 @@ public class NBTFileTest {
         assertEquals(ListTag.empty(StringTag.ID), ListTag.of(StringTag.ID));
         assertNotEquals(ListTag.empty(StringTag.ID), ListTag.empty(DoubleTag.ID));
 
-        var tag = ListTag.of(IntTag.ID, IntTag.of(1));
+        final var tag = ListTag.of(IntTag.ID, IntTag.of(1));
         assertEquals(ListTag.of(IntTag.of(1)), tag);
 
-        var numberList = ListTag.builder()
+        final var numberList = ListTag.builder()
                 .add(NumberTag.of(1))
                 .add(NumberTag.of(2))
                 .add(NumberTag.of(4))
@@ -141,7 +155,7 @@ public class NBTFileTest {
 
     @Test
     public void createFile() throws IOException {
-        var contents = CompoundTag.builder()
+        final var contents = CompoundTag.builder()
                 .put("array", IntArrayTag.of())
                 .put("list", ListTag.of(DoubleTag.ID))
                 .put("compound", CompoundTag.empty())
@@ -152,51 +166,51 @@ public class NBTFileTest {
 
         assertFalse(Files.isRegularFile(path), path + " already exists");
 
-        try (var nbt = NBTOutputStream.create(path)) {
+        try (final var nbt = NBTOutputStream.create(path)) {
             nbt.writeTag(null, contents);
 
             assertTrue(Files.isRegularFile(path), "Failed to create file");
         }
 
-        try (var reader = NBTInputStream.create(path)) {
+        try (final var reader = NBTInputStream.create(path)) {
             assertEquals(contents, reader.readTag(), "File was written incorrectly");
         }
 
-        var modified = CompoundTag.empty();
-        try (var nbt = NBTOutputStream.create(path)) {
+        final var modified = CompoundTag.empty();
+        try (final var nbt = NBTOutputStream.create(path)) {
             nbt.writeTag(null, modified);
         }
 
-        try (var reader = NBTInputStream.create(path)) {
+        try (final var reader = NBTInputStream.create(path)) {
             assertEquals(modified, reader.readTag(), "File was not overridden");
         }
     }
 
     @Test
     public void testLongStringRoundTrip() throws IOException {
-        var value = "a".repeat(0x8000);
-        var contents = CompoundTag.builder()
+        final var value = "a".repeat(0x8000);
+        final var contents = CompoundTag.builder()
                 .put("string", value)
                 .build();
 
-        var bytes = new ByteArrayOutputStream();
-        try (var nbt = NBTOutputStream.create(bytes, Compression.NONE)) {
+        final var bytes = new ByteArrayOutputStream();
+        try (final var nbt = NBTOutputStream.create(bytes, Compression.NONE)) {
             nbt.writeTag(null, contents);
         }
 
-        try (var reader = NBTInputStream.create(new ByteArrayInputStream(bytes.toByteArray()), Compression.NONE)) {
+        try (final var reader = NBTInputStream.create(new ByteArrayInputStream(bytes.toByteArray()), Compression.NONE)) {
             assertEquals(contents, reader.readTag());
         }
     }
 
     @Test
     public void testOversizedStringFailsBeforeLengthTruncation() {
-        var contents = CompoundTag.builder()
+        final var contents = CompoundTag.builder()
                 .put("string", "a".repeat(0x1_0000))
                 .build();
 
         assertThrows(IOException.class, () -> {
-            try (var nbt = NBTOutputStream.create(new ByteArrayOutputStream(), Compression.NONE)) {
+            try (final var nbt = NBTOutputStream.create(new ByteArrayOutputStream(), Compression.NONE)) {
                 nbt.writeTag(null, contents);
             }
         });
@@ -204,10 +218,10 @@ public class NBTFileTest {
 
     @Test
     public void testUnregisteredSerializer() {
-        var nbt = NBT.builder().build();
+        final var nbt = NBT.builder().build();
 
         // Create a simple object that has no registered serializer
-        var unserializable = new Object();
+        final var unserializable = new Object();
 
         // Without the fix, this would cause a StackOverflowError due to infinite recursion
         // With the fix, it throws a ParserException
@@ -216,14 +230,31 @@ public class NBTFileTest {
 
     @Test
     public void testUnregisteredDeserializer() {
-        var nbt = NBT.builder().build();
+        final var nbt = NBT.builder().build();
 
         // Create a simple tag that has no registered deserializer for Object
-        var tag = IntTag.of(42);
+        final var tag = IntTag.of(42);
 
         // Without the fix, this would cause a StackOverflowError due to infinite recursion
         // With the fix, it throws a ParserException
         assertThrows(ParserException.class, () -> nbt.deserialize(tag, Object.class), "StackOverflowError expected");
+    }
+
+    private static Stream<Arguments> tagPredicateProvider() {
+        return Stream.of(
+                Arguments.of(CompoundTag.empty(), TagPredicates.onlyCompound()),
+                Arguments.of(ListTag.empty(IntTag.ID), TagPredicates.onlyList()),
+                Arguments.of(ByteTag.of((byte) 1), TagPredicates.onlyNumber()),
+                Arguments.of(ShortTag.of((short) 1), TagPredicates.onlyNumber()),
+                Arguments.of(IntTag.of(1), TagPredicates.onlyNumber()),
+                Arguments.of(LongTag.of(1L), TagPredicates.onlyNumber()),
+                Arguments.of(FloatTag.of(1f), TagPredicates.onlyNumber()),
+                Arguments.of(DoubleTag.of(1d), TagPredicates.onlyNumber()),
+                Arguments.of(StringTag.of("test"), TagPredicates.onlyString()),
+                Arguments.of(ByteArrayTag.of((byte) 1), TagPredicates.onlyByteArray()),
+                Arguments.of(LongArrayTag.of(1L), TagPredicates.onlyLongArray()),
+                Arguments.of(IntArrayTag.of(1), TagPredicates.onlyIntArray())
+        );
     }
 
     private static Stream<Arguments> provideDefaultAdapters() {
@@ -300,13 +331,13 @@ public class NBTFileTest {
 
     @MethodSource("provideDefaultAdapters")
     @ParameterizedTest(name = "[{index}] {1}: {0}")
-    public <T> void testDefaultAdapters(T value, Class<T> type, Class<T> expectedClass) {
-        var nbt = NBT.builder().build();
+    public <T> void testDefaultAdapters(final T value, final Class<T> type, final Class<T> expectedClass) {
+        final var nbt = NBT.builder().build();
 
-        var tag = nbt.serialize(value, type);
+        final var tag = nbt.serialize(value, type);
         assertNotNull(tag, "Serialization must not return null for type: " + type);
 
-        var deserialized = nbt.deserialize(tag, expectedClass);
+        final var deserialized = nbt.deserialize(tag, expectedClass);
         assertNotNull(deserialized, "Deserialization must not return null for type: " + type);
 
         assertEquals(value, deserialized, "Values must be equal for type: " + type);
@@ -316,5 +347,44 @@ public class NBTFileTest {
     public static void cleanup() throws IOException {
         Files.deleteIfExists(path);
         assertFalse(Files.isRegularFile(path), path + " still exists");
+    }
+
+    public record TagPredicates(
+            boolean compound,
+            boolean list,
+            boolean number,
+            boolean bool,
+            boolean string,
+            boolean byteArray,
+            boolean longArray,
+            boolean intArray
+    ) {
+        private static TagPredicates onlyCompound() {
+            return new TagPredicates(true, false, false, false, false, false, false, false);
+        }
+
+        private static TagPredicates onlyList() {
+            return new TagPredicates(false, true, false, false, false, false, false, false);
+        }
+
+        private static TagPredicates onlyNumber() {
+            return new TagPredicates(false, false, true, true, false, false, false, false);
+        }
+
+        private static TagPredicates onlyString() {
+            return new TagPredicates(false, false, false, false, true, false, false, false);
+        }
+
+        private static TagPredicates onlyByteArray() {
+            return new TagPredicates(false, false, false, false, false, true, false, false);
+        }
+
+        private static TagPredicates onlyLongArray() {
+            return new TagPredicates(false, false, false, false, false, false, true, false);
+        }
+
+        private static TagPredicates onlyIntArray() {
+            return new TagPredicates(false, false, false, false, false, false, false, true);
+        }
     }
 }
